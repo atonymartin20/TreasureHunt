@@ -22,6 +22,9 @@ print(f"Init_data: {init_data}")
 print(f"Init_data['title']: {init_data['title']}")
 
 def create_new_room(room_stats):
+    # def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
+    # current_room = Room(room_stats['room_id'], room_stats['title'], room_stats['description'], room_stats['coordinates'], room_stats['terrain'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'])
+
     current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
     return current_room
 
@@ -39,8 +42,9 @@ def create_graph(room):
         'messages': room.messages,
         'visited': {},
         'x': room.x,
-        'y': room.y,
+        'y': room.y
     }
+    print(f"DEBUG: {roomGraph[room.room_id]}")
     for i in current_room.exits:
         value = {i: '?'}
         roomGraph[current_room.room_id]['visited'].update(value)
