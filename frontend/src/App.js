@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import Map from './Components/Map.js'
 import UserInfoDisplay from './Components/UserInfoDisplay.js'
+require('dotenv').config()
 
 function App() {
   return (
