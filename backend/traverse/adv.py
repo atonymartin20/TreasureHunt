@@ -159,7 +159,7 @@ while len(visited) < max_rooms:
 
     if direction_to_move in visited[player.currentRoom.room_id]:
         traversalPath.append(direction_to_move)
-        path.append(direction_array[direction_to_move])
+        path.append(reverseDirection[direction_to_move])
         player.travel(direction_to_move)
 
     time.sleep(current_room.cooldown)
