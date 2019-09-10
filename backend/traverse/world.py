@@ -15,8 +15,11 @@ class World:
         gridSize = 1
         for i in range(0, numRooms):
             # x = roomGraph[i][0][0]
-            x = int(roomGraph[i]["coordinates"].split(',')[0][1:])
-            y = int(roomGraph[i]["coordinates"].split(',')[1][:-1])
+            # x = int(roomGraph[i]["coordinates"].split(',')[0][1:])
+            # y = int(roomGraph[i]["coordinates"].split(',')[1][:-1])
+            print(f"DEBUG::roomGraph[i]::{roomGraph[i]}")
+            x = roomGraph[i]["x"]
+            y = roomGraph[i]["y"]
             # gridSize = max(gridSize, roomGraph[i][0][0], roomGraph[i][0][1])
             gridSize = max(gridSize, x, y)
             self.rooms[i] = Room(roomGraph[i]['room_id'], roomGraph[i]['title'], roomGraph[i]['description'], roomGraph[i]['coordinates'], roomGraph[i]['exits'])
@@ -27,8 +30,10 @@ class World:
             self.roomGrid.append([None] * gridSize)
         for roomID in roomGraph:
             room = self.rooms[roomID]
-            x = int(roomGraph[roomID]["coordinates"].split(',')[0][1:])
-            y = int(roomGraph[roomID]["coordinates"].split(',')[1][:-1])
+            # x = int(roomGraph[roomID]["coordinates"].split(',')[0][1:])
+            # y = int(roomGraph[roomID]["coordinates"].split(',')[1][:-1])
+            x = roomGraph[roomID]["x"]
+            y = roomGraph[roomID]["y"]
             self.roomGrid[x][y] = room
 
             # if 'n' in roomGraph[roomID][1]:
