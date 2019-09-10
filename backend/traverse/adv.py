@@ -18,11 +18,11 @@ init_headers = {
 init_response = requests.get(
     'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=init_headers)
 init_data = init_response.json()
-print(init_data)
-print(init_data['title'])
+print(f"Init_data: {init_data}")
+print(f"Init_data['title']: {init_data['title']}")
 
 def create_new_room(room_stats):
-    current_room = Room(room_stats['room_id'], room_stats['title'], room_stats['description'], room_stats['coordinates'], room_stats['terrain'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'])
+    current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
     return current_room
 
 def create_graph(room):
@@ -38,8 +38,8 @@ def create_graph(room):
         'errors': room.errors,
         'messages': room.messages,
         'visited': {},
-        'x': room.coordinates.split(',')[0][1],
-        # 'y': room.coordinates.split(',')[1][:3],
+        'x': room.x,
+        'y': room.y,
     }
     for i in current_room.exits:
         value = {i: '?'}
@@ -92,7 +92,7 @@ min_cooldown = 10
 world = World()
 # world.loadGraph(roomGraph)
 roomGraph = {}
-current_room = create_new_room(init_response.json())
+current_room = create_new_room(init_data)
 prev_room = current_room
 room_graph = create_graph(current_room)
 
@@ -109,7 +109,9 @@ visited = {}
 reverseDirection = {'n': 's', 's': 'n', 'w': 'e', 'e': 'w' }
 
 #add starting room to visited
-print(visited[player.currentRoom.room_id])
+print(f"{current_room}")
+print(f"Visited: {visited}")
+print(f"Visited: visited[player.currentRoom.room_id]: {visited[player.currentRoom.room_id]}")
 visited[player.currentRoom.room_id] = roomGraph[player.currentRoom.room_id]['visited']
 time.sleep(min_cooldown)
 

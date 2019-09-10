@@ -2,13 +2,11 @@
 # description attributes.
 class Room:
     def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
-    # def __init__(self, title, description, id=0, coordinates=(60,60), exits=[],players=[], items=[], cooldown=None, errors=[], message=[], x=None, y=None):
-
         self.room_id = room_id
         self.title = title
         self.description = description
-        self.coordinates = coordinates
         self.terrain = terrain
+        self.coordinates = coordinates
         self.players = players
         self.items = items
         self.exits = exits
@@ -23,7 +21,7 @@ class Room:
         self.y = y
 
     def __str__(self):
-        return f"\n-------------------\nCurrent Room = {self.room_id} {self.title}\n{self.description}\n{self.getExitsString()}\n"
+        return f"\n-------------------\nCurrent Room\nSelf.room_id = {self.room_id}\nSelf.title = {self.title}\nSelf.description = {self.description}\nSelf.coordinates = {self.coordinates}\nSelf.terrain = {self.terrain}\nSelf.players = {self.players}\nSelf.items = {self.items}\nSelf.exits = {self.exits}\nSelf.cooldown = {self.cooldown}\nSelf.errors = {self.errors}\nSelf.messages = {self.messages}\nSelf.getExitsString = {self.getExitsString()}\n"
 
     def printRoomDescription(self, player):
         print(str(self))
