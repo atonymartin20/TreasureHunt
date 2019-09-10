@@ -27,7 +27,8 @@ class World:
             y = roomGraph[i]["y"]
             # gridSize = max(gridSize, roomGraph[i][0][0], roomGraph[i][0][1])
             gridSize = max(gridSize, x, y)
-            self.rooms[i] = Room(roomGraph[i]['room_id'], roomGraph[i]['title'], roomGraph[i]['description'], roomGraph[i]['coordinates'], roomGraph[i]['exits'])
+            # self.rooms[i] = Room(roomGraph[i]['room_id'], roomGraph[i]['title'], roomGraph[i]['description'], roomGraph[i]['coordinates'], roomGraph[i]['exits'])
+            self.rooms[i] = Room(roomGraph[i])
         self.roomGrid = []
         gridSize += 1
         self.gridSize = gridSize

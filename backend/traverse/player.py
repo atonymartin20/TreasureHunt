@@ -10,8 +10,9 @@ class Player:
         self.inventory = inventory
         self.status = status
 
-    def update(self, response):
+    def update(self, response, current_room):
         self.name = response["name"]
+        self.currentRoom = current_room
         self.cooldown = response["cooldown"]
         self.encumbrance = response["encumbrance"]
         self.strength = response["strength"]
