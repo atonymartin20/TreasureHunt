@@ -50,6 +50,13 @@ class Player:
             if move_response.status_code == 200:
                 nextRoom = Room(move_response.json())
                 self.currentRoom = nextRoom
+
+                # Print any messages
+                if len(nextRoom.messages) > 0:
+                    for msg in nextRoom.messages:
+                        print(msg)
+
+                # Print the room
                 if (showRooms):
                     nextRoom.printRoomDescription(self)
 
@@ -59,4 +66,5 @@ class Player:
                 time.sleep(move_response.json().cooldown)
         else:
             print("You cannot move in that direction.")
+
 
