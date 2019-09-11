@@ -118,16 +118,16 @@ def checkRoom(current_room):
                 time.sleep(item_data['cooldown'])
 
     # Is the room a shop?
-    print(f"DEBUG::room title::{current_room.title}")
+    # print(f"DEBUG::room title::{current_room.title}")
     if current_room.title == "Shop":
-        print(f"DEBUG::room is a shop")
+        # print(f"DEBUG::room is a shop")
         # Add to the world.shopRoom if needed
         if current_room.room_id not in world.shopRoom:
             world.shopRoom.append(current_room.room_id)
 
         # Check current inventory for treasure to sell
         if len(player.inventory) > 0:
-            print(f"DEBUG::inventory::{player.inventory}")
+            # print(f"DEBUG::inventory::{player.inventory}")
             for item in player.inventory:
                 # examine the item
                 item_json = {"name": item}
@@ -144,7 +144,7 @@ def checkRoom(current_room):
                         'https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/', json=item_json, headers=init_headers)
                     item_data = item_response.json()
 
-                    print(f"DEBUG::sell data::{item_data}")
+                    # print(f"DEBUG::sell data::{item_data}")
                     printMessages(item_data)                
                     time.sleep(item_data['cooldown'])
 
@@ -230,7 +230,7 @@ while len(visited) < max_rooms:
     canMove = checkRoom(player.currentRoom)
 
     #  If current room hasn't been visited
-    if roomId not in map:
+    if roomId not in map.keys():
         map[roomId] = {}
 
         # Get exits
