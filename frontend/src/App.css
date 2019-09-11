@@ -1,4 +1,13 @@
 .App {
-  text-align: center;
+  display: flex;
+  margin-left: 40px;
+}
+
+.main-header {
+  text-align: center
+}
+
+.Map {
+  margin: 0 auto;
 }
 
