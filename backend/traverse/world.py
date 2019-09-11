@@ -11,7 +11,7 @@ class World:
 
     def loadGraph(self, roomGraph):
         numRooms = len(roomGraph)
-        # print(f"DEBUG::numRooms::{numRooms}")
+        print(f"DEBUG::numRooms::{numRooms}")
         # print(f"DEBUG::roomGraph::{roomGraph}")
         rooms = [None] * numRooms
         gridSize = 1
@@ -46,20 +46,24 @@ class World:
 
             # if 'n' in roomGraph[roomID][1]:
             #     self.rooms[roomID].connectRooms('n', self.rooms[roomGraph[roomID][1]['n']])
-            if 'n' in roomGraph[roomID]["visited"] and roomGraph[roomID]["visited"]["n"] != "?":
-                self.rooms[roomID].connectRooms('n', self.rooms[roomGraph[roomID]["visited"]["n"]])
+            if 'n' in roomGraph[roomID]['visited'] and roomGraph[roomID]['visited']['n'] != "?":
+                conn_to = str(roomGraph[roomID]['visited']['n'])
+                self.rooms[roomID].connectRooms('n', self.rooms[conn_to])
             # if 's' in roomGraph[roomID][1]:
             #     self.rooms[roomID].connectRooms('s', self.rooms[roomGraph[roomID][1]['s']])
-            if 's' in roomGraph[roomID]["visited"] and roomGraph[roomID]["visited"]["s"] != "?":
-                self.rooms[roomID].connectRooms('s', self.rooms[roomGraph[roomID]["visited"]["s"]])
+            if 's' in roomGraph[roomID]['visited'] and roomGraph[roomID]['visited']['s'] != "?":
+                conn_to = str(roomGraph[roomID]['visited']['s'])
+                self.rooms[roomID].connectRooms('s', self.rooms[conn_to])
             # if 'e' in roomGraph[roomID][1]:
             #     self.rooms[roomID].connectRooms('e', self.rooms[roomGraph[roomID][1]['e']])
-            if 'e' in roomGraph[roomID]["visited"] and roomGraph[roomID]["visited"]["e"] != "?":
-                self.rooms[roomID].connectRooms('e', self.rooms[roomGraph[roomID]["visited"]['e']])
+            if 'e' in roomGraph[roomID]['visited'] and roomGraph[roomID]['visited']['e'] != "?":
+                conn_to = str(roomGraph[roomID]['visited']['e'])
+                self.rooms[roomID].connectRooms('e', self.rooms[conn_to])
             # if 'w' in roomGraph[roomID][1]:
             #     self.rooms[roomID].connectRooms('w', self.rooms[roomGraph[roomID][1]['w']])
-            if 'w' in roomGraph[roomID]["visited"] and roomGraph[roomID]["visited"]["w"] != "?":
-                self.rooms[roomID].connectRooms('w', self.rooms[roomGraph[roomID]["visited"]['w']])
+            if 'w' in roomGraph[roomID]['visited'] and roomGraph[roomID]['visited']['w'] != "?":
+                conn_to = str(roomGraph[roomID]['visited']['w'])
+                self.rooms[roomID].connectRooms('w', self.rooms[conn_to])
         # print(f"DEBUG::self.rooms::{self.rooms}")
 
         # Doesn't like this, since there really isn't an order to a dictionary. It's handled in adv.py
