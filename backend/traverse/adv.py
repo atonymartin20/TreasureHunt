@@ -9,6 +9,10 @@ from world import World
 from dotenv import load_dotenv #Loads .env file
 load_dotenv()
 
+import sys
+sys.path.append('../tools/')
+import graphs
+
 key = os.getenv("KEY")
 
 # Test Key and get initial data
