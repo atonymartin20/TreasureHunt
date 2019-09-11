@@ -9,9 +9,15 @@ from world import World
 from dotenv import load_dotenv #Loads .env file
 load_dotenv()
 
-import sys
-sys.path.append('../tools/')
-import graphs
+from utils import bfs
+
+# Let's keep the maps we found
+import os.path
+from os import path
+if path.exists("roomGraph.py"):
+    from roomGraph import roomGraph
+if path.exists("map.py"):
+    from map import map
 
 key = os.getenv("KEY")
 
@@ -22,7 +28,8 @@ init_headers = {
 init_response = requests.get(
     'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=init_headers)
 init_data = init_response.json()
-# print(init_data)
+time.sleep(init_data["cooldown"])
+print(init_data)
 # print(init_data['title'])
 
 # def create_new_room(room_stats):
@@ -57,8 +64,7 @@ def create_graph(room):
         roomGraph[current_room.room_id]['visited'].update(value)
     return roomGraph
 
-def update_graph(current_room, prev_room, direction):
-    prev_direction = reverseDirection[direction]
+def update_graph(current_room, prev_room, direction, prev_direction):
     value = {}
     if roomGraph.get(current_room.room_id) == None:
         # Removed duplicate code, calling to existing function instead
@@ -74,7 +80,7 @@ def update_graph(current_room, prev_room, direction):
 
     # print(f"DEBUG::roomGraph::{roomGraph[current_room.room_id]}")
 
-    with open("../graph.txt", "w") as file:
+    with open("roomGraph.py", "w") as file:
         file.write("roomGraph = ")
         file.write(json.dumps(roomGraph))
 
@@ -114,8 +120,22 @@ def update_graph(current_room, prev_room, direction):
 max_rooms = 500
 min_cooldown = 10
 world = World()
-# world.loadGraph(roomGraph)
-roomGraph = {}
+
+# Load in saved data
+if path.exists("roomGraph.py"):
+    world.loadGraph(roomGraph)
+    world.printRooms()
+else:
+    roomGraph = {}
+
+visited = set()
+
+if path.exists("map.py"):
+    for key in map.keys():
+        visited.add(key)
+else:
+    map = {}
+
 current_room = Room(init_response.json())
 # print(f"DEBUG::Current_room::{current_room}")
 prev_room = current_room
@@ -131,8 +151,7 @@ print(current_room)
 # Traversal Path
 traversalPath = []
 path = []
-visited = set()
-map = {}
+
 reverseDirection = {'n': 's', 's': 'n', 'w': 'e', 'e': 'w' }
 roomId = None
 prevId = None
@@ -143,12 +162,12 @@ visited.update( {player.currentRoom.room_id: roomGraph[player.currentRoom.room_i
 # print(f"DEBUG::visited::{visited}")
 # print(visited[player.currentRoom.room_id])
 # visited[player.currentRoom.room_id] = roomGraph[player.currentRoom.room_id]['visited']
-time.sleep(min_cooldown)
+# time.sleep(min_cooldown)
 
-status_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/status/", headers={"Authorization": f"Token {key}"})
-
+status_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/status/", headers=init_headers)
+print(f"DEBUG::status_response::{status_response.json()}")
 player.update(status_response.json(), current_room)
-time.sleep(min_cooldown)
+time.sleep(status_response.json()["cooldown"])
 
 #  While loop runs while all rooms haven't been visited
 while len(visited) < max_rooms:
@@ -192,7 +211,7 @@ while len(visited) < max_rooms:
         player.travel(dir)
 
         # Update graph here
-        update_graph(player.currentRoom, prevRoom, dir)
+        update_graph(player.currentRoom, prevRoom, dir, reverseDirection[dir])
     else:
         # Find nearest ? to backtrack to
         bfs_rooms = bfs(roomId, map)
@@ -214,9 +233,12 @@ while len(visited) < max_rooms:
 
             prevId = None
 
-    with open("../map.txt", "w") as file:
+    with open("map.py", "w") as file:
         file.write("map = ")
         file.write(json.dumps(map))
 
+    # Just for testing
+    # if roomId == 0:
+    #     exit(0)
     # print(f"DEBUG::map::{map}")
 
