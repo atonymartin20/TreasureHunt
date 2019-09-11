@@ -13,7 +13,7 @@ class UserInfoDisplay extends React.Component {
         const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
         const options = {
             headers: {
-                Authorization: 'Token {ADD TOKEN HERE}'
+                Authorization: `Token ${process.env.REACT_APP_KEY}`
             }
         };
 
