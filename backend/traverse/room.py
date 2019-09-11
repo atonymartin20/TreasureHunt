@@ -46,19 +46,19 @@ class Room:
 
     def connectRooms(self, direction, connectingRoom):
         if direction == "n":
-            self.n_to = connectingRoom.room_id
-            connectingRoom.s_to = self.room_id
+            self.n_to = connectingRoom
+            connectingRoom.s_to = self
             #print(f"DEBUG::connectRooms::n_to = {self.n_to} connecting.s_to = {connectingRoom.s_to}")
         elif direction == "s":
-            self.s_to = connectingRoom.room_id
-            connectingRoom.n_to = self.room_id
+            self.s_to = connectingRoom
+            connectingRoom.n_to = self
             #print(f"DEBUG::connectRooms::s_to = {self.s_to} connecting.n_to = {connectingRoom.n_to}")
         elif direction == "e":
-            self.e_to = connectingRoom.room_id
-            connectingRoom.w_to = self.room_id
+            self.e_to = connectingRoom
+            connectingRoom.w_to = self
         elif direction == "w":
-            self.w_to = connectingRoom.room_id
-            connectingRoom.e_to = self.room_id
+            self.w_to = connectingRoom
+            connectingRoom.e_to = self
         else:
             print("INVALID ROOM CONNECTION")
             return None

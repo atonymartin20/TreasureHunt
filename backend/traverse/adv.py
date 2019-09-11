@@ -225,11 +225,10 @@ while len(visited) < max_rooms:
             traversalPath = traversalPath + newpath
 
             for move in newpath:
-                prevRoom = player.currentRoom
                 player.travel(move)
 
-                # Update graph here
-                update_graph(player.currentRoom, prevRoom, dir)
+                # Shouldn't need to update graph here, back-tracking to nearest ?
+                # update_graph(player.currentRoom, prevRoom, dir, reverseDirection[dir])
 
             prevId = None
 
