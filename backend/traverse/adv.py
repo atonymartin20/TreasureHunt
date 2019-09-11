@@ -21,14 +21,14 @@ init_data = init_response.json()
 # print(init_data)
 # print(init_data['title'])
 
-def create_new_room(room_stats):
-    # def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
-    # current_room = Room(room_stats['room_id'], room_stats['title'], room_stats['description'], room_stats['coordinates'], room_stats['terrain'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'])
-    # print(f"DEBUG::room_stats::{room_stats}")
-    current_room = Room(room_stats)
-    # print(current_room)
-    # current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
-    return current_room
+# def create_new_room(room_stats):
+#     # def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
+#     # current_room = Room(room_stats['room_id'], room_stats['title'], room_stats['description'], room_stats['coordinates'], room_stats['terrain'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'])
+#     # print(f"DEBUG::room_stats::{room_stats}")
+#     current_room = Room(room_stats)
+#     # print(current_room)
+#     # current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
+#     return current_room
 
 def create_graph(room):
     roomGraph[room.room_id] = {
@@ -56,48 +56,49 @@ def create_graph(room):
 def update_graph(current_room, prev_room, direction, prev_direction):
     value = {}
     if roomGraph.get(current_room.room_id) == None:
-      roomGraph[current_room.room_id] = {
-        'room_id': current_room.room_id,
-        'title': current_room.title,
-        'description': current_room.description,
-        'coordinates': current_room.coordinates,
-        'players': current_room.players,
-        'terrain': current_room.terrain,
-        'items': current_room.items,
-        'exits': current_room.exits,
-        'cooldown': current_room.cooldown,
-        'errors': current_room.errors,
-        'messages': current_room.messages,
-        'visited': {},
-        'x': current_room.x,
-        'y': current_room.y
-      }
-
-      for i in current_room.exits:
-         value = {i: '?'}
-         roomGraph[current_room.room_id]['visited'].update(value)
+        # Removed duplicate code, calling to existing function instead
+        create_graph(current_room)
 
     value = {prev_direction: prev_room.room_id}
     roomGraph[current_room.room_id]["visited"].update(value)
+    print(f"DEBUG::update_graph:curr_room::{value}")
 
     value = {direction: current_room.room_id}
     roomGraph[prev_room.room_id]["visited"].update(value)
+    print(f"DEBUG::update_graph:prev_room::{value}")
 
-def move_direction(direction_to_move, current_room):
-    move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json={"direction":direction_to_move}, headers=init_headers)
-    # print(f"DEBUG::move_response::{move_response.json()}")
-    prev_room = current_room
-    current_room = create_new_room(move_response.json())
+    print(f"DEBUG::roomGraph::{roomGraph[current_room.room_id]}")
 
-    update_graph(current_room, prev_room, direction_to_move, reverseDirection[direction_to_move])
+# def move_direction(direction_to_move, current_room):
+#     # Checking to see if we already have the room ID for "Wise Explorer" bonus.
+#     # link = current_room.getRoomInDirection(direction_to_move)
+#     visited = None
+#     if direction_to_move in roomGraph[current_room.room_id]['visited'].keys():
+#         visited = roomGraph[current_room.room_id]['visited'][direction_to_move]
+#     print(f"DEBUG::visited::{visited}")
     
-    for msg in current_room.messages:
-        print(msg)
-    print(current_room)
+#     if visited != "?" and visited is not None:
+#         move_json = {"direction": direction_to_move, "next_room_id": str(visited)}
+#         print(f"DEBUG::move_json::{move_json}")
+#     else:
+#         move_json = {"direction":direction_to_move}
 
-    print(f"Waiting {current_room.cooldown} seconds.")
-    time.sleep(current_room.cooldown)
-    return [current_room, prev_room]
+#     move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
+#     # print(f"DEBUG::move_response::{move_response.json()}")
+#     prev_room = current_room
+#     current_room = create_new_room(move_response.json())
+
+#     print(f"DEBUG::prev_room::{prev_room.room_id}")
+#     print(f"DEBUG::current_room::{current_room.room_id}")
+#     update_graph(current_room, prev_room, direction_to_move, reverseDirection[direction_to_move])
+    
+#     for msg in current_room.messages:
+#         print(msg)
+#     print(current_room)
+
+#     print(f"Waiting {current_room.cooldown} seconds.")
+#     time.sleep(current_room.cooldown)
+#     return [current_room, prev_room]
 
 # Load world
 
@@ -106,7 +107,7 @@ min_cooldown = 10
 world = World()
 # world.loadGraph(roomGraph)
 roomGraph = {}
-current_room = create_new_room(init_response.json())
+current_room = Room(init_response.json())
 # print(f"DEBUG::Current_room::{current_room}")
 prev_room = current_room
 room_graph = create_graph(current_room)
@@ -121,8 +122,12 @@ print(current_room)
 # Traversal Path
 traversalPath = []
 path = []
-visited = {}
+visited = set()
+map = {}
 reverseDirection = {'n': 's', 's': 'n', 'w': 'e', 'e': 'w' }
+roomId = None
+prevId = None
+dir = None
 
 #add starting room to visited
 visited.update( {player.currentRoom.room_id: roomGraph[player.currentRoom.room_id]['visited']})
@@ -138,46 +143,51 @@ time.sleep(min_cooldown)
 
 #  While loop runs while all rooms haven't been visited
 while len(visited) < max_rooms:
+    roomId = player.currentRoom.room_id
+    print(f"DEBUG::Top - prevId::{prevId}")
+
     #  If current room hasn't been visited
-    # print(f"DEBUG::player.currentRoom.room_id::{player.currentRoom.room_id}")
-    if player.currentRoom.room_id not in visited:
-    #  Add current Room to roomsPath and roomsDictionary
-        visited[player.currentRoom.room_id] = roomGraph[player.currentRoom.room_id]['visited']
-        prev_direction = path[-1]
-        del visited[player.currentRoom.id][prev_direction]
+    if roomId not in map:
+        map[roomId] = {}
 
-    while '?' not in visited[player.currentRoom.room_id].values():
-        if len(path) > 0:
-        #  Pop off path
-            prev_direction = path.pop(0)
-        #  Add to traversalPath
-        traversalPath.append(prev_direction)
-        # player.travel(prev_direction)
-        move_direction(prev_direction, current_room)
-        # time.sleep(current_room.cooldown)
-        
+        # Get exits
+        exits = player.currentRoom.getExits()
 
-    unexplored = []
-    for key, value in visited[player.currentRoom.room_id].items():
-        if value == '?':
-            unexplored.append(key)
+        # Add exits to map queue
+        for x in exits:
+            map[roomId][x] = "?"
+
+        visited.add(roomId)
+
+    # If prevId is set, update map
+    if prevId is not None:
+        map[prevId][dir] = roomId
+        map[roomId][reverseDirection[dir]] = prevId
+
+    # Find a direction to move in
+    dir = next((dir for dir, val in map[roomId].items() if val == "?"), None)
+
+    # Is there a direction to move to?
+    if dir is not None:
+        prevId = roomId
+        traversalPath.append(dir)
+        player.travel(dir)
+    else:
+        # Find nearest ? to backtrack to
+        bfs_rooms = bfs(roomId, map)
+        if bfs_rooms is None:
             break
-    
-    direction_to_move = unexplored[0]
 
-    rooms = move_direction(direction_to_move, current_room)
-    current_room = rooms[0]
-    # print(f"DEBUG::new current_room::{current_room}")
-    prev_room = rooms[1]
+        # Translate room ID numbers to path
+        for i in range(len(bfs_rooms) -1):
+            newpath = []
+            next((newpath.append(dir) for dir, val in map[bfs_rooms[i]].items() if val == bfs_rooms[i+1]))
+            traversalPath = traversalPath + newpath
 
-    world.loadGraph(roomGraph)
+            for move in newpath:
+                player.travel(move)
 
-    if direction_to_move in visited[player.currentRoom.room_id]:
-        traversalPath.append(direction_to_move)
-        path.append(reverseDirection[direction_to_move])
-        # player.travel(direction_to_move)
-        move_direction(direction_to_move, current_room)
-        # time.sleep(current_room.cooldown)
+            prevId = None
 
+    print(f"DEBUG::map::{map}")
 
-    # time.sleep(current_room.cooldown)
