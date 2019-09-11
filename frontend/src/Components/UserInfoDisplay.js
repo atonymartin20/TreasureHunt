@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import InventoryList from './InventoryList.js'
 
 class UserInfoDisplay extends React.Component {
     constructor(props) {
@@ -39,7 +40,9 @@ class UserInfoDisplay extends React.Component {
                     <li>Strength: {this.state.userData.strength}</li>
                     <li>Speed: {this.state.userData.speed}</li>
                     <li>Gold: {this.state.userData.gold}</li>
-                    <li>Inventory: {this.state.userData.inventory}</li>  
+                    <li>Inventory: 
+                        <InventoryList inventory={this.state.userData.inventory}/>
+                    </li>  
                 </ul>
             </div>
         );
