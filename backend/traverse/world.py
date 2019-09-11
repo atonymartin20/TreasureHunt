@@ -8,6 +8,8 @@ class World:
         self.rooms = {}
         self.roomGrid = []
         self.gridSize = 0
+        self.shopRoom = [1]     # Don't know if there is more than one
+        self.shrineRoom = []    # Don't know if there is more than one
 
     def loadGraph(self, roomGraph):
         numRooms = len(roomGraph)
