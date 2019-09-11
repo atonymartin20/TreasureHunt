@@ -2,7 +2,7 @@ import os
 import time
 import requests
 import random
-
+import json
 from room import Room
 from player import Player
 from world import World
@@ -53,7 +53,8 @@ def create_graph(room):
         roomGraph[current_room.room_id]['visited'].update(value)
     return roomGraph
 
-def update_graph(current_room, prev_room, direction, prev_direction):
+def update_graph(current_room, prev_room, direction):
+    prev_direction = reverseDirection[direction]
     value = {}
     if roomGraph.get(current_room.room_id) == None:
         # Removed duplicate code, calling to existing function instead
@@ -61,13 +62,17 @@ def update_graph(current_room, prev_room, direction, prev_direction):
 
     value = {prev_direction: prev_room.room_id}
     roomGraph[current_room.room_id]["visited"].update(value)
-    print(f"DEBUG::update_graph:curr_room::{value}")
+    # print(f"DEBUG::update_graph:curr_room::{value}")
 
     value = {direction: current_room.room_id}
     roomGraph[prev_room.room_id]["visited"].update(value)
-    print(f"DEBUG::update_graph:prev_room::{value}")
+    # print(f"DEBUG::update_graph:prev_room::{value}")
 
-    print(f"DEBUG::roomGraph::{roomGraph[current_room.room_id]}")
+    # print(f"DEBUG::roomGraph::{roomGraph[current_room.room_id]}")
+
+    with open("../graph.txt", "w") as file:
+        file.write("roomGraph = ")
+        file.write(json.dumps(roomGraph))
 
 # def move_direction(direction_to_move, current_room):
 #     # Checking to see if we already have the room ID for "Wise Explorer" bonus.
@@ -144,7 +149,15 @@ time.sleep(min_cooldown)
 #  While loop runs while all rooms haven't been visited
 while len(visited) < max_rooms:
     roomId = player.currentRoom.room_id
-    print(f"DEBUG::Top - prevId::{prevId}")
+    
+    # Check for items in room to pick up - TODO
+    if len(player.currentRoom.items) > 0:
+        for item in player.currentRoom.items:
+            item_json = {"name": item}
+            item_response = requests.post(
+                'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', json=item_json, headers=init_headers)
+            item_data = item_response.json()
+            print(f"TREASURE!!: {item_data}")
 
     #  If current room hasn't been visited
     if roomId not in map:
@@ -170,8 +183,12 @@ while len(visited) < max_rooms:
     # Is there a direction to move to?
     if dir is not None:
         prevId = roomId
+        prevRoom = player.currentRoom
         traversalPath.append(dir)
         player.travel(dir)
+
+        # Update graph here
+        update_graph(player.currentRoom, prevRoom, dir)
     else:
         # Find nearest ? to backtrack to
         bfs_rooms = bfs(roomId, map)
@@ -185,9 +202,17 @@ while len(visited) < max_rooms:
             traversalPath = traversalPath + newpath
 
             for move in newpath:
+                prevRoom = player.currentRoom
                 player.travel(move)
+
+                # Update graph here
+                update_graph(player.currentRoom, prevRoom, dir)
 
             prevId = None
 
-    print(f"DEBUG::map::{map}")
+    with open("../map.txt", "w") as file:
+        file.write("map = ")
+        file.write(json.dumps(map))
+
+    # print(f"DEBUG::map::{map}")
 

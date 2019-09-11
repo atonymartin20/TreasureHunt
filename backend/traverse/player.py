@@ -44,7 +44,7 @@ class Player:
 
 
             move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
-            print(f"DEBUG::move_response::{move_response.json()}")
+            # print(f"DEBUG::move_response::{move_response.json()}")
             
             # Check to make sure we did move. Otherwise, print error
             if move_response.status_code == 200:
@@ -52,6 +52,7 @@ class Player:
                 self.currentRoom = nextRoom
                 if (showRooms):
                     nextRoom.printRoomDescription(self)
+
                 time.sleep(nextRoom.cooldown)
             else:
                 print(f"ERROR::travel::{move_response.json()}")
