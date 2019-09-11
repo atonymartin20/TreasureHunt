@@ -78,6 +78,16 @@ def update_graph(current_room, prev_room, direction, prev_direction):
         file.write(json.dumps(roomGraph))
 
 
+def printMessages(data):
+    if len(data['messages']) > 0:
+        for msg in data['messages']:
+            print(f"-- {msg}")
+
+    if len(data['errors']) > 0:
+        for err in data['errors']:
+            print(f"xx {err}")
+
+
 def checkRoom(current_room):
     # Any items to pick up?
     if len(current_room.items) > 0:
@@ -95,17 +105,16 @@ def checkRoom(current_room):
                 'https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', json=item_json, headers=init_headers)
             item_data = item_response.json()
             print(f"DEBUG::examine item_data::{item_data}")
+            printMessages(item_data)
             time.sleep(item_data['cooldown'])
 
             # Can it be worn?
-            if item_data['itemtype'] is not "TREASURE":
+            if item_data['itemtype'] != "TREASURE":
                 item_response = requests.post(
                     'https://lambda-treasure-hunt.herokuapp.com/api/adv/wear/', json=item_json, headers=init_headers
                 )
                 item_data = item_response.json()
-                if len(item_data['messages']) > 0:
-                    for msg in item_data['messages']:
-                        print("ITEM: {msg}")
+                printMessages(item_data)
                 time.sleep(item_data['cooldown'])
 
     # Is the room a shop?
@@ -134,16 +143,14 @@ def checkRoom(current_room):
                     item_response = requests.post(
                         'https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/', json=item_json, headers=init_headers)
                     item_data = item_response.json()
-                    
+
                     print(f"DEBUG::sell data::{item_data}")
-                    if len(item_data['messages']) > 0:
-                        for msg in item_data['messages']:
-                            print("ITEM: {msg}")
-                
+                    printMessages(item_data)                
                     time.sleep(item_data['cooldown'])
 
     # Is the room a shrine?
-    if current_room.title == "Shrine":
+    if "Shrine" in current_room.title:
+        print("SHRINE: Praying to the shrine.")
         # Add to the world.shrineRoom if needed
         if current_room.room_id not in world.shrineRoom:
             world.shrineRoom.append(current_room.room_id)
@@ -152,6 +159,8 @@ def checkRoom(current_room):
             shrine_response = requests.post(
                 'https://lambda-treasure-hunt.herokuapp.com/api/adv/pray/', headers=init_headers)
             shrine_data = shrine_response.json()
+            print(f"DEBUG::shrine_data::{shrine_data}")
+            printMessages(shrine_data)
             time.sleep(shrine_data['cooldown'])
 
     # Update the player, check to see if encumbered
