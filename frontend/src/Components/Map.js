@@ -2,10 +2,8 @@
 
 import React  from 'react';
 import '../../node_modules/react-vis/dist/style.css';
-import {XYPlot, LineSeries, MarkSeries, makeWidthFlexible} from 'react-vis';
+import {XYPlot, LineSeries, MarkSeries} from 'react-vis';
 import rooms from '../Data/rooms.js'
-
-const FlexibleXYPlot = makeWidthFlexible(XYPlot)
 
 class Map extends React.Component {
     constructor(props) {
@@ -58,7 +56,6 @@ class Map extends React.Component {
     }
 
     var edges = getAllEdges(rooms)
-    console.log(edges)
 
     return (
       <div>
