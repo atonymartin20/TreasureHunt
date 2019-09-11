@@ -49,6 +49,7 @@ class Player:
             # Check to make sure we did move. Otherwise, print error
             if move_response.status_code == 200:
                 nextRoom = Room(move_response.json())
+                self.currentRoom.connectRooms(direction, nextRoom)
                 self.currentRoom = nextRoom
 
                 # Print any messages
