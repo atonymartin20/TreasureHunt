@@ -96,7 +96,7 @@ def checkRoom(current_room):
             item_response = requests.post(
                 'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', json=item_json, headers=init_headers)
             item_data = item_response.json()
-            print(f"ITEM FOUND!!: {item_data}")
+            print(f"ITEM FOUND!!: {item}")
             time.sleep(item_data['cooldown'])
 
             # examine the item
@@ -104,7 +104,7 @@ def checkRoom(current_room):
             item_response = requests.post(
                 'https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', json=item_json, headers=init_headers)
             item_data = item_response.json()
-            print(f"DEBUG::examine item_data::{item_data}")
+            # print(f"DEBUG::examine item_data::{item_data}")
             printMessages(item_data)
             time.sleep(item_data['cooldown'])
 
@@ -134,7 +134,7 @@ def checkRoom(current_room):
                 item_response = requests.post(
                     'https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', json=item_json, headers=init_headers)
                 item_data = item_response.json()
-                print(f"DEBUG::examine item_data::{item_data}")
+                # print(f"DEBUG::examine item_data::{item_data}")
                 time.sleep(item_data['cooldown'])
 
                 # If it is a treasure, sell it
@@ -149,8 +149,8 @@ def checkRoom(current_room):
                     time.sleep(item_data['cooldown'])
 
     # Is the room a shrine?
-    if "Shrine" in current_room.title:
-        print("SHRINE: Praying to the shrine.")
+    if "Shrine" in current_room.title or "Grave" in current_room.title:
+        print(f"SHRINE: Praying to {current_room.title}")
         # Add to the world.shrineRoom if needed
         if current_room.room_id not in world.shrineRoom:
             world.shrineRoom.append(current_room.room_id)
@@ -159,7 +159,7 @@ def checkRoom(current_room):
             shrine_response = requests.post(
                 'https://lambda-treasure-hunt.herokuapp.com/api/adv/pray/', headers=init_headers)
             shrine_data = shrine_response.json()
-            print(f"DEBUG::shrine_data::{shrine_data}")
+            # print(f"DEBUG::shrine_data::{shrine_data}")
             printMessages(shrine_data)
             time.sleep(shrine_data['cooldown'])
 
