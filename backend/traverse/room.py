@@ -1,27 +1,30 @@
 # Implement a class to hold room information. This should have name and
 # description attributes.
 class Room:
-    def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
-        self.room_id = room_id
-        self.title = title
-        self.description = description
-        self.terrain = terrain
-        self.coordinates = coordinates
-        self.players = players
-        self.items = items
-        self.exits = exits
-        self.cooldown = cooldown
-        self.errors = errors
-        self.messages = messages
-        self.n_to = None
-        self.s_to = None
-        self.e_to = None
-        self.w_to = None
-        self.x = x
-        self.y = y
+    # def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
+    def __init__(self, room_stats):
+        # print(f"DEBUG::Room::{room_stats}")
+        self.room_id = room_stats['room_id']
+        self.title = room_stats['title']
+        self.description = room_stats['description']
+        self.coordinates = room_stats['coordinates']
+        self.terrain = room_stats['terrain']
+        self.players = room_stats['players'] if room_stats['players'] else []
+        self.items = room_stats['items']
+        self.exits = room_stats['exits']
+        self.cooldown = room_stats['cooldown']
+        self.errors = room_stats['errors']
+        self.messages = room_stats['messages']
+
+        self.n_to = "?" if "n" in self.exits else None
+        self.s_to = "?" if "s" in self.exits else None
+        self.e_to = "?" if "e" in self.exits else None
+        self.w_to = "?" if "w" in self.exits else None
+        self.x = eval(self.coordinates)[0]
+        self.y = eval(self.coordinates)[1]
 
     def __str__(self):
-        return f"\n-------------------\nCurrent Room\nSelf.room_id = {self.room_id}\nSelf.title = {self.title}\nSelf.description = {self.description}\nSelf.coordinates = {self.coordinates}\nSelf.terrain = {self.terrain}\nSelf.players = {self.players}\nSelf.items = {self.items}\nSelf.exits = {self.exits}\nSelf.cooldown = {self.cooldown}\nSelf.errors = {self.errors}\nSelf.messages = {self.messages}\nSelf.getExitsString = {self.getExitsString()}\n"
+        return f"\n-------------------\nCurrent Room = {self.room_id}\n{self.title}\n{self.description}\n{self.getExitsString()}\nItems: {self.items}"
 
     def printRoomDescription(self, player):
         print(str(self))

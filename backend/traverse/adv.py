@@ -18,22 +18,25 @@ init_headers = {
 init_response = requests.get(
     'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=init_headers)
 init_data = init_response.json()
-print(f"Init_data: {init_data}")
-print(f"Init_data['title']: {init_data['title']}")
+# print(init_data)
+# print(init_data['title'])
 
 def create_new_room(room_stats):
     # def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
     # current_room = Room(room_stats['room_id'], room_stats['title'], room_stats['description'], room_stats['coordinates'], room_stats['terrain'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'])
     # print(f"DEBUG::room_stats::{room_stats}")
-    current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
+    current_room = Room(room_stats)
+    # print(current_room)
+    # current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
     return current_room
 
 def create_graph(room):
     roomGraph[room.room_id] = {
-        'room_id': current_room.room_id,
+        'room_id': room.room_id,
         'title': room.title,
         'description': room.description,
         'coordinates': room.coordinates,
+        'players': room.players,
         'terrain': room.terrain,
         'items': room.items,
         'exits': room.exits,
@@ -58,6 +61,7 @@ def update_graph(current_room, prev_room, direction, prev_direction):
         'title': current_room.title,
         'description': current_room.description,
         'coordinates': current_room.coordinates,
+        'players': current_room.players,
         'terrain': current_room.terrain,
         'items': current_room.items,
         'exits': current_room.exits,
@@ -81,12 +85,18 @@ def update_graph(current_room, prev_room, direction, prev_direction):
 
 def move_direction(direction_to_move, current_room):
     move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json={"direction":direction_to_move}, headers=init_headers)
-    # print(f"DEBUG::move_response::{move_response}")
+    # print(f"DEBUG::move_response::{move_response.json()}")
     prev_room = current_room
     current_room = create_new_room(move_response.json())
 
     update_graph(current_room, prev_room, direction_to_move, reverseDirection[direction_to_move])
+    
+    for msg in current_room.messages:
+        print(msg)
+    print(current_room)
 
+    print(f"Waiting {current_room.cooldown} seconds.")
+    time.sleep(current_room.cooldown)
     return [current_room, prev_room]
 
 # Load world
@@ -105,7 +115,7 @@ room_graph = create_graph(current_room)
 player = Player("Name", current_room)
 world.startingRoom = current_room
 
-
+print(current_room)
 
 # <<<<<<< HEAD
 # current_room = create_new_room(init_data)
@@ -145,12 +155,13 @@ time.sleep(min_cooldown)
 
 status_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/status/", headers={"Authorization": f"Token {key}"})
 
-player.update(status_response.json())
+player.update(status_response.json(), current_room)
 time.sleep(min_cooldown)
 
 #  While loop runs while all rooms haven't been visited
 while len(visited) < max_rooms:
     #  If current room hasn't been visited
+    # print(f"DEBUG::player.currentRoom.room_id::{player.currentRoom.room_id}")
     if player.currentRoom.room_id not in visited:
     #  Add current Room to roomsPath and roomsDictionary
         visited[player.currentRoom.room_id] = roomGraph[player.currentRoom.room_id]['visited']
@@ -163,7 +174,9 @@ while len(visited) < max_rooms:
             prev_direction = path.pop(0)
         #  Add to traversalPath
         traversalPath.append(prev_direction)
-        player.travel(prev_direction)
+        # player.travel(prev_direction)
+        move_direction(prev_direction, current_room)
+        # time.sleep(current_room.cooldown)
         
 
     unexplored = []
@@ -176,6 +189,7 @@ while len(visited) < max_rooms:
 
     rooms = move_direction(direction_to_move, current_room)
     current_room = rooms[0]
+    # print(f"DEBUG::new current_room::{current_room}")
     prev_room = rooms[1]
 
     world.loadGraph(roomGraph)
@@ -183,7 +197,9 @@ while len(visited) < max_rooms:
     if direction_to_move in visited[player.currentRoom.room_id]:
         traversalPath.append(direction_to_move)
         path.append(reverseDirection[direction_to_move])
-        player.travel(direction_to_move)
+        # player.travel(direction_to_move)
+        move_direction(direction_to_move, current_room)
+        # time.sleep(current_room.cooldown)
 
 
-    time.sleep(current_room.cooldown)
+    # time.sleep(current_room.cooldown)
