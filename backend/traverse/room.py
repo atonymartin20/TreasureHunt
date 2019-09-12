@@ -24,7 +24,7 @@ class Room:
         self.y = eval(self.coordinates)[1]
 
     def __str__(self):
-        return f"\n-------------------\nCurrent Room = {self.room_id}\n{self.title}\n{self.description}\n{self.getExitsString()}\nItems: {self.items}"
+        return f"\n-------------------\nCurrent Room = {self.room_id}\n{self.title}\n{self.description}\n{self.getExitsString()}\nPlayers: {self.players}\nItems: {self.items}"
 
     def printRoomDescription(self, player):
         print(str(self))

@@ -181,12 +181,17 @@ while len(visited) < max_rooms:
     
     # Check for items in room to pick up - TODO
     if len(player.currentRoom.items) > 0:
-        for item in player.currentRoom.items:
-            item_json = {"name": item}
-            item_response = requests.post(
-                'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', json=item_json, headers=init_headers)
-            item_data = item_response.json()
-            print(f"TREASURE!!: {item_data}")
+        for player in player.currentRoom.players:
+            player_json = {"name": player}
+            print(f"{player.currentRoom.players}")
+
+        # for item in player.currentRoom.items:
+        #     item_json = {"name": item}
+        #     item_response = requests.post(
+        #         'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', json=item_json, headers=init_headers)
+        #     item_data = item_response.json()
+        #     print(f"TREASURE!!: {item_data}")
+        #     time.sleep(item_data["cooldown"])
 
     #  If current room hasn't been visited
     if roomId not in map:
