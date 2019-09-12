@@ -19,6 +19,7 @@ if path.exists("roomGraph.py"):
 if path.exists("map.py"):
     from map import map
 
+
 key = os.getenv("KEY")
 
 # Test Key and get initial data
@@ -29,17 +30,8 @@ init_response = requests.get(
     'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', headers=init_headers)
 init_data = init_response.json()
 time.sleep(init_data["cooldown"])
-print(init_data)
-# print(init_data['title'])
+print(f"INIT::{init_data}")
 
-# def create_new_room(room_stats):
-#     # def __init__(self, title, description, terrain, room_id=0, coordinates=(60,60), players=[], items=[], exits= [], cooldown=None, errors=[], messages=[], x=None, y=None):
-#     # current_room = Room(room_stats['room_id'], room_stats['title'], room_stats['description'], room_stats['coordinates'], room_stats['terrain'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'])
-#     # print(f"DEBUG::room_stats::{room_stats}")
-#     current_room = Room(room_stats)
-#     # print(current_room)
-#     # current_room = Room(room_stats['title'], room_stats['description'], room_stats['terrain'], room_stats['room_id'], room_stats['coordinates'], room_stats['players'], room_stats['items'], room_stats['exits'], room_stats['cooldown'], room_stats['errors'], room_stats['messages'], eval(room_stats['coordinates'])[0], eval(room_stats['coordinates'])[1])
-#     return current_room
 
 def create_graph(room):
     roomGraph[room.room_id] = {
@@ -64,6 +56,7 @@ def create_graph(room):
         roomGraph[current_room.room_id]['visited'].update(value)
     return roomGraph
 
+
 def update_graph(current_room, prev_room, direction, prev_direction):
     value = {}
     if roomGraph.get(current_room.room_id) == None:
@@ -84,38 +77,103 @@ def update_graph(current_room, prev_room, direction, prev_direction):
         file.write("roomGraph = ")
         file.write(json.dumps(roomGraph))
 
-# def move_direction(direction_to_move, current_room):
-#     # Checking to see if we already have the room ID for "Wise Explorer" bonus.
-#     # link = current_room.getRoomInDirection(direction_to_move)
-#     visited = None
-#     if direction_to_move in roomGraph[current_room.room_id]['visited'].keys():
-#         visited = roomGraph[current_room.room_id]['visited'][direction_to_move]
-#     print(f"DEBUG::visited::{visited}")
-    
-#     if visited != "?" and visited is not None:
-#         move_json = {"direction": direction_to_move, "next_room_id": str(visited)}
-#         print(f"DEBUG::move_json::{move_json}")
-#     else:
-#         move_json = {"direction":direction_to_move}
 
-#     move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
-#     # print(f"DEBUG::move_response::{move_response.json()}")
-#     prev_room = current_room
-#     current_room = create_new_room(move_response.json())
+def printMessages(data):
+    if len(data['messages']) > 0:
+        for msg in data['messages']:
+            print(f"-- {msg}")
 
-#     print(f"DEBUG::prev_room::{prev_room.room_id}")
-#     print(f"DEBUG::current_room::{current_room.room_id}")
-#     update_graph(current_room, prev_room, direction_to_move, reverseDirection[direction_to_move])
-    
-#     for msg in current_room.messages:
-#         print(msg)
-#     print(current_room)
+    if len(data['errors']) > 0:
+        for err in data['errors']:
+            print(f"xx {err}")
 
-#     print(f"Waiting {current_room.cooldown} seconds.")
-#     time.sleep(current_room.cooldown)
-#     return [current_room, prev_room]
 
-# Load world
+def checkRoom(current_room):
+    # Any items to pick up?
+    if len(current_room.items) > 0:
+        for item in current_room.items:
+            item_json = {"name": item}
+            item_response = requests.post(
+                'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', json=item_json, headers=init_headers)
+            item_data = item_response.json()
+            print(f"ITEM FOUND!!: {item}")
+            time.sleep(item_data['cooldown'])
+
+            # examine the item
+            item_json = {"name": item}
+            item_response = requests.post(
+                'https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', json=item_json, headers=init_headers)
+            item_data = item_response.json()
+            # print(f"DEBUG::examine item_data::{item_data}")
+            printMessages(item_data)
+            time.sleep(item_data['cooldown'])
+
+            # Can it be worn?
+            if item_data['itemtype'] != "TREASURE":
+                item_response = requests.post(
+                    'https://lambda-treasure-hunt.herokuapp.com/api/adv/wear/', json=item_json, headers=init_headers
+                )
+                item_data = item_response.json()
+                printMessages(item_data)
+                time.sleep(item_data['cooldown'])
+
+    # Is the room a shop?
+    # print(f"DEBUG::room title::{current_room.title}")
+    if current_room.title == "Shop":
+        # print(f"DEBUG::room is a shop")
+        # Add to the world.shopRoom if needed
+        if current_room.room_id not in world.shopRoom:
+            world.shopRoom.append(current_room.room_id)
+
+        # Check current inventory for treasure to sell
+        if len(player.inventory) > 0:
+            # print(f"DEBUG::inventory::{player.inventory}")
+            for item in player.inventory:
+                # examine the item
+                item_json = {"name": item}
+                item_response = requests.post(
+                    'https://lambda-treasure-hunt.herokuapp.com/api/adv/examine/', json=item_json, headers=init_headers)
+                item_data = item_response.json()
+                # print(f"DEBUG::examine item_data::{item_data}")
+                time.sleep(item_data['cooldown'])
+
+                # If it is a treasure, sell it
+                if item_data['itemtype'] == "TREASURE":
+                    item_json = {"name": item, "confirm": "yes"}
+                    item_response = requests.post(
+                        'https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/', json=item_json, headers=init_headers)
+                    item_data = item_response.json()
+
+                    # print(f"DEBUG::sell data::{item_data}")
+                    printMessages(item_data)                
+                    time.sleep(item_data['cooldown'])
+
+    # Is the room a shrine?
+    if "Shrine" in current_room.title or "Grave" in current_room.title:
+        print(f"SHRINE: Praying to {current_room.title}")
+        # Add to the world.shrineRoom if needed
+        if current_room.room_id not in world.shrineRoom:
+            world.shrineRoom.append(current_room.room_id)
+
+        # Pray at the shrine to earn new powers
+            shrine_response = requests.post(
+                'https://lambda-treasure-hunt.herokuapp.com/api/adv/pray/', headers=init_headers)
+            shrine_data = shrine_response.json()
+            # print(f"DEBUG::shrine_data::{shrine_data}")
+            printMessages(shrine_data)
+            time.sleep(shrine_data['cooldown'])
+
+    # Update the player, check to see if encumbered
+    status_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/status/", headers=init_headers)
+    player.update(status_response.json(), current_room)
+    time.sleep(status_response.json()["cooldown"])
+
+    if player.encumbrance >= player.strength:
+        print("Carrying too much! Need to go sell!")
+        return False
+
+    return True
+
 
 max_rooms = 500
 min_cooldown = 10
@@ -137,10 +195,8 @@ else:
     map = {}
 
 current_room = Room(init_response.json())
-# print(f"DEBUG::Current_room::{current_room}")
 prev_room = current_room
 room_graph = create_graph(current_room)
-# print(f"DEBUG::room_graph::{room_graph}")
 
 player = Player("Name", current_room)
 world.startingRoom = current_room
@@ -165,36 +221,22 @@ dir = None
 
 #add starting room to visited
 visited.update( {player.currentRoom.room_id: roomGraph[player.currentRoom.room_id]['visited']})
-# print(f"DEBUG::visited::{visited}")
-# print(visited[player.currentRoom.room_id])
-# visited[player.currentRoom.room_id] = roomGraph[player.currentRoom.room_id]['visited']
-# time.sleep(min_cooldown)
 
 status_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/status/", headers=init_headers)
 print(f"DEBUG::status_response::{status_response.json()}")
 player.update(status_response.json(), current_room)
 time.sleep(status_response.json()["cooldown"])
 
+
 #  While loop runs while all rooms haven't been visited
 while len(visited) < max_rooms:
     roomId = player.currentRoom.room_id
     
-    # Check for items in room to pick up - TODO
-    if len(player.currentRoom.items) > 0:
-        for player in player.currentRoom.players:
-            player_json = {"name": player}
-            print(f"{player.currentRoom.players}")
-
-        # for item in player.currentRoom.items:
-        #     item_json = {"name": item}
-        #     item_response = requests.post(
-        #         'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/', json=item_json, headers=init_headers)
-        #     item_data = item_response.json()
-        #     print(f"TREASURE!!: {item_data}")
-        #     time.sleep(item_data["cooldown"])
+    # Check the current room
+    canMove = checkRoom(player.currentRoom)
 
     #  If current room hasn't been visited
-    if roomId not in map:
+    if roomId not in map.keys():
         map[roomId] = {}
 
         # Get exits
@@ -212,10 +254,14 @@ while len(visited) < max_rooms:
         map[roomId][reverseDirection[dir]] = prevId
 
     # Find a direction to move in
-    dir = next((dir for dir, val in map[roomId].items() if val == "?"), None)
-
+    # Little bit of a hack here, but let's get store logged if starting from 0!   
+    if 1 not in map and roomId is 0:
+        dir = "w"
+    else:
+        dir = next((dir for dir, val in map[roomId].items() if val == "?"), None)
+    
     # Is there a direction to move to?
-    if dir is not None:
+    if dir is not None and canMove:
         prevId = roomId
         prevRoom = player.currentRoom
         traversalPath.append(dir)
@@ -224,8 +270,13 @@ while len(visited) < max_rooms:
         # Update graph here
         update_graph(player.currentRoom, prevRoom, dir, reverseDirection[dir])
     else:
-        # Find nearest ? to backtrack to
-        bfs_rooms = bfs(roomId, map)
+        if canMove is False:
+            # We have to go back to the shop to sell!
+            bfs_rooms = bfs(roomId, map, world.shopRoom)
+        else:
+            # Find nearest ? to backtrack to
+            bfs_rooms = bfs(roomId, map)
+
         if bfs_rooms is None:
             break
 

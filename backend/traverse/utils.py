@@ -1,4 +1,4 @@
-def bfs(start_room, map):
+def bfs(start_room, map, shop=None):
     """
     Return a list containing the shortest path from
     starting_vertex to destination_vertex in
@@ -16,8 +16,12 @@ def bfs(start_room, map):
 
         if node not in visited:
             visited.add(node)
+            # Going back to shop?
+            if shop is not None:
+                if shop in map[node].values():
+                    return path
             # Check if it contains a "?"
-            if "?" in map[node].values():
+            elif "?" in map[node].values():
                 return path
 
             for neighbor in map[node].values():
