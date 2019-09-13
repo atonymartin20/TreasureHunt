@@ -23,8 +23,19 @@ class Room:
         self.x = eval(self.coordinates)[0]
         self.y = eval(self.coordinates)[1]
 
+
     def __str__(self):
-        return f"\n-------------------\nCurrent Room = {self.room_id}\n{self.title}\n{self.description}\n{self.getExitsString()}\nItems: {self.items}"
+        roomStr =  "\n-------------------\n"
+        roomStr += f"{self.room_id}: {self.name} [{self.terrain}]\n"
+        roomStr += f"   {self.description}\n"
+        if len(self.players) > 0:
+            roomStr += f"People: {self.players}\n"
+        if len(self.items) > 0:
+            roomStr += f"{self.items}\n"
+        roomStr += f"{self.getExitsString()}\n"
+        roomStr += f"Waiting {self.cooldown} seconds...\n"
+        return roomStr
+
 
     def printRoomDescription(self, player):
         print(str(self))
