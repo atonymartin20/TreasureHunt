@@ -89,8 +89,16 @@ def printMessages(data):
 
 
 def checkRoom(current_room):
+
+    # Checking people
+    if len(current_room.players) > 0:
+        for i in current_room.players:
+            print(f"{i} was found in Room: {current_room.room_id}")
+    
     # Any items to pick up?
     if len(current_room.items) > 0:
+        # Don't need to pick up items
+        '''
         for item in current_room.items:
             item_json = {"name": item}
             item_response = requests.post(
@@ -116,6 +124,8 @@ def checkRoom(current_room):
                 item_data = item_response.json()
                 printMessages(item_data)
                 time.sleep(item_data['cooldown'])
+        '''
+
 
     # Is the room a shop?
     # print(f"DEBUG::room title::{current_room.title}")

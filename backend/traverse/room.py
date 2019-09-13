@@ -24,28 +24,34 @@ class Room:
         self.y = eval(self.coordinates)[1]
 
     def __str__(self):
-        return f"\n-------------------\nCurrent Room = {self.room_id}\n{self.title}\n{self.description}\n{self.getExitsString()}\nPlayers: {self.players}\nItems: {self.items}"
+        return f"\n-------------------\nCurrent Room = {self.room_id}\n{self.title}\n{self.description}\n{self.getExitsString()}\nPlayers: {self.players}\nItems: {self.items}\nX: {self.x}\nY:{self.y}"
 
     def printRoomDescription(self, player):
         print(str(self))
 
     def getExits(self):
         exits = []
+        if self.e_to is not None:
+            exits.append("e")
+        if self.w_to is not None:
+            exits.append("w")
         if self.n_to is not None:
             exits.append("n")
         if self.s_to is not None:
             exits.append("s")
-        if self.w_to is not None:
-            exits.append("w")
-        if self.e_to is not None:
-            exits.append("e")
         return exits
 
     def getExitsString(self):
         return f"Exits: [{', '.join(self.getExits())}]"
 
     def connectRooms(self, direction, connectingRoom):
-        if direction == "n":
+        if direction == "e":
+            self.e_to = connectingRoom
+            connectingRoom.w_to = self
+        elif direction == "w":
+            self.w_to = connectingRoom
+            connectingRoom.e_to = self
+        elif direction == "n":
             self.n_to = connectingRoom
             connectingRoom.s_to = self
             #print(f"DEBUG::connectRooms::n_to = {self.n_to} connecting.s_to = {connectingRoom.s_to}")
@@ -53,29 +59,23 @@ class Room:
             self.s_to = connectingRoom
             connectingRoom.n_to = self
             #print(f"DEBUG::connectRooms::s_to = {self.s_to} connecting.n_to = {connectingRoom.n_to}")
-        elif direction == "e":
-            self.e_to = connectingRoom
-            connectingRoom.w_to = self
-        elif direction == "w":
-            self.w_to = connectingRoom
-            connectingRoom.e_to = self
         else:
             print("INVALID ROOM CONNECTION")
             return None
 
     def getRoomInDirection(self, direction):
-        if direction == "n":
-            print( f"Room: {self.room_id} {direction} {self.n_to}")
-            return self.n_to
-        elif direction == "s":
-            print( f"Room: {self.room_id} {direction} {self.s_to}")
-            return self.s_to
-        elif direction == "e":
+        if direction == "e":
             print( f"Room: {self.room_id} {direction} {self.e_to}")
             return self.e_to
         elif direction == "w":
             print( f"Room: {self.room_id} {direction} {self.w_to}")
             return self.w_to
+        elif direction == "n":
+            print( f"Room: {self.room_id} {direction} {self.n_to}")
+            return self.n_to
+        elif direction == "s":
+            print( f"Room: {self.room_id} {direction} {self.s_to}")
+            return self.s_to
         else:
             return None
 
