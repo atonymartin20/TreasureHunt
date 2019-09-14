@@ -26,7 +26,7 @@ class Room:
 
     def __str__(self):
         roomStr =  "\n-------------------\n"
-        roomStr += f"{self.room_id}: {self.name} [{self.terrain}]\n"
+        roomStr += f"{self.room_id}: {self.title} [{self.terrain}]\n"
         roomStr += f"   {self.description}\n"
         if len(self.players) > 0:
             roomStr += f"People: {self.players}\n"
