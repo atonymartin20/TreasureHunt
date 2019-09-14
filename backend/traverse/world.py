@@ -10,6 +10,7 @@ class World:
         self.gridSize = 0
         self.shopRoom = [1]     # Don't know if there is more than one
         self.shrineRoom = []    # Don't know if there is more than one
+        self.pirateRoom = [467]
 
     def loadGraph(self, roomGraph):
         numRooms = len(roomGraph)
