@@ -1,11 +1,10 @@
 import os
 import hashlib
 import requests
-
 import sys
-
-from uuid import uuid4
-
+# from uuid import uuid4
+import time
+from utils import printMessages
 from timeit import default_timer as timer
 
 import random
@@ -61,7 +60,7 @@ def valid_proof(last_hash, proof, difficulty):
     return False
 
 
-if __name__ == '__main__':
+def mine():
     # What node are we interacting with?
     if len(sys.argv) > 1:
         node = sys.argv[1]
@@ -76,8 +75,8 @@ if __name__ == '__main__':
         # Get the last proof from the server
         r = requests.get(url=node + "/last_proof",  headers=init_headers)
         data = r.json()
-        print(data.get('messages'))
-        print(data.get('errors'))
+        printMessages(data)
+        time.sleep(data.get('cooldown'))
 
         new_proof = proof_of_work(data.get('proof'), data.get('difficulty'))
         
@@ -85,7 +84,7 @@ if __name__ == '__main__':
 
         r = requests.post(url=node + "/mine",  headers=init_headers, json=post_data)
         data = r.json()
-        print(data.get('messages'))
-        print(data.get('errors'))
-        exit(0)
+        printMessages(data)
+        time.sleep(data.get('cooldown'))
+        return
         

@@ -7,6 +7,7 @@ from room import Room
 from player import Player
 from world import World
 from utils import Queue, bfs, update_graph, printMessages
+from miner import mine
 
 import random
 
@@ -176,12 +177,12 @@ def menu():
     print("3: Go to Store (1)")
     print("4: Go to nearest unknown (?)")
     print("5: Go to _____")
+    print("6: Go to mine")
+    print("7: Mine It!")
     print("q: Quit")
     cmd = input("Your command: ").lower()
 
-    if cmd not in ["1", "2", "3", "4", "5", "q"]:
-        print("I did not understand that command.")
-    elif cmd == "q":
+    if cmd == "q":
         exit(0)
     elif cmd == "1":
         walk()
@@ -194,6 +195,12 @@ def menu():
     elif cmd == "5":
         dest = input("What room do you want to go to?: ")
         bft(int(dest))
+    elif cmd == "6":
+        bft(250)
+    elif cmd == "7":
+        mine()
+    else:
+        print("I did not understand that command.")
 
 
 def walk():
