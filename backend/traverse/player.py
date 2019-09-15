@@ -34,12 +34,17 @@ class Player:
         self.inventory = response["inventory"]
         self.status = response["status"]
 
-    def travel(self, direction, showRooms = True, flying = False):
-        # Need to rewrite this some. Commenting out for now, since we're not tracking room numbers during movement yet.
+    def travel(self, direction, roomGraph, showRooms = True, flying = False):
         nextRoom = self.currentRoom.getRoomInDirection(direction)
         if nextRoom is not None:
-            if nextRoom is not "?":
-                move_json = {"direction": direction, "next_room_id": str(nextRoom.room_id)}
+            if roomGraph.get(self.currentRoom.room_id) is None:
+                newRoom = nextRoom
+            else:
+                newRoom = roomGraph[self.currentRoom.room_id]['visited'].get(direction)
+                
+            if newRoom is not "?":
+                print(f"Your map says that {direction} will lead you to {newRoom}")
+                move_json = {"direction": direction, "next_room_id": str(newRoom)}
             else:
                 move_json = {"direction":direction}
 

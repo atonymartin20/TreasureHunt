@@ -42,8 +42,11 @@ class World:
         roomGraph = newGraph
 
         for i in roomGraph.keys():
-            x = roomGraph[i]['x']
-            y = roomGraph[i]['y']
+            try:
+                x = roomGraph[i]['x']
+                y = roomGraph[i]['y']
+            except:
+                print(f"ERROR::loadGraph::{roomGraph[i]}")
             gridSize = max(gridSize, x, y)
 
             self.rooms[i] = Room(roomGraph[i])

@@ -91,14 +91,38 @@ class Room:
 
 
     def getRoomInDirection(self, direction):
+        # dirRoom = map[roomId].get(direction)
+        # if dirRoom is not None and dirRoom != "?":
+        #     print(f"Your map says that {direction} goes to {mapDict[roomId].get(direction)}")
+        #     return mapDict[roomId].get(direction)
         if direction == "n":
+            if self.n_to != "?":
+                print( f"Room: {self.room_id} {direction} {self.n_to.room_id}")
             return self.n_to
         elif direction == "s":
+            if self.s_to != "?":
+                print( f"Room: {self.room_id} {direction} {self.s_to.room_id}")
             return self.s_to
         elif direction == "e":
+            if self.e_to != "?":
+                print( f"Room: {self.room_id} {direction} {self.e_to.room_id}")
             return self.e_to
         elif direction == "w":
+            if self.w_to != "?":
+                print( f"Room: {self.room_id} {direction} {self.w_to.room_id}")
             return self.w_to
+        # if direction == "n" and self.n_to is not None and self.n_to != "?":
+        #     print(f"Your map says that north goes to {self.n_to.room_id}")
+        #     return self.n_to
+        # elif direction == "s" and self.s_to is not None and self.s_to != "?":
+        #     print(f"Your map says that south goes to {self.s_to.room_id}")
+        #     return self.s_to
+        # elif direction == "e" and self.e_to is not None and self.e_to != "?":
+        #     print(f"Your map says that east goes to {self.e_to.room_id}")
+        #     return self.e_to
+        # elif direction == "w" and self.w_to is not None and self.w_to != "?":
+        #     print(f"Your map says that west goes to {self.w_to.room_id}")
+        #     return self.w_to
         else:
             return None
     def getCoords(self):

@@ -27,9 +27,16 @@ print(f"INIT::{init_data}")
 world = World()
 if path.exists("roomGraph.py"):
     from roomGraph import roomGraph
+    newGraph = {}
+    for key in roomGraph.keys():
+        newGraph[int(key)] = {}
+        newGraph[int(key)].update(roomGraph[key])
+    roomGraph = newGraph
     world.loadGraph(roomGraph)
 else:
     roomGraph={}
+
+visited = set()
 
 if path.exists("map.py"):
     from map import map
@@ -37,11 +44,17 @@ if path.exists("map.py"):
     for key in map.keys():
         newMap[int(key)] = {}
         newMap[int(key)].update(map[key])
+        visited.add(key)
     map = newMap
 else:
     map = {}
 
 print(map)
+
+# Hack to fix the missing parts of roomGraph
+for key in map.keys():
+    for dir in map[key].keys():
+        roomGraph[key]['visited'][dir] = map[key][dir]
 
 currRoom = Room(init_response.json())
 world.startingRoom = currRoom
@@ -120,7 +133,7 @@ def checkRoom(current_room):
                     time.sleep(item_data['cooldown'])
 
     # Is the room a shrine?
-    if "Shrine" in current_room.title or "Grave" in current_room.title:
+    if "Shrine" in current_room.title or "Grave" in current_room.title or "Peak" in current_room.title:
         print(f"SHRINE: Praying to {current_room.title}")
         # Add to the world.shrineRoom if needed
         if current_room.room_id not in world.shrineRoom:
@@ -148,7 +161,7 @@ def checkRoom(current_room):
 # FILL THIS IN
 
 revDirs = {"n": "s", "s": "n", "e": "w", "w": "e"}
-visited = set()
+
 roomId = None
 currRoom = player.currentRoom
 prevRoom = None
@@ -194,7 +207,7 @@ def walk():
             prevRoom = player.currentRoom
             dir = cmds[0]
 
-            player.travel(dir, True, flying)
+            player.travel(dir, roomGraph)
             currRoom = player.currentRoom
             update_graph(roomGraph, map, currRoom, prevRoom, dir, revDirs[dir])
         elif cmds[0] == "pray":
@@ -233,7 +246,7 @@ def bft(dest):
 
         for move in newpath:
             print(f"Moving {move} from {bfs_path[i]} to {bfs_path[i+1]}")
-            player.travel(move, True)
+            player.travel(move, roomGraph)
             currRoom = player.currentRoom
 
 
@@ -252,6 +265,9 @@ def auto():
 
     #  While loop runs while all rooms haven't been visited
     while len(visited) < max_rooms:
+        if len(roomGraph) % 10 == 0:
+            world.printRooms()
+        print(f"{len(roomGraph)} rooms have been visited.")
         roomId = player.currentRoom.room_id
         
         # Check the current room
@@ -287,7 +303,7 @@ def auto():
             prevId = roomId
             prevRoom = player.currentRoom
             traversalPath.append(dir)
-            player.travel(dir, True)
+            player.travel(dir, roomGraph)
 
             # Update graph here
             update_graph(roomGraph, map, player.currentRoom, prevRoom, dir, revDirs[dir])
@@ -309,7 +325,7 @@ def auto():
                 traversalPath = traversalPath + newpath
 
                 for move in newpath:
-                    player.travel(move, True)
+                    player.travel(move, roomGraph)
 
                     # Shouldn't need to update graph here, back-tracking to nearest ?
                     # update_graph(player.currentRoom, prevRoom, dir, revDirs[dir])

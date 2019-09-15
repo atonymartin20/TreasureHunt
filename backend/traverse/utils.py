@@ -91,6 +91,9 @@ def update_graph(roomGraph, map, current_room, prev_room=None, dir=None, prev_di
         
 
     if prev_room is not None:
+        if roomGraph.get(prev_room.room_id) is None:
+            update_graph(roomGraph, map, prev_room)
+        
         value = {prev_dir: prev_room.room_id}
         roomGraph[current_room.room_id]['visited'].update(value)
         map[current_room.room_id].update(value)
@@ -98,6 +101,9 @@ def update_graph(roomGraph, map, current_room, prev_room=None, dir=None, prev_di
         value = {dir: current_room.room_id}
         roomGraph[prev_room.room_id]['visited'].update(value)
         map[prev_room.room_id].update(value)
+
+        current_room.connectRooms(prev_dir, prev_room)
+
 
     with open("roomGraph.py", "w") as file:
         file.write("roomGraph = ")
