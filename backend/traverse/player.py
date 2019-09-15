@@ -10,6 +10,7 @@ init_headers = {
     'Authorization': f"Token {key}",
 }
 
+
 class Player:
     def __init__(self, name, startingRoom, cooldown = None, encumbrance = None, strength = None, speed = None,  gold = None, inventory = None, status = None):
         self.name = name
@@ -33,7 +34,7 @@ class Player:
         self.inventory = response["inventory"]
         self.status = response["status"]
 
-    def travel(self, direction, showRooms = True):
+    def travel(self, direction, showRooms = True, flying = False):
         # Need to rewrite this some. Commenting out for now, since we're not tracking room numbers during movement yet.
         nextRoom = self.currentRoom.getRoomInDirection(direction)
         if nextRoom is not None:
@@ -42,8 +43,10 @@ class Player:
             else:
                 move_json = {"direction":direction}
 
-
-            move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
+            if flying:
+                move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/", json=move_json, headers=init_headers)
+            else:
+                move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
             # print(f"DEBUG::move_response::{move_response.json()}")
             
             # Check to make sure we did move. Otherwise, print error
@@ -66,5 +69,17 @@ class Player:
                 time.sleep(move_response.json().cooldown)
         else:
             print("You cannot move in that direction.")
+# class Player:
+#     def __init__(self, name, startingRoom):
+#         self.name = name
+#         self.currentRoom = startingRoom
 
-
+        
+#     def travel(self, direction, showRooms = False):
+#         nextRoom = self.currentRoom.getRoomInDirection(direction)
+#         if nextRoom is not None:
+#             self.currentRoom = nextRoom
+#             if (showRooms):
+#                 nextRoom.printRoomDescription(self)
+#         else:
+#             print("You cannot move in that direction.")
