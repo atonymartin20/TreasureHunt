@@ -10,6 +10,7 @@ init_headers = {
     'Authorization': f"Token {key}",
 }
 
+
 class Player:
     def __init__(self, name, startingRoom, cooldown = None, encumbrance = None, strength = None, speed = None,  gold = None, inventory = None, status = None):
         self.name = name
@@ -33,17 +34,24 @@ class Player:
         self.inventory = response["inventory"]
         self.status = response["status"]
 
-    def travel(self, direction, showRooms = True):
-        # Need to rewrite this some. Commenting out for now, since we're not tracking room numbers during movement yet.
+    def travel(self, direction, roomGraph, showRooms = True, flying = False):
         nextRoom = self.currentRoom.getRoomInDirection(direction)
         if nextRoom is not None:
-            if nextRoom is not "?":
-                move_json = {"direction": direction, "next_room_id": str(nextRoom.room_id)}
+            if roomGraph.get(self.currentRoom.room_id) is None:
+                newRoom = nextRoom
+            else:
+                newRoom = roomGraph[self.currentRoom.room_id]['visited'].get(direction)
+                
+            if newRoom is not "?":
+                print(f"Your map says that {direction} will lead you to {newRoom}")
+                move_json = {"direction": direction, "next_room_id": str(newRoom)}
             else:
                 move_json = {"direction":direction}
 
-
-            move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
+            if flying:
+                move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/", json=move_json, headers=init_headers)
+            else:
+                move_response = requests.post("https://lambda-treasure-hunt.herokuapp.com/api/adv/move/", json=move_json, headers=init_headers)
             # print(f"DEBUG::move_response::{move_response.json()}")
             
             # Check to make sure we did move. Otherwise, print error
@@ -66,5 +74,17 @@ class Player:
                 time.sleep(move_response.json().cooldown)
         else:
             print("You cannot move in that direction.")
+# class Player:
+#     def __init__(self, name, startingRoom):
+#         self.name = name
+#         self.currentRoom = startingRoom
 
-
+        
+#     def travel(self, direction, showRooms = False):
+#         nextRoom = self.currentRoom.getRoomInDirection(direction)
+#         if nextRoom is not None:
+#             self.currentRoom = nextRoom
+#             if (showRooms):
+#                 nextRoom.printRoomDescription(self)
+#         else:
+#             print("You cannot move in that direction.")
