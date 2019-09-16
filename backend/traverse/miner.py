@@ -86,5 +86,5 @@ def mine():
         data = r.json()
         printMessages(data)
         time.sleep(data.get('cooldown'))
-        return
+        # return
         

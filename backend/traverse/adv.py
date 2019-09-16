@@ -28,6 +28,7 @@ print(f"INIT::{init_data}")
 world = World()
 if path.exists("roomGraph.py"):
     from roomGraph import roomGraph
+    print(f"{len(roomGraph)} rooms have been visited")
     newGraph = {}
     for key in roomGraph.keys():
         newGraph[int(key)] = {}
