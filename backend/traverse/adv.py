@@ -269,7 +269,6 @@ def auto():
     prevId = None
     traversalPath = []
     max_rooms = 500
-
     #  While loop runs while all rooms haven't been visited
     while len(visited) < max_rooms:
         if len(roomGraph) % 10 == 0:
