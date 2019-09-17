@@ -3,25 +3,59 @@
 import React  from 'react';
 import '../../node_modules/react-vis/dist/style.css';
 import {XYPlot, LineSeries, MarkSeries} from 'react-vis';
+import axios from 'axios';
 import rooms from '../Data/rooms.js'
 
 class Map extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentLocation: [{x: 4, y: 5}]
+            currentLocation: null,
+            userInitData: {}
         }
     }
-  
+
+    componentDidMount() {
+        setTimeout(() => {
+
+        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/';
+        const options = {
+            headers: {
+                Authorization: `Token ${process.env.REACT_APP_KEY}`
+            }
+        };
+
+
+        axios.get(endpoint, options)
+            .then(res => {
+                let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                console.log(currentLocation)
+                this.setState({
+                    userInitData: res.data,
+                    currentLocation: currentLocation
+                });
+            })
+            .catch(err => {
+                console.log('error', err);
+            });
+        }, 1000);
+    }
+
     render() {
 
     // get coordinates from the room data--used to display rooms
 
     var coords = []
-
+    let testData = this.state.userInitData;
+    console.log(testData)
+    let testData2 = this.state.currentLocation
+    console.log(testData2)
     for (var room in rooms) {
-        let c = rooms[room].coordinates.replace( /[\s()]/g, '' ).split( ',' );
-        coords.push({x: Number(c[0]), y: Number(c[1])});
+        // let c = rooms[room].coordinates.replace( /[\s()]/g, '' ).split( ',' );
+        coords.push({x: rooms[room].x, y: rooms[room].y})
+        // console.log(coords[room])
+        // coords.push({x: Number(c[0]), y: Number(c[1])});
     }
         
     // get edges (existing exits) for a single room 
@@ -39,9 +73,11 @@ class Map extends React.Component {
         }
         // for every exit in the room, create an array with the selected room's coords at index 0 and then the exit's coords
         existingExits.forEach(exit => {
-            let c = room.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-            let d = rooms[exit].coordinates.replace( /[\s()]/g, '' ).split( ',' );
-            edges.push([{x: Number(c[0]), y: Number(c[1])}, {x: Number(d[0]), y: Number(d[1])}])
+            // let c = room.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+            // let d = rooms[exit].coordinates.replace( /[\s()]/g, '' ).split( ',' );
+            edges.push([{x: room.x, y: room.y}, {x: rooms[exit].x, y: rooms[exit].y}])
+
+            // edges.push([{x: Number(c[0]), y: Number(c[1])}, {x: Number(d[0]), y: Number(d[1])}])
         })
         return edges
     }
@@ -62,7 +98,7 @@ class Map extends React.Component {
 
     return (
       <div>
-        <XYPlot height={415} width={690}>
+        <XYPlot height={615} width={1290}>
             {/* return lines from edges */}
             {edges.map(edge => (
                 <LineSeries
@@ -77,12 +113,12 @@ class Map extends React.Component {
                 color='blue'
             />
             {/* display user's current location */}
-            {/* <MarkSeries
-                data={this.state.currentLocation}
+            <MarkSeries
+                data={testData2}
                 color='red'
-            /> */}
+            />
             {/* <MarkSeries
-                data={this.props.currentLocation}
+                data={this.state.userInitData.coordinates}
                 color='red'
             /> */}
         </XYPlot>

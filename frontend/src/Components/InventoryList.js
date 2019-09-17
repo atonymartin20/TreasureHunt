@@ -7,7 +7,8 @@ function InventoryList(props) {
         return (
             <ul>
                 {inventoryHasItems.map(item => {
-                    return <li key={Math.random()}>{item.name}</li>
+                    return <li key={Math.random()}>{item}</li>
+                    // return <li key={Math.random()}>{item.name}</li>
                 })}
             </ul>);
     }
