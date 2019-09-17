@@ -6,29 +6,33 @@ class UserInfoDisplay extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userData: {}
+            userData: {},
         }
     }
 
     componentDidMount() {
-        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
-        const options = {
-            headers: {
-                Authorization: `Token ${process.env.REACT_APP_KEY}`
-            }
-        };
-
-        axios.post(endpoint, {}, options)
-            .then(res => {
-                this.setState({
-                    userData: res.data
+        setTimeout(() => {
+            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
+            const options = {
+                headers: {
+                    Authorization: `Token ${process.env.REACT_APP_KEY}`
+                }
+            };
+    
+            axios.post(endpoint, {}, options)
+                .then(res => {
+                    console.log(res.data)
+                    this.setState({
+                        userData: res.data
+                    });
+                })
+                .catch(err => {
+                    console.log('error', err);
                 });
-            })
-            .catch(err => {
-                console.log('error', err);
-            });
+
+        }, 1000);
     }
-  
+
     render() {
         return (
             <div>
@@ -41,7 +45,7 @@ class UserInfoDisplay extends React.Component {
                     <li>Speed: {this.state.userData.speed}</li>
                     <li>Gold: {this.state.userData.gold}</li>
                     <li>Inventory: 
-                        <InventoryList inventory={this.state.userData.inventory}/>
+                        <InventoryList inventory={this.state.userData.inventory} />
                     </li>  
                 </ul>
             </div>

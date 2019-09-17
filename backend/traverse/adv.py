@@ -105,6 +105,7 @@ def checkRoom(current_room):
     # Is the room a shop?
     # print(f"DEBUG::room title::{current_room.title}")
     if current_room.title == "Shop":
+        print(f"{player.inventory}")
         # print(f"DEBUG::room is a shop")
         # Add to the world.shopRoom if needed
         if current_room.room_id not in world.shopRoom:
@@ -112,7 +113,7 @@ def checkRoom(current_room):
 
         # Check current inventory for treasure to sell
         if len(player.inventory) > 0:
-            # print(f"DEBUG::inventory::{player.inventory}")
+            print(f"DEBUG::inventory::{player.inventory}")
             for item in player.inventory:
                 # examine the item
                 item_json = {"name": item}
@@ -252,6 +253,7 @@ def bft(dest):
         next((newpath.append(dir) for dir, val in map[bfs_path[i]].items() if val == bfs_path[i+1]))
 
         for move in newpath:
+            checkRoom(player.currentRoom)
             print(f"Moving {move} from {bfs_path[i]} to {bfs_path[i+1]}")
             player.travel(move, roomGraph)
             currRoom = player.currentRoom
