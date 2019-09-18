@@ -1,10 +1,12 @@
 // this component displays the map of the rooms and the player's current location
 
 import React  from 'react';
-import '../../node_modules/react-vis/dist/style.css';
+import '../../../node_modules/react-vis/dist/style.css';
 import {XYPlot, LineSeries, MarkSeries} from 'react-vis';
-import axios from 'axios';
-import rooms from '../Data/rooms.js'
+import rooms from '../../Data/rooms.js';
+import Legend from './Legend.js';
+import { AppContext } from '../Context/AppContext.js';
+
 
 class Map extends React.Component {
     constructor(props) {
@@ -15,45 +17,39 @@ class Map extends React.Component {
         }
     }
 
-    componentDidMount() {
-        setTimeout(() => {
-
-        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/';
-        const options = {
-            headers: {
-                Authorization: `Token ${process.env.REACT_APP_KEY}`
-            }
-        };
-
-
-        axios.get(endpoint, options)
-            .then(res => {
-                let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                console.log(currentLocation)
-                this.setState({
-                    userInitData: res.data,
-                    currentLocation: currentLocation
-                });
-            })
-            .catch(err => {
-                console.log('error', err);
-            });
-        }, 1000);
-    }
-
     render() {
-
     // get coordinates from the room data--used to display rooms
 
-    var coords = []
-    let testData = this.state.userInitData;
-    console.log(testData)
-    let testData2 = this.state.currentLocation
-    console.log(testData2)
+    let coords = []
+    let shrine = []
+    let shop = []
+    let pirateRy = []
+    let mine = []
+
     for (var room in rooms) {
-        // let c = rooms[room].coordinates.replace( /[\s()]/g, '' ).split( ',' );
         coords.push({x: rooms[room].x, y: rooms[room].y})
+        
+        // If a shrine has been found.  Add it to shrine array
+        if(rooms[room].room_id === 22 || rooms[room].room_id === 461 || rooms[room].room_id === 499) {
+            shrine.push({x: rooms[room].x, y: rooms[room].y})
+        }
+
+        // If the shop has been found.  Add it to shop array
+        if(rooms[room].room_id === 1) {
+            shop.push({x: rooms[room].x, y: rooms[room].y})
+        }
+
+        // If Pirate Ry's has been found.  Add it to pirateRy array
+        if(rooms[room].room_id === 467) {
+            pirateRy.push({x: rooms[room].x, y: rooms[room].y})
+        }
+
+        // If the mine has been found.  Add it to mine array
+        if(rooms[room].room_id === 250) {
+            mine.push({x: rooms[room].x, y: rooms[room].y})
+        }
+
+        // let c = rooms[room].coordinates.replace( /[\s()]/g, '' ).split( ',' );
         // console.log(coords[room])
         // coords.push({x: Number(c[0]), y: Number(c[1])});
     }
@@ -111,21 +107,55 @@ class Map extends React.Component {
             <MarkSeries
                 data={coords}
                 color='blue'
+                size={5}
             />
+
+            {/* Displays Shop in Green */}
+            <MarkSeries
+                data={shop}
+                color='green'
+                size={7}
+            />
+
+            {/* Displays Shrines in Yellow */}
+            <MarkSeries
+                data={shrine}
+                color='yellow'
+                size={7}
+                stroke='black'
+                strokeWidth={2}
+            />
+
+            {/* Displays Pirate Ry's in Bright Pink */}
+            <MarkSeries
+                data={pirateRy}
+                color='#FF00F0'
+                size={7}
+                stroke='black'
+                strokeWidth={2}
+            />
+
+            {/* Displays Mine in Black */}
+            <MarkSeries
+                data={mine}
+                color='black'
+                size={7}
+            />
+
             {/* display user's current location */}
             <MarkSeries
-                data={testData2}
+                data={this.context.state.currentLocation}
                 color='red'
+                size={10}
+                stroke='black'
+                strokeWidth={2}
             />
-            {/* <MarkSeries
-                data={this.state.userInitData.coordinates}
-                color='red'
-            /> */}
         </XYPlot>
-        
+        <Legend />
       </div>
     );
   }
 }
 
+Map.contextType = AppContext;
 export default Map;
