@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
 import { AppContext } from './Components/Context/AppContext.js';
+import { AppDiv, AppLeftDiv, AppRightDiv } from './Components/StyledComponents';
+import TopBar from './Components/TopBar';
 import Map from './Components/Map/Map.js'
 import CurrentRoom from './Components/CurrentRoom';
 import UserInfoDisplay from './Components/UserDisplay/UserInfoDisplay.js'
-require('dotenv').config()
 
 class App extends React.Component{
     componentDidMount() {
@@ -13,14 +13,16 @@ class App extends React.Component{
     }
     render(){
         return (
-            <div className='App'>
-                <header>
-                    <h1 className='main-header'>Treasure Map!</h1>
-                    <Map className='Map'/>
+            <AppDiv>
+                <TopBar />
+                <AppLeftDiv>
+                    <Map/>
+                </AppLeftDiv>
+                <AppRightDiv>
                     <CurrentRoom />
                     <UserInfoDisplay />
-                </header>
-            </div>
+                </AppRightDiv>
+            </AppDiv>
         )
     }
 }

@@ -61,7 +61,19 @@ export default class AppProvider extends Component {
                                 console.log('error', err);
                             });
                         }, 2200);
-                    }
+                    },
+                    MoveLeft: () => {
+                        // All of that here
+                    },
+                    MoveRight: () => {
+                        // All of that here
+                    },
+                    MoveUp: () => {
+                        // All of that here
+                    },
+                    MoveDown: () => {
+                        // All of that here
+                    },
                 }}
             >
                 {this.props.children}

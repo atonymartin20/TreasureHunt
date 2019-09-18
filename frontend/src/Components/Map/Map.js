@@ -19,7 +19,6 @@ class Map extends React.Component {
 
     render() {
     // get coordinates from the room data--used to display rooms
-
     let coords = []
     let shrine = []
     let shop = []
@@ -92,68 +91,141 @@ class Map extends React.Component {
 
     var edges = getAllEdges(rooms)
 
-    return (
-      <div>
-        <XYPlot height={615} width={1290}>
-            {/* return lines from edges */}
-            {edges.map(edge => (
-                <LineSeries
-                    data={edge}
-                    color='#96B146'
-                    key={Math.random()}
-                />
-            ))}
-            {/* display rooms using coordinates */}
-            <MarkSeries
-                data={coords}
-                color='blue'
-                size={5}
-            />
+    // Grabs Window Size
+    let plotWidth = window.innerWidth * .7;
+    let plotHeight = plotWidth * .667;
 
-            {/* Displays Shop in Green */}
-            <MarkSeries
-                data={shop}
-                color='green'
-                size={7}
-            />
+    // If window size is greater than our built-in max width Display this.
+    if (window.innerWidth >= 1300) {
+        return (
+            <div>
+              <XYPlot height={600} width={870}>
+                  {/* return lines from edges */}
+                  {edges.map(edge => (
+                      <LineSeries
+                          data={edge}
+                          color='#96B146'
+                          key={Math.random()}
+                      />
+                  ))}
+                  {/* display rooms using coordinates */}
+                  <MarkSeries
+                      data={coords}
+                      color='blue'
+                      size={5}
+                  />
+      
+                  {/* Displays Shop in Green */}
+                  <MarkSeries
+                      data={shop}
+                      color='green'
+                      size={7}
+                  />
+      
+                  {/* Displays Shrines in Yellow */}
+                  <MarkSeries
+                      data={shrine}
+                      color='yellow'
+                      size={7}
+                      stroke='black'
+                      strokeWidth={2}
+                  />
+      
+                  {/* Displays Pirate Ry's in Bright Pink */}
+                  <MarkSeries
+                      data={pirateRy}
+                      color='#FF00F0'
+                      size={7}
+                      stroke='black'
+                      strokeWidth={2}
+                  />
+      
+                  {/* Displays Mine in Black */}
+                  <MarkSeries
+                      data={mine}
+                      color='black'
+                      size={7}
+                  />
+      
+                  {/* display user's current location */}
+                  <MarkSeries
+                      data={this.context.state.currentLocation}
+                      color='red'
+                      size={10}
+                      stroke='black'
+                      strokeWidth={2}
+                  />
+              </XYPlot>
+              <Legend />
+            </div>
+          );
+    }
+    // Else display smaller map version using plotHeight and plotWidth as variables.
+    else {
+        return (
+            <div>
+              <XYPlot height={plotHeight} width={plotWidth}>
+                  {/* return lines from edges */}
+                  {edges.map(edge => (
+                      <LineSeries
+                          data={edge}
+                          color='#96B146'
+                          key={Math.random()}
+                      />
+                  ))}
+                  {/* display rooms using coordinates */}
+                  <MarkSeries
+                      data={coords}
+                      color='blue'
+                      size={4}
+                  />
+      
+                  {/* Displays Shop in Green */}
+                  <MarkSeries
+                      data={shop}
+                      color='green'
+                      size={6}
+                  />
+      
+                  {/* Displays Shrines in Yellow */}
+                  <MarkSeries
+                      data={shrine}
+                      color='yellow'
+                      size={6}
+                      stroke='black'
+                      strokeWidth={2}
+                  />
+      
+                  {/* Displays Pirate Ry's in Bright Pink */}
+                  <MarkSeries
+                      data={pirateRy}
+                      color='#FF00F0'
+                      size={6}
+                      stroke='black'
+                      strokeWidth={2}
+                  />
+      
+                  {/* Displays Mine in Black */}
+                  <MarkSeries
+                      data={mine}
+                      color='black'
+                      size={6}
+                  />
+      
+                  {/* display user's current location */}
+                  <MarkSeries
+                      data={this.context.state.currentLocation}
+                      color='red'
+                      size={8}
+                      stroke='black'
+                      strokeWidth={2}
+                  />
+              </XYPlot>
+              <Legend />
+            </div>
+          );
+    }
 
-            {/* Displays Shrines in Yellow */}
-            <MarkSeries
-                data={shrine}
-                color='yellow'
-                size={7}
-                stroke='black'
-                strokeWidth={2}
-            />
-
-            {/* Displays Pirate Ry's in Bright Pink */}
-            <MarkSeries
-                data={pirateRy}
-                color='#FF00F0'
-                size={7}
-                stroke='black'
-                strokeWidth={2}
-            />
-
-            {/* Displays Mine in Black */}
-            <MarkSeries
-                data={mine}
-                color='black'
-                size={7}
-            />
-
-            {/* display user's current location */}
-            <MarkSeries
-                data={this.context.state.currentLocation}
-                color='red'
-                size={10}
-                stroke='black'
-                strokeWidth={2}
-            />
-        </XYPlot>
-        <Legend />
-      </div>
-    );
   }
 }
 
