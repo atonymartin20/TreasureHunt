@@ -18,9 +18,11 @@ export default class AppProvider extends Component {
                     state: this.state,
                     GetInitData: () => {
                         const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/';
+                        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                        console.log(key)
                         const options = {
                             headers: {
-                                Authorization: `Token ${process.env.REACT_APP_KEY}`
+                                Authorization: `Token ${key}`
                             }
                         };
                         axios
@@ -41,9 +43,10 @@ export default class AppProvider extends Component {
                     GetUserData: () => {
                         setTimeout(() => {
                         const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
+                        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                         const options = {
                             headers: {
-                                Authorization: `Token ${process.env.REACT_APP_KEY}`
+                                Authorization: `Token ${key}`
                             }
                         };
                 
