@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
-
+import InventoryList from './InventoryList.js'
 
 class CurrentRoom extends React.Component {
     constructor(props) {
@@ -19,24 +19,24 @@ class CurrentRoom extends React.Component {
                     <li>Room ID: {this.context.state.userInitData.room_id}</li>
                     <li>Title: {this.context.state.userInitData.title}</li>
                     <li>Description: {this.context.state.userInitData.description}</li>
-                    <li>Cooldown: {this.context.state.userData.speed}</li>
-                    <li>Elevation: {this.context.state.userData.gold}</li>
+                    <li>Cooldown: {this.context.state.userInitData.cooldown}</li>
+                    <li>Elevation: {this.context.state.userInitData.elevation}</li>
+                    <li>Terrain: {this.context.state.userInitData.terrain}</li>
                     <li>Players: 
-                        {/* <InventoryList inventory={this.context.state.userData.inventory} /> */}
+                        <InventoryList inventoryPlayers={this.context.state.userInitData.players} />
                     </li>  
                     <li>Items: 
-                        {/* <InventoryList inventory={this.context.state.userData.inventory} /> */}
+                        <InventoryList inventoryItems={this.context.state.userInitData.items} />
                     </li>
                     <li>Exits: 
-                        {/* <InventoryList inventory={this.context.state.userData.inventory} /> */}
+                        <InventoryList inventoryExits={this.context.state.userInitData.exits} />
                     </li>
                     <li>Errors: 
-                        {/* <InventoryList inventory={this.context.state.userData.inventory} /> */}
+                        <InventoryList inventoryErrors={this.context.state.userInitData.errors} />
                     </li>
                     <li>Messages: 
-                        {/* <InventoryList inventory={this.context.state.userData.inventory} /> */}
+                        <InventoryList inventoryMessages={this.context.state.userInitData.messages} />
                     </li>
-                    <li>Terrain: {this.context.state.userData.gold}</li>
 
                 </ul>
             </div>
