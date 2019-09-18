@@ -28,7 +28,7 @@ export default class AppProvider extends Component {
                             .then(res => {
                                 let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
                                 let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                console.log("Current Location: ", currentLocation)
+                                console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
                                 this.setState({
                                     userInitData: res.data,
                                     currentLocation: currentLocation
