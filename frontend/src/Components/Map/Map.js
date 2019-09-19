@@ -6,6 +6,7 @@ import {XYPlot, LineSeries, MarkSeries} from 'react-vis';
 import rooms from '../../Data/rooms.js';
 import Legend from './Legend.js';
 import { AppContext } from '../Context/AppContext.js';
+import { MapDiv } from '../StyledComponents';
 
 
 class Map extends React.Component {
@@ -98,7 +99,7 @@ class Map extends React.Component {
     // If window size is greater than our built-in max width Display this.
     if (window.innerWidth >= 1300) {
         return (
-            <div>
+            <MapDiv>
               <XYPlot height={600} width={870}>
                   {/* return lines from edges */}
                   {edges.map(edge => (
@@ -157,13 +158,13 @@ class Map extends React.Component {
                   />
               </XYPlot>
               <Legend />
-            </div>
+            </MapDiv>
           );
     }
     // Else display smaller map version using plotHeight and plotWidth as variables.
     else {
         return (
-            <div>
+            <MapDiv>
               <XYPlot height={plotHeight} width={plotWidth}>
                   {/* return lines from edges */}
                   {edges.map(edge => (
@@ -176,7 +177,7 @@ class Map extends React.Component {
                   {/* display rooms using coordinates */}
                   <MarkSeries
                       data={coords}
-                      color='blue'
+                      color='#0000FF'
                       size={4}
                   />
       
@@ -222,7 +223,7 @@ class Map extends React.Component {
                   />
               </XYPlot>
               <Legend />
-            </div>
+            </MapDiv>
           );
     }
 
