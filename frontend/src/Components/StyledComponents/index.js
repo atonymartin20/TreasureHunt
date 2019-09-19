@@ -51,6 +51,15 @@ const TopBarH1 = styled.div`
 const MapDiv = styled.div`
 `;
 
+const MapH1 = styled.h1`
+    width: 100%;
+    color: black;
+    font-size: 2.2rem;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+`;
+
 // Legend Styled Components
 const LegendDiv = styled.div`
     border: 2px solid black;
@@ -61,7 +70,6 @@ const LegendDiv = styled.div`
     flex-wrap: wrap;
     padding: 10px 2%;
 `;
-    // flex-direction: column;
 
 const LegendH2 = styled.h2`
     font-size: 1.6rem;
@@ -105,6 +113,47 @@ const CurrentLocationP = styled(LegendP)`
     color: #FF0000;
 `;
 
+// Current Room Styled Components
+const CurrentRoomDiv = styled.div`
+    width: 100%;
+`;
+
+const CurrentRoomH2 = styled.h2`
+    font-size: 1.5rem;
+    padding: 0px;
+    margin: 0px;
+`;
+
+const CurrentRoomLi = styled.li`
+    font-size: 1.0rem;
+`;
+
+const CurrentRoomSpan = styled.span`
+    font-size: 1.0rem;
+    font-weight: bold;
+`;
+
+// User Info Styled Components
+const UserInfoDiv = styled.div`
+    width: 100%;
+    margin-top: 15px;
+`;
+
+const UserInfoH2 = styled.h2`
+    font-size: 1.5rem;
+    padding: 0px;
+    margin: 0px;
+`;
+
+const UserInfoLi = styled.li`
+    font-size: 1.0rem;
+`;
+
+const UserInfoSpan = styled.span`
+    font-size: 1.0rem;
+    font-weight: bold;
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -112,6 +161,7 @@ export {
     AppLeftDiv,
     AppRightDiv,
     MapDiv,
+    MapH1,
     LegendDiv,
     LegendH2,
     RegularNodeP,
@@ -120,5 +170,13 @@ export {
     PirateRyP,
     MineP,
     CurrentLocationP,
+    CurrentRoomDiv,
+    CurrentRoomH2,
+    CurrentRoomLi,
+    CurrentRoomSpan,
+    UserInfoDiv,
+    UserInfoH2,
+    UserInfoLi,
+    UserInfoSpan,
 };
 // export 
