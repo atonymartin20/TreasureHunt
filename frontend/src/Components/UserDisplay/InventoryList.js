@@ -13,9 +13,8 @@ function InventoryList(props) {
     }
     else {
         return(
-            <ul>
-                <li>No items</li>
-            </ul>);
+            <span>&nbsp;&nbsp;No items in inventory</span>
+        );
     }
 }
 

@@ -25,12 +25,18 @@ function InventoryList(props) {
     }
     else if (inventoryHasPlayers) {
         if (inventoryHasPlayers.length > 0) {
+            let playerSpan = ''
+            inventoryHasPlayers.map(player => {
+                return playerSpan += `${player}, ${'\xa0'} `
+            })
+
+            const removeTrailingComma = (string) => {
+                let n = string.lastIndexOf(",");
+                let a = string.substring(0, n);
+                return a;
+            }
             return (
-                <ul>
-                    {inventoryHasPlayers.map(player => {
-                        return <li key={Math.random()}>{player}</li>
-                    })}
-                </ul>
+                <span>&nbsp;&nbsp;{removeTrailingComma(playerSpan)}</span>
             );
         }
         else {
@@ -41,12 +47,19 @@ function InventoryList(props) {
     }
     else if (inventoryHasExits) {
         if (inventoryHasExits.length > 0) {
+            let exitSpan = ''
+            inventoryHasExits.map(exit => {
+                let upper = exit.toUpperCase();
+                return exitSpan += `${upper}, ${'\xa0'} `
+            })
+
+            const removeTrailingComma = (string) => {
+                let n = string.lastIndexOf(",");
+                let a = string.substring(0, n);
+                return a;
+            }
             return (
-                <ul>
-                    {inventoryHasExits.map(exit => {
-                        return <li key={Math.random()}>{exit}</li>
-                    })}
-                </ul>
+                <span>&nbsp;&nbsp;{removeTrailingComma(exitSpan)}</span>
             );
         }
         else {
@@ -56,7 +69,17 @@ function InventoryList(props) {
         }
     }
     else if (inventoryHasErrors) {
-        if (inventoryHasErrors.length > 0) {
+        if (inventoryHasErrors.length === 1) {
+            let errorSpan = ''
+            inventoryHasErrors.map(error => {
+                return errorSpan += `${error}`
+            })
+
+            return (
+                <span>&nbsp;&nbsp;{errorSpan}</span>
+            );
+        }
+        else if (inventoryHasErrors.length > 0) {
             return (
                 <ul>
                     {inventoryHasErrors.map(error => {
@@ -72,7 +95,17 @@ function InventoryList(props) {
         }
     }
     else if (inventoryHasMessages) {
-        if (inventoryHasMessages.length > 0) {
+        if (inventoryHasMessages.length === 1) {
+            let messageSpan = ''
+            inventoryHasMessages.map(message => {
+                return messageSpan += `${message}`
+            })
+
+            return (
+                <span>&nbsp;&nbsp;{messageSpan}</span>
+            );
+        }
+        else if (inventoryHasMessages.length > 0) {
             return (
                 <ul>
                     {inventoryHasMessages.map(message => {
