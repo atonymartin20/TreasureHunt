@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import pirateBackground from '../../Images/pirate-background.jpg';
-import pirateBorder from '../../Images/pirate-border.png';
 
 //  App Styled Components
 const AppDiv = styled.div`
