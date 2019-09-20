@@ -154,6 +154,11 @@ const UserInfoSpan = styled.span`
     font-weight: bold;
 `;
 
+//  Button Panel Styled Components
+const ButtonPanelDiv = styled.div`
+
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -178,5 +183,6 @@ export {
     UserInfoH2,
     UserInfoLi,
     UserInfoSpan,
+    ButtonPanelDiv,
 };
 // export 

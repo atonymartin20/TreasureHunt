@@ -38,7 +38,6 @@ class CurrentRoom extends React.Component {
                     <CurrentRoomLi><CurrentRoomSpan>Messages:</CurrentRoomSpan> 
                         <InventoryList inventoryMessages={this.context.state.userInitData.messages} />
                     </CurrentRoomLi>
-
                 </ul>
             </CurrentRoomDiv>
         );
