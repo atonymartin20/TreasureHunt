@@ -49,6 +49,11 @@ const TopBarH1 = styled.div`
 
 // Map Styled Components
 const MapDiv = styled.div`
+    width: 100%;
+    border: 2px solid blue;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 `;
 
 const MapH1 = styled.h1`
@@ -63,12 +68,13 @@ const MapH1 = styled.h1`
 // Legend Styled Components
 const LegendDiv = styled.div`
     border: 2px solid black;
-    width: 50%;
-    margin: 0 auto;
+    width: 40%;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
     padding: 10px 2%;
+    border-radius: 10px;
+
 `;
 
 const LegendH2 = styled.h2`
@@ -154,6 +160,13 @@ const UserInfoSpan = styled.span`
     font-weight: bold;
 `;
 
+//  Button Panel Styled Components
+const ButtonPanelDiv = styled.div`
+    width: 40%;
+    border: 2px solid black;
+    border-radius: 10px;
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -178,5 +191,6 @@ export {
     UserInfoH2,
     UserInfoLi,
     UserInfoSpan,
+    ButtonPanelDiv,
 };
 // export 

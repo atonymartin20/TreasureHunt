@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import rooms from '../../Data/rooms.js';
 require('dotenv').config()
 
 export const AppContext = React.createContext();
@@ -9,6 +10,7 @@ export default class AppProvider extends Component {
         currentLocation: null,
         userInitData: {},
         userData: {},
+        wiseExplorer: false
     };
 
     render() {
@@ -62,16 +64,67 @@ export default class AppProvider extends Component {
                             });
                         }, 2200);
                     },
-                    MoveLeft: () => {
+                    MoveWest: () => {
+                        console.log('This.state.wiseExplorer', this.state.wiseExplorer, 'this.context.state.wiseExplorer', this.context.state.wiseExplorer)
+                        if (this.state.wiseExplorer) {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`
+                                    },
+                                    json: {
+                                        "direction": "w",
+                                        // "next_room_id": (newRoom).toString()
+                                    }
+                                }
+                                axios
+                                    .post(endpoint, {}, options)
+                                    .then(res => {
+                                        console.log(res.data)
+                                        this.setState({
+                                            userData: res.data
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, 2200);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`
+                                    },
+                                    json: {
+                                        "direction": "w",
+                                    }
+                                }
+                                axios
+                                    .post(endpoint, {}, options)
+                                    .then(res => {
+                                        console.log(res.data)
+                                        this.setState({
+                                            userData: res.data
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, 2200);
+                        }
+                    },
+                    MoveEast: () => {
                         // All of that here
                     },
-                    MoveRight: () => {
+                    MoveNorth: () => {
                         // All of that here
                     },
-                    MoveUp: () => {
-                        // All of that here
-                    },
-                    MoveDown: () => {
+                    MoveSouth: () => {
                         // All of that here
                     },
                 }}
