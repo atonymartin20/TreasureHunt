@@ -6,14 +6,14 @@ class ButtonPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userData: {},
+            // userData: {},
         }
     }
 
     render() {
         return (
             <ButtonPanelDiv>
-                <CurrentRoomH2>Current Room Info:</CurrentRoomH2>
+                <h1>Button Panel Div</h1>
             </ButtonPanelDiv>
         );
     }

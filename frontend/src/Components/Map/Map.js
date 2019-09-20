@@ -5,6 +5,7 @@ import '../../../node_modules/react-vis/dist/style.css';
 import { XYPlot, LineSeries, MarkSeries } from 'react-vis';
 import rooms from '../../Data/rooms.js';
 import Legend from './Legend.js';
+import ButtonPanel from '../ButtonPanel';
 import { AppContext } from '../Context/AppContext.js';
 import { MapDiv, MapH1 } from '../StyledComponents';
 
@@ -153,6 +154,7 @@ class Map extends React.Component {
                         />
                     </XYPlot>
                     <Legend />
+                    <ButtonPanel />
                 </MapDiv>
             );
         }
@@ -207,6 +209,7 @@ class Map extends React.Component {
                         />
                     </XYPlot>
                     <Legend />
+                    <ButtonPanel />
                 </MapDiv>
             );
         }
