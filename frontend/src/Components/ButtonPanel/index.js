@@ -100,7 +100,6 @@ class ButtonPanel extends React.Component {
                 <MovementButton id="west_button">West</MovementButton>
                 <MovementButton id="east_button">East</MovementButton>
 
-                <h1>Button Panel Div</h1>
             </ButtonPanelDiv>
         );
     }

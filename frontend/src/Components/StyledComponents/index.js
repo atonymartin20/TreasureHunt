@@ -11,24 +11,21 @@ const AppDiv = styled.div`
     width: 100%;
     margin: 0 auto;
     background-color: #EAE6E5;
-    box-sizing: border-box;
-`;
-
+    `;
+    
 const AppLeftDiv = styled.div`
     padding: 20px 1%;
     width: 70%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    box-sizing: border-box;
-`;
+    `;
 
 const AppRightDiv = styled.div`
     width: 30%;
     display: flex;
     flex-wrap: wrap;
     padding: 20px 1%;
-    box-sizing: border-box;
     background-image: url(${pirateBackground});
 `;
 
@@ -164,11 +161,27 @@ const ButtonPanelDiv = styled.div`
     width: 40%;
     border: 2px solid black;
     border-radius: 10px;
-`;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 10px;
+    `;
 
 const MovementButton = styled.div`
-
-`;
+    width: 35%;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #9BF182;
+    font-size: 1.0rem;
+    font-weight: bold;
+    padding: 15px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    `;
+    // text-align: center;
 
 export {
     TopBarDiv,
