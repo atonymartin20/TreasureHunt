@@ -83,22 +83,25 @@ class ButtonPanel extends React.Component {
             }
         }
     }
+
+    TestFunction = () => {
+        console.log('On Click works.  Now time to add context.')
+    }
+
     async RunFunctions() {
         await this.UpdateRoomData();
         await this.DisableButtons();
 
     }
     render() {
-        // this.UpdateRoomData();
-        // this.DisableButtons();
         this.RunFunctions();
         console.log(this.state);
         return (
             <ButtonPanelDiv>
-                <MovementButton id="north_button">North</MovementButton>
-                <MovementButton id="south_button">South</MovementButton>
-                <MovementButton id="west_button">West</MovementButton>
-                <MovementButton id="east_button">East</MovementButton>
+                <MovementButton id="north_button" onClick={this.TestFunction}>North</MovementButton>
+                <MovementButton id="south_button" onClick={this.TestFunction}>South</MovementButton>
+                <MovementButton id="west_button" onClick={this.TestFunction}>West</MovementButton>
+                <MovementButton id="east_button" onClick={this.TestFunction}>East</MovementButton>
 
             </ButtonPanelDiv>
         );

@@ -180,6 +180,7 @@ const MovementButton = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 10px;
+    cursor: pointer;
     `;
     // text-align: center;
 
