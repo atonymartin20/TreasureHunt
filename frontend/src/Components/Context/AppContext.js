@@ -8,7 +8,6 @@ export const AppContext = React.createContext();
 export default class AppProvider extends Component {
     state = {
         currentLocation: null,
-        userInitData: {},
         userData: {},
         currentRoomData: {},
         wiseExplorer: false
@@ -34,7 +33,6 @@ export default class AppProvider extends Component {
                                 let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
                                 console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
                                 this.setState({
-                                    userInitData: res.data,
                                     currentRoomData: res.data,
                                     currentLocation: currentLocation
                                 });
@@ -66,61 +64,88 @@ export default class AppProvider extends Component {
                         }, 2200);
                     },
                     MoveWest: () => {
-                        console.log('This.state.wiseExplorer', this.state.wiseExplorer, 'this.context.state.wiseExplorer', this.context.state.wiseExplorer)
-                        if (this.state.wiseExplorer) {
+                        // console.log('This.state.wiseExplorer', this.state.wiseExplorer, 'this.context.state.wiseExplorer', this.context.state.wiseExplorer)
+                        // if (this.state.wiseExplorer) {
                             setTimeout(() => {
+                                console.log('Started MoveWest');
                                 const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
                                 const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                                 const options = {
                                     headers: {
-                                        Authorization: `Token ${key}`
-                                    },
-                                    json: {
-                                        "direction": "w",
-                                        // "next_room_id": (newRoom).toString()
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
                                     }
                                 }
+                                const body = {
+                                    'direction': "w",
+                                    // "next_room_id": (newRoom).toString()
+                                }
                                 axios
-                                    .post(endpoint, {}, options)
+                                    .post(endpoint, body, options)
                                     .then(res => {
                                         console.log(res.data)
                                         this.setState({
-                                            userData: res.data
+                                            currentRoomData: res.data
                                         });
                                     })
                                     .catch(err => {
                                         console.log('error', err);
                                     });
                             }, 2200);
-                        }
-                        else {
-                            setTimeout(() => {
-                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
-                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                                const options = {
-                                    headers: {
-                                        Authorization: `Token ${key}`
-                                    },
-                                    json: {
-                                        "direction": "w",
-                                    }
-                                }
-                                axios
-                                    .post(endpoint, {}, options)
-                                    .then(res => {
-                                        console.log(res.data)
-                                        this.setState({
-                                            userData: res.data
-                                        });
-                                    })
-                                    .catch(err => {
-                                        console.log('error', err);
-                                    });
-                            }, 2200);
-                        }
-                    },
+                            // }
+                            // else {
+                            //     setTimeout(() => {
+                            //         const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                            //         const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            //         const options = {
+                            //             headers: {
+                            //                 Authorization: `Token ${key}`
+                            //             },
+                            //             json: {
+                            //                 "direction": "w",
+                            //             }
+                            //         }
+                            //         axios
+                            //             .post(endpoint, {}, options)
+                            //             .then(res => {
+                            //                 console.log(res.data)
+                            //                 this.setState({
+                            //                     userData: res.data
+                            //                 });
+                            //             })
+                            //             .catch(err => {
+                            //                 console.log('error', err);
+                            //             });
+                            //     }, 2200);
+                            // }
+                        },
                     MoveEast: () => {
-                        // All of that here
+                        setTimeout(() => {
+                            console.log('Started MoveEast');
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'direction': "e",
+                                // "next_room_id": (newRoom).toString()
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then(res => {
+                                    console.log(res.data)
+                                    this.setState({
+                                        currentRoomData: res.data
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, 2200);
                     },
                     MoveNorth: () => {
                         // All of that here

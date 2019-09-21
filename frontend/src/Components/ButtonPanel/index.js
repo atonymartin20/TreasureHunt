@@ -76,12 +76,13 @@ class ButtonPanel extends React.Component {
     render() {
         this.RunFunctions();
         console.log(this.state);
+        console.log(this.context)
         return (
             <ButtonPanelDiv>
-                <MovementButton onClick={this.TestFunction} disabled={this.state.northAvailable === false}>North</MovementButton>
-                <MovementButton onClick={this.TestFunction} disabled={this.state.southAvailable === false}>South</MovementButton>
-                <MovementButton onClick={this.TestFunction} disabled={this.state.westAvailable === false}>West</MovementButton>
-                <MovementButton onClick={this.TestFunction} disabled={this.state.eastAvailable === false}>East</MovementButton>
+                <MovementButton onClick={this.context.MoveNorth} disabled={this.state.northAvailable === false}>North</MovementButton>
+                <MovementButton onClick={this.context.MoveSouth} disabled={this.state.southAvailable === false}>South</MovementButton>
+                <MovementButton onClick={this.context.MoveWest} disabled={this.state.westAvailable === false}>West</MovementButton>
+                <MovementButton onClick={this.context.MoveEast} disabled={this.state.eastAvailable === false}>East</MovementButton>
             </ButtonPanelDiv>
         );
     }
