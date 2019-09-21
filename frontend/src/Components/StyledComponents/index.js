@@ -50,7 +50,6 @@ const TopBarH1 = styled.div`
 // Map Styled Components
 const MapDiv = styled.div`
     width: 100%;
-    border: 2px solid blue;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
@@ -167,6 +166,10 @@ const ButtonPanelDiv = styled.div`
     border-radius: 10px;
 `;
 
+const MovementButton = styled.div`
+
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -192,5 +195,6 @@ export {
     UserInfoLi,
     UserInfoSpan,
     ButtonPanelDiv,
+    MovementButton,
 };
 // export 

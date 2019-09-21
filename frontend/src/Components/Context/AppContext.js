@@ -10,6 +10,7 @@ export default class AppProvider extends Component {
         currentLocation: null,
         userInitData: {},
         userData: {},
+        currentRoomData: {},
         wiseExplorer: false
     };
 
@@ -21,7 +22,6 @@ export default class AppProvider extends Component {
                     GetInitData: () => {
                         const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/';
                         const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                        console.log(key)
                         const options = {
                             headers: {
                                 Authorization: `Token ${key}`
@@ -35,6 +35,7 @@ export default class AppProvider extends Component {
                                 console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
                                 this.setState({
                                     userInitData: res.data,
+                                    currentRoomData: res.data,
                                     currentLocation: currentLocation
                                 });
                             })
