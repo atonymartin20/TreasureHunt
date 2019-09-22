@@ -6,34 +6,16 @@ class ButtonPanel extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            northAvailable: false,
-            southAvailable: false,
-            westAvailable: false,
-            eastAvailable: false
-        }
-    }
-    
-    DisableButtons = () => {
-        let disabledNorth = document.getElementById('north_button');
-        let disabledSouth = document.getElementById('south_button');
-        let disabledEast = document.getElementById('east_button');
-        let disabledWest = document.getElementById('west_button');
-        if (this.state.northAvailable === false) {
-            disabledNorth.disabled = true
-        }
-        if (this.state.southAvailable === false) {
-            disabledSouth.disabled = true
-        }
-        if (this.state.westAvailable === false) {
-            disabledWest.disabled = true
-        }
-        if (this.state.eastAvailable === false) {
-            disabledEast.disabled = true
+            northAvailable: true,
+            southAvailable: true,
+            westAvailable: true,
+            eastAvailable: true
         }
     }
 
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
+
             if (this.context.state.currentRoomData.exits.includes("n") && this.state.northAvailable === false) {
                 this.setState({
                     northAvailable: true
@@ -84,25 +66,17 @@ class ButtonPanel extends React.Component {
         }
     }
 
-    TestFunction = () => {
-        console.log('On Click works.  Now time to add context.')
-    }
-
     async RunFunctions() {
         await this.UpdateRoomData();
-        await this.DisableButtons();
-
     }
     render() {
         this.RunFunctions();
-        console.log(this.state);
         return (
             <ButtonPanelDiv>
-                <MovementButton id="north_button" onClick={this.TestFunction}>North</MovementButton>
-                <MovementButton id="south_button" onClick={this.TestFunction}>South</MovementButton>
-                <MovementButton id="west_button" onClick={this.TestFunction}>West</MovementButton>
-                <MovementButton id="east_button" onClick={this.TestFunction}>East</MovementButton>
-
+                <MovementButton onClick={this.context.MoveNorth} disabled={this.state.northAvailable === false}>North</MovementButton>
+                <MovementButton onClick={this.context.MoveSouth} disabled={this.state.southAvailable === false}>South</MovementButton>
+                <MovementButton onClick={this.context.MoveWest} disabled={this.state.westAvailable === false}>West</MovementButton>
+                <MovementButton onClick={this.context.MoveEast} disabled={this.state.eastAvailable === false}>East</MovementButton>
             </ButtonPanelDiv>
         );
     }

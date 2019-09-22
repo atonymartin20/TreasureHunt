@@ -16,27 +16,27 @@ class CurrentRoom extends React.Component {
             <CurrentRoomDiv>
                 <CurrentRoomH2>Current Room Info:</CurrentRoomH2>
                 <ul>
-                    <CurrentRoomLi><CurrentRoomSpan>Coordinates:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.coordinates}</CurrentRoomLi>
-                    <CurrentRoomLi><CurrentRoomSpan>Room ID:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.room_id}</CurrentRoomLi>
-                    <CurrentRoomLi><CurrentRoomSpan>Title:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.title}</CurrentRoomLi>
-                    <CurrentRoomLi><CurrentRoomSpan>Description:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.description}</CurrentRoomLi>
-                    <CurrentRoomLi><CurrentRoomSpan>Cooldown:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.cooldown}</CurrentRoomLi>
-                    <CurrentRoomLi><CurrentRoomSpan>Elevation:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.elevation}</CurrentRoomLi>
-                    <CurrentRoomLi><CurrentRoomSpan>Terrain:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.userInitData.terrain}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Coordinates:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.coordinates}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Room ID:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.room_id}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Title:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.title}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Description:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.description}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Cooldown:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.cooldown}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Elevation:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.elevation}</CurrentRoomLi>
+                    <CurrentRoomLi><CurrentRoomSpan>Terrain:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.terrain}</CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Players:</CurrentRoomSpan> 
-                        <InventoryList inventoryPlayers={this.context.state.userInitData.players} />
+                        <InventoryList inventoryPlayers={this.context.state.currentRoomData.players} />
                     </CurrentRoomLi>  
                     <CurrentRoomLi><CurrentRoomSpan>Items:</CurrentRoomSpan> 
-                        <InventoryList inventoryItems={this.context.state.userInitData.items} />
+                        <InventoryList inventoryItems={this.context.state.currentRoomData.items} />
                     </CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Exits:</CurrentRoomSpan> 
-                        <InventoryList inventoryExits={this.context.state.userInitData.exits} />
+                        <InventoryList inventoryExits={this.context.state.currentRoomData.exits} />
                     </CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Errors:</CurrentRoomSpan> 
-                        <InventoryList inventoryErrors={this.context.state.userInitData.errors} />
+                        <InventoryList inventoryErrors={this.context.state.currentRoomData.errors} />
                     </CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Messages:</CurrentRoomSpan> 
-                        <InventoryList inventoryMessages={this.context.state.userInitData.messages} />
+                        <InventoryList inventoryMessages={this.context.state.currentRoomData.messages} />
                     </CurrentRoomLi>
                 </ul>
             </CurrentRoomDiv>

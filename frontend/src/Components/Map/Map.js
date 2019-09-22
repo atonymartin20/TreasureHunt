@@ -14,7 +14,6 @@ class Map extends React.Component {
         super(props);
         this.state = {
             currentLocation: null,
-            userInitData: {}
         };
     }
 
