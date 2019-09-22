@@ -7,9 +7,9 @@ import CurrentRoom from './Components/CurrentRoom';
 import UserInfoDisplay from './Components/UserDisplay/UserInfoDisplay.js'
 
 class App extends React.Component{
-    componentDidMount() {
-        this.context.GetInitData();
-        this.context.GetUserData();
+    async componentDidMount() {
+        await this.context.GetInitalRoomData();
+        await this.context.GetUserData();
     }
     render(){
         return (

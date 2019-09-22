@@ -10,7 +10,8 @@ export default class AppProvider extends Component {
         currentLocation: null,
         userData: {},
         currentRoomData: {},
-        wiseExplorer: false
+        wiseExplorer: false,
+        cooldown: null
     };
 
     render() {
@@ -18,50 +19,52 @@ export default class AppProvider extends Component {
             <AppContext.Provider
                 value={{
                     state: this.state,
-                    GetInitData: () => {
-                        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/';
-                        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                        const options = {
-                            headers: {
-                                Authorization: `Token ${key}`
-                            }
-                        };
-                        axios
-                            .get(endpoint, options)
-                            .then(res => {
-                                let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                                let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
-                                this.setState({
-                                    currentRoomData: res.data,
-                                    currentLocation: currentLocation
+                    GetInitalRoomData: () => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/init/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`
+                                }
+                            };
+                            axios
+                                .get(endpoint, options)
+                                .then(res => {
+                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                    this.setState({
+                                        currentRoomData: res.data,
+                                        currentLocation: currentLocation,
+                                        cooldown: (res.data.cooldown * 1500)
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
                                 });
-                            })
-                            .catch(err => {
-                                console.log('error', err);
-                            });
                     },
                     GetUserData: () => {
                         setTimeout(() => {
-                        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
-                        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                        const options = {
-                            headers: {
-                                Authorization: `Token ${key}`
-                            }
-                        };
-                
-                        axios.post(endpoint, {}, options)
-                            .then(res => {
-                                console.log(res.data)
-                                this.setState({
-                                    userData: res.data
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`
+                                }
+                            };
+                    
+                            axios
+                                .post(endpoint, {}, options)
+                                .then(res => {
+                                    console.log(res.data)
+                                    this.setState({
+                                        userData: res.data,
+                                        cooldown: (res.data.cooldown * 1000)
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
                                 });
-                            })
-                            .catch(err => {
-                                console.log('error', err);
-                            });
-                        }, 2200);
+                        }, 1500);
                     },
                     MoveWest: () => {
                         // console.log('This.state.wiseExplorer', this.state.wiseExplorer, 'this.context.state.wiseExplorer', this.context.state.wiseExplorer)
@@ -83,15 +86,20 @@ export default class AppProvider extends Component {
                                 axios
                                     .post(endpoint, body, options)
                                     .then(res => {
-                                        console.log(res.data)
+                                        console.log('MoveWest coordinates', res.data.coordinates);
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
                                         this.setState({
-                                            currentRoomData: res.data
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100)
                                         });
                                     })
                                     .catch(err => {
                                         console.log('error', err);
                                     });
-                            }, 2200);
+                            }, this.state.cooldown);
                             // }
                             // else {
                             //     setTimeout(() => {
@@ -122,6 +130,7 @@ export default class AppProvider extends Component {
                     MoveEast: () => {
                         setTimeout(() => {
                             console.log('Started MoveEast');
+                            console.log(this.state.cooldown)
                             const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
                             const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                             const options = {
@@ -137,15 +146,20 @@ export default class AppProvider extends Component {
                             axios
                                 .post(endpoint, body, options)
                                 .then(res => {
-                                    console.log(res.data)
-                                    this.setState({
-                                        currentRoomData: res.data
+                                    console.log('MoveEast coordinates', res.data.coordinates);
+                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                    console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
+                                        this.setState({
+                                        currentRoomData: res.data,
+                                        currentLocation: currentLocation,
+                                        cooldown: (res.data.cooldown * 1100)
                                     });
                                 })
                                 .catch(err => {
                                     console.log('error', err);
                                 });
-                        }, 2200);
+                        }, this.state.cooldown);
                     },
                     MoveNorth: () => {
                         // All of that here

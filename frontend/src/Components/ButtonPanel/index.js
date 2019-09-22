@@ -66,17 +66,11 @@ class ButtonPanel extends React.Component {
         }
     }
 
-    TestFunction = () => {
-        console.log('On Click works.  Now time to add context.', this.state)
-    }
-
     async RunFunctions() {
         await this.UpdateRoomData();
     }
     render() {
         this.RunFunctions();
-        console.log(this.state);
-        console.log(this.context)
         return (
             <ButtonPanelDiv>
                 <MovementButton onClick={this.context.MoveNorth} disabled={this.state.northAvailable === false}>North</MovementButton>
