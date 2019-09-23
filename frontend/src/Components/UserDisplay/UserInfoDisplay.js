@@ -24,7 +24,7 @@ class UserInfoDisplay extends React.Component {
                     <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                     <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                     <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan>
-                        <InventoryList inventory={this.context.state.userData.inventory} />
+                        <InventoryList inventory = {this.context.state.userData.inventory} currentRoom = {this.context.state.currentRoomData.room_id} sellItem = {this.context.SellItem} dropItem = {this.context.DropItem}/>
                     </UserInfoLi>  
                 </ul>
             </UserInfoDiv>
