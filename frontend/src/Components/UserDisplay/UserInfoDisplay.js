@@ -10,13 +10,10 @@ class UserInfoDisplay extends React.Component {
             <UserInfoDiv>
                 <UserInfoH2>Player: {this.context.state.userData.name}</UserInfoH2>
                 <ul>
-                    {/* <UserInfoLi><UserInfoSpan>Name:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.name}</UserInfoLi> */}
-                    {/* <UserInfoLi><UserInfoSpan>Cooldown:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.cooldown}</UserInfoLi> */}
                     <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                     <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
-                    {/* <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi> */}
                     <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
-                    <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>  
+                    <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
                 </ul>
             </UserInfoDiv>
         );

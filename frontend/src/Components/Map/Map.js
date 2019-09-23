@@ -52,14 +52,7 @@ class Map extends React.Component {
                 mine.push({ x: rooms[room].x, y: rooms[room].y });
             }
 
-            // let c = rooms[room].coordinates.replace( /[\s()]/g, '' ).split( ',' );
-            // console.log(coords[room])
-            // coords.push({x: Number(c[0]), y: Number(c[1])});
         }
-
-        // get edges (existing exits) for a single room
-
-        // let coords2 = [coords[this.state.currentLocation]]
 
         function getRoomEdges(room) {
             var existingExits = [];
@@ -72,14 +65,10 @@ class Map extends React.Component {
             }
             // for every exit in the room, create an array with the selected room's coords at index 0 and then the exit's coords
             existingExits.forEach(exit => {
-                // let c = room.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                // let d = rooms[exit].coordinates.replace( /[\s()]/g, '' ).split( ',' );
                 edges.push([
                     { x: room.x, y: room.y },
                     { x: rooms[exit].x, y: rooms[exit].y }
                 ]);
-
-                // edges.push([{x: Number(c[0]), y: Number(c[1])}, {x: Number(d[0]), y: Number(d[1])}])
             });
             return edges;
         }

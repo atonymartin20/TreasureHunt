@@ -31,8 +31,6 @@ class InventoryList extends React.Component {
                     <ul>
                         {this.context.state.userData.inventory.map(item => {
                             return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryDropButton onClick={() => {this.UpdateOnDrop({item})}}>Drop</InventoryDropButton></li>
-                            // return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryDropButton onClick={() => {props.dropItem({item})}}>Drop</InventoryDropButton></li>
-    
                         })}
                     </ul>);
     
