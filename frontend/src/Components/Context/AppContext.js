@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import rooms from '../../Data/rooms.js';
+import roomMap from '../../Data/roomMap.js';
 require('dotenv').config()
-
 export const AppContext = React.createContext();
 
 export default class AppProvider extends Component {
@@ -13,6 +12,15 @@ export default class AppProvider extends Component {
         wiseExplorer: false,
         cooldown: null
     };
+
+    componentDidMount() {
+        console.log('Room Map', roomMap)
+        if(Object.keys(roomMap).length === 500) {
+            this.setState({
+                wiseExplorer: true
+            })
+        }
+    }
 
     render() {
         return (
@@ -67,10 +75,9 @@ export default class AppProvider extends Component {
                         }, 1500);
                     },
                     MoveWest: () => {
-                        // console.log('This.state.wiseExplorer', this.state.wiseExplorer, 'this.context.state.wiseExplorer', this.context.state.wiseExplorer)
-                        // if (this.state.wiseExplorer) {
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].w.toString()
                             setTimeout(() => {
-                                console.log('Started MoveWest');
                                 const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
                                 const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                                 const options = {
@@ -81,91 +88,239 @@ export default class AppProvider extends Component {
                                 }
                                 const body = {
                                     'direction': "w",
-                                    // "next_room_id": (newRoom).toString()
+                                    "next_room_id": nextRoom
                                 }
                                 axios
                                     .post(endpoint, body, options)
                                     .then(res => {
-                                        console.log('MoveWest coordinates', res.data.coordinates);
                                         let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
                                         let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                        console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
                                         this.setState({
                                             currentRoomData: res.data,
                                             currentLocation: currentLocation,
-                                            cooldown: (res.data.cooldown * 1100)
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
                                         });
                                     })
                                     .catch(err => {
                                         console.log('error', err);
                                     });
                             }, this.state.cooldown);
-                            // }
-                            // else {
-                            //     setTimeout(() => {
-                            //         const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
-                            //         const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                            //         const options = {
-                            //             headers: {
-                            //                 Authorization: `Token ${key}`
-                            //             },
-                            //             json: {
-                            //                 "direction": "w",
-                            //             }
-                            //         }
-                            //         axios
-                            //             .post(endpoint, {}, options)
-                            //             .then(res => {
-                            //                 console.log(res.data)
-                            //                 this.setState({
-                            //                     userData: res.data
-                            //                 });
-                            //             })
-                            //             .catch(err => {
-                            //                 console.log('error', err);
-                            //             });
-                            //     }, 2200);
-                            // }
-                        },
-                    MoveEast: () => {
-                        setTimeout(() => {
-                            console.log('Started MoveEast');
-                            console.log(this.state.cooldown)
-                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
-                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                            const options = {
-                                headers: {
-                                    Authorization: `Token ${key}`,
-                                    'Content-Type': 'application/json'
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
                                 }
-                            }
-                            const body = {
-                                'direction': "e",
-                                // "next_room_id": (newRoom).toString()
-                            }
-                            axios
-                                .post(endpoint, body, options)
-                                .then(res => {
-                                    console.log('MoveEast coordinates', res.data.coordinates);
-                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                    console.log("Current Location: ", currentLocation, " User Initial Data: ", res.data)
+                                const body = {
+                                    'direction': "w",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
                                         this.setState({
-                                        currentRoomData: res.data,
-                                        currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1100)
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('error', err);
-                                });
-                        }, this.state.cooldown);
+                            }, this.state.cooldown);
+                        }
+                    },
+                    MoveEast: () => {
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].e.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "e",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "e",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                     MoveNorth: () => {
-                        // All of that here
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].n.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "n",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "n",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                     MoveSouth: () => {
-                        // All of that here
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].s.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "s",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/move/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "s",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                 }}
             >
