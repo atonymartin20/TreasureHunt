@@ -10,7 +10,7 @@ export default class AppProvider extends Component {
         userData: {},
         currentRoomData: {},
         wiseExplorer: false,
-        cooldown: null
+        cooldown: 2000
     };
 
     componentDidMount() {
@@ -51,6 +51,7 @@ export default class AppProvider extends Component {
                     },
                     GetUserData: () => {
                         setTimeout(() => {
+                            console.log('Get User Data starting')
                             const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/status/';
                             const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                             const options = {
@@ -62,15 +63,17 @@ export default class AppProvider extends Component {
                             axios
                                 .post(endpoint, {}, options)
                                 .then(res => {
+                                    console.log('GetUserData res.data', res.data)
                                     this.setState({
                                         userData: res.data,
-                                        cooldown: (res.data.cooldown * 1000)
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
                                     });
+                                    console.log(this.state.cooldown, res.data.cooldown)
                                 })
                                 .catch(err => {
                                     console.log('error', err);
                                 });
-                        }, 1500);
+                        }, this.state.cooldown);
                     },
                     MoveWest: () => {
                         if (this.state.wiseExplorer) {
@@ -321,9 +324,12 @@ export default class AppProvider extends Component {
                         }
                     },
                     DropItem: (item) => {
+                        // console.log('Still not working right')
                         setTimeout(() => {
+                            // this.setState({
+                            //     cooldown: 8000
+                            // });
                             const itemName = item.item
-                            console.log('I would like to sell this item.', itemName)
                             const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/drop/';
                             const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                             const options = {
@@ -338,7 +344,11 @@ export default class AppProvider extends Component {
                             axios
                                 .post(endpoint, body, options)
                                 .then( res => {
-                                    console.log('res.data', res.data)
+                                    console.log('res.data in Drop Item', res.data, 'cooldown', res.data.cooldown)
+                                    this.setState({
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                    console.log(this.state.cooldown, res.data.cooldown)
                                 })
                                 .catch(err => {
                                     console.log('error', err);
@@ -348,7 +358,6 @@ export default class AppProvider extends Component {
                     SellItem: (item) => {
                         setTimeout(() => {
                             const itemName = item.item
-                            console.log('I would like to sell this item.', itemName)
                             const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/';
                             const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
                             const options = {
@@ -366,6 +375,9 @@ export default class AppProvider extends Component {
                                     .post(endpoint, body, options)
                                     .then( res => {
                                         console.log('res.data', res.data)
+                                        this.setState({
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
                                     })
                                     .catch(err => {
                                         console.log('error', err);

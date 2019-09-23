@@ -5,27 +5,18 @@ import { UserInfoDiv, UserInfoH2, UserInfoLi, UserInfoSpan } from '../StyledComp
 
 
 class UserInfoDisplay extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            userData: {},
-        }
-    }
-
     render() {
         return (
             <UserInfoDiv>
-                <UserInfoH2>User Info:</UserInfoH2>
+                <UserInfoH2>Player: {this.context.state.userData.name}</UserInfoH2>
                 <ul>
-                    <UserInfoLi><UserInfoSpan>Name:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.name}</UserInfoLi>
-                    <UserInfoLi><UserInfoSpan>Cooldown:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.cooldown}</UserInfoLi>
+                    {/* <UserInfoLi><UserInfoSpan>Name:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.name}</UserInfoLi> */}
+                    {/* <UserInfoLi><UserInfoSpan>Cooldown:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.cooldown}</UserInfoLi> */}
                     <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                     <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
-                    <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
+                    {/* <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi> */}
                     <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
-                    <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan>
-                        <InventoryList inventory = {this.context.state.userData.inventory} currentRoom = {this.context.state.currentRoomData.room_id} sellItem = {this.context.SellItem} dropItem = {this.context.DropItem}/>
-                    </UserInfoLi>  
+                    <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>  
                 </ul>
             </UserInfoDiv>
         );

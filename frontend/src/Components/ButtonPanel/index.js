@@ -9,13 +9,21 @@ class ButtonPanel extends React.Component {
             northAvailable: true,
             southAvailable: true,
             westAvailable: true,
-            eastAvailable: true
+            eastAvailable: true,
         }
     }
 
+    componentDidMount() {
+        this.UpdateRoomData();
+    }
+
+    componentDidUpdate() {
+        this.UpdateRoomData();
+    }
+
+
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
-
             if (this.context.state.currentRoomData.exits.includes("n") && this.state.northAvailable === false) {
                 this.setState({
                     northAvailable: true
@@ -66,11 +74,7 @@ class ButtonPanel extends React.Component {
         }
     }
 
-    async RunFunctions() {
-        await this.UpdateRoomData();
-    }
     render() {
-        this.RunFunctions();
         return (
             <ButtonPanelDiv>
                 <MovementButton onClick={this.context.MoveNorth} disabled={this.state.northAvailable === false}>North</MovementButton>

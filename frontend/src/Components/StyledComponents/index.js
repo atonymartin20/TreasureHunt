@@ -121,6 +121,11 @@ const CurrentRoomDiv = styled.div`
     width: 100%;
 `;
 
+const CurrentRoomTitleBar = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 const CurrentRoomH2 = styled.h2`
     font-size: 1.5rem;
     padding: 0px;
@@ -158,7 +163,8 @@ const UserInfoSpan = styled.span`
 `;
 
 const InventoryDropButton = styled.button`
-    width: 35%;
+    width: 85%;
+    max-width: 120px;
     height: 40px;
     border: 2px solid black;
     border-radius: 10px;
@@ -170,7 +176,8 @@ const InventoryDropButton = styled.button`
 `;
 
 const InventorySellButton = styled.button`
-    width: 35%;
+    width: 85%;
+    max-width: 120px;
     height: 40px;
     border: 2px solid black;
     border-radius: 10px;
@@ -232,6 +239,7 @@ export {
     MineP,
     CurrentLocationP,
     CurrentRoomDiv,
+    CurrentRoomTitleBar,
     CurrentRoomH2,
     CurrentRoomLi,
     CurrentRoomSpan,
