@@ -1,138 +1,116 @@
 import React from 'react';
+import { CurrentRoomLi, CurrentRoomSpan, InventoryPickUpButton } from '../StyledComponents';
+import { AppContext } from '../Context/AppContext.js';
 
-function InventoryList(props) {
-    let inventoryHasItems = props.inventoryItems;
-    let inventoryHasPlayers = props.inventoryPlayers;
-    let inventoryHasExits = props.inventoryExits;
-    let inventoryHasErrors = props.inventoryErrors;
-    let inventoryHasMessages = props.inventoryMessages;
-
-    if (inventoryHasItems) {
-        if (inventoryHasItems.length > 0) {
-            return (
-                <ul>
-                    {inventoryHasItems.map(item => {
-                        return <li key={Math.random()}>{item}</li>
-                    })}
-                </ul>
-            );
-        }
-        else {
-            return(
-                <span>&nbsp;&nbsp;No items</span>
-            );
+class InventoryList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userData: {},
         }
     }
-    else if (inventoryHasPlayers) {
-        if (inventoryHasPlayers.length > 5) {
-            let playerSpan = ''
-            for(let i = 0; i < 5; i++) {
-                playerSpan += `${inventoryHasPlayers[i]}, `
+
+    UpdateOnPickUp({item}) {
+        this.context.PickUpItem({item});
+        setTimeout(() => {
+            this.context.GetUserData();
+        },6500)
+    }
+    render() {
+        // Checks to see if this.context.state.currentRoomData has been filled in yet.
+        if(Object.keys(this.context.state.currentRoomData).length !== 0) {
+            // Checks ListType being passed through props
+            if (this.props.ListType === "players") {
+                if ((this.context.state.currentRoomData.players).length > 5) {
+                    let playerSpan = ''
+                    for(let i = 0; i < 5; i++) {
+                        playerSpan += `${this.context.state.currentRoomData.players[i]}, `
+                    }
+                    let remainingPlayers = this.context.state.currentRoomData.players.length - 5;
+                    return (
+                        <span>&nbsp;&nbsp;{playerSpan} and {remainingPlayers} more players.</span>
+                    )
+                }
+                else if ((this.context.state.currentRoomData.players).length > 0) {
+                    let playerSpan = ''
+                    this.context.state.currentRoomData.players.map(player => {
+                        return playerSpan += `${player}, ${'\xa0'} `
+                    })
+                
+                    const removeTrailingComma = (string) => {
+                        let n = string.lastIndexOf(",");
+                        let a = string.substring(0, n);
+                        return a;
+                    }
+                    return (
+                        <span>&nbsp;&nbsp;{removeTrailingComma(playerSpan)}</span>
+                    );
+                }
+                else {
+                    return(
+                        <span>&nbsp;&nbsp;No players</span>
+                    );
+                }
             }
-            let remainingPlayers = inventoryHasPlayers.length - 5;
-            return (
-                <span>&nbsp;&nbsp;{playerSpan} and {remainingPlayers} more players.</span>
-            )
-        }
-        else if (inventoryHasPlayers.length > 0) {
-            let playerSpan = ''
-            inventoryHasPlayers.map(player => {
-                return playerSpan += `${player}, ${'\xa0'} `
-            })
-
-            const removeTrailingComma = (string) => {
-                let n = string.lastIndexOf(",");
-                let a = string.substring(0, n);
-                return a;
+            // Checks ListType being passed through props
+            else if (this.props.ListType === "items") {
+                if (Object.keys(this.context.state.currentRoomData.items).length > 0) {
+                    return (
+                        <ul>
+                            {this.context.state.currentRoomData.items.map(item => {
+                                return <li key={Math.random()}>{item}</li>
+                            })}
+                        </ul>
+                    );
+                }
+                else {
+                    return(
+                        <span>&nbsp;&nbsp;No items</span>
+                    );
+                }
             }
-            return (
-                <span>&nbsp;&nbsp;{removeTrailingComma(playerSpan)}</span>
-            );
-        }
-        else {
-            return(
-                <span>&nbsp;&nbsp;No players</span>
-            );
-        }
-    }
-    else if (inventoryHasExits) {
-        if (inventoryHasExits.length > 0) {
-            let exitSpan = ''
-            inventoryHasExits.map(exit => {
-                let upper = exit.toUpperCase();
-                return exitSpan += `${upper}, ${'\xa0'} `
-            })
 
-            const removeTrailingComma = (string) => {
-                let n = string.lastIndexOf(",");
-                let a = string.substring(0, n);
-                return a;
+            // Checks ListType being passed through props
+            else if (this.props.ListType === "messages") {
+                if ((this.context.state.currentRoomData.messages).length > 0) {
+                    return (
+                        <ul>
+                            {this.context.state.currentRoomData.messages.map(message => {
+                                return <li key={Math.random()}>{message}</li>
+                            })}
+                        </ul>
+                    );
+                }
+                else if ((this.context.state.currentRoomData.messages).length === 1) {
+                    let messageSpan = ''
+                    this.context.state.currentRoomData.messages.map(message => {
+                        return messageSpan += `${message}`
+                    })
+                        
+                    return (
+                        <span>&nbsp;&nbsp;{messageSpan}</span>
+                        );
+                }
+                else {
+                    return(
+                        <span>&nbsp;&nbsp;No messages</span>
+                    );
+                }
             }
-            return (
-                <span>&nbsp;&nbsp;{removeTrailingComma(exitSpan)}</span>
-            );
-        }
-        else {
-            return(
-                <span>&nbsp;&nbsp;No exits</span>
-            );
-        }
-    }
-    else if (inventoryHasErrors) {
-        if (inventoryHasErrors.length === 1) {
-            let errorSpan = ''
-            inventoryHasErrors.map(error => {
-                return errorSpan += `${error}`
-            })
 
-            return (
-                <span>&nbsp;&nbsp;{errorSpan}</span>
-            );
+            // If the prop ListType doesn't match "players","items", or "messgaes" return null.
+            else {
+                return null
+            }
         }
-        else if (inventoryHasErrors.length > 0) {
-            return (
-                <ul>
-                    {inventoryHasErrors.map(error => {
-                        return <li key={Math.random()}>{error}</li>
-                    })}
-                </ul>
-            );
-        }
-        else {
-            return(
-                <span>&nbsp;&nbsp;No errors</span>
-            );
-        }
-    }
-    else if (inventoryHasMessages) {
-        if (inventoryHasMessages.length === 1) {
-            let messageSpan = ''
-            inventoryHasMessages.map(message => {
-                return messageSpan += `${message}`
-            })
 
-            return (
-                <span>&nbsp;&nbsp;{messageSpan}</span>
-            );
-        }
-        else if (inventoryHasMessages.length > 0) {
-            return (
-                <ul>
-                    {inventoryHasMessages.map(message => {
-                        return <li key={Math.random()}>{message}</li>
-                    })}
-                </ul>
-            );
-        }
+        // if this.context.state.currentRoomData hasn't been filled in yet return null
         else {
-            return(
-                <span>&nbsp;&nbsp;No messages</span>
-            );
+            return null
         }
-    }
-    else {
-        return null
     }
 }
 
-export default InventoryList
+InventoryList.contextType = AppContext;
+
+export default InventoryList;
