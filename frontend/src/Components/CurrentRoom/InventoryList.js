@@ -24,7 +24,17 @@ function InventoryList(props) {
         }
     }
     else if (inventoryHasPlayers) {
-        if (inventoryHasPlayers.length > 0) {
+        if (inventoryHasPlayers.length > 5) {
+            let playerSpan = ''
+            for(let i = 0; i < 5; i++) {
+                playerSpan += `${inventoryHasPlayers[i]}, `
+            }
+            let remainingPlayers = inventoryHasPlayers.length - 5;
+            return (
+                <span>&nbsp;&nbsp;{playerSpan} and {remainingPlayers} more players.</span>
+            )
+        }
+        else if (inventoryHasPlayers.length > 0) {
             let playerSpan = ''
             inventoryHasPlayers.map(player => {
                 return playerSpan += `${player}, ${'\xa0'} `

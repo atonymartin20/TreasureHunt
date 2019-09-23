@@ -10,11 +10,10 @@ export default class AppProvider extends Component {
         userData: {},
         currentRoomData: {},
         wiseExplorer: false,
-        cooldown: null
+        cooldown: 2000
     };
 
     componentDidMount() {
-        console.log('Room Map', roomMap)
         if(Object.keys(roomMap).length === 500) {
             this.setState({
                 wiseExplorer: true
@@ -63,16 +62,15 @@ export default class AppProvider extends Component {
                             axios
                                 .post(endpoint, {}, options)
                                 .then(res => {
-                                    console.log(res.data)
                                     this.setState({
                                         userData: res.data,
-                                        cooldown: (res.data.cooldown * 1000)
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
                                     });
                                 })
                                 .catch(err => {
                                     console.log('error', err);
                                 });
-                        }, 1500);
+                        }, this.state.cooldown);
                     },
                     MoveWest: () => {
                         if (this.state.wiseExplorer) {
@@ -322,6 +320,65 @@ export default class AppProvider extends Component {
                             }, this.state.cooldown);
                         }
                     },
+                    DropItem: (item) => {
+                        setTimeout(() => {
+                            const itemName = item.item
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/drop/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'name': `${itemName}`,
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then( res => {
+                                    this.setState({
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
+                    },
+                    SellItem: (item) => {
+                        setTimeout(() => {
+                            const itemName = item.item
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/sell/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'name': `${itemName}`,
+                                "confirm": 'yes'
+                            }
+                            if (itemName.includes('treasure')) {
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then( res => {
+                                        console.log('res.data', res.data)
+                                        this.setState({
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }
+                            else {
+                                alert("The shopkeeper doesn't want that item.  He currently would only like to buy your treasure.")
+                            }
+                        }, this.state.cooldown);
+                    }
                 }}
             >
                 {this.props.children}

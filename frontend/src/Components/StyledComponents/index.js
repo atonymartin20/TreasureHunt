@@ -121,6 +121,11 @@ const CurrentRoomDiv = styled.div`
     width: 100%;
 `;
 
+const CurrentRoomTitleBar = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
 const CurrentRoomH2 = styled.h2`
     font-size: 1.5rem;
     padding: 0px;
@@ -157,6 +162,32 @@ const UserInfoSpan = styled.span`
     font-weight: bold;
 `;
 
+const InventoryDropButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #97E3E8;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
+
+const InventorySellButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #C597E8;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
+
 //  Button Panel Styled Components
 const ButtonPanelDiv = styled.div`
     width: 45%;
@@ -177,7 +208,6 @@ const MovementButton = styled.button`
     background-color: #9BF182;
     font-size: 1.0rem;
     font-weight: bold;
-    padding: 15px 5%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -209,6 +239,7 @@ export {
     MineP,
     CurrentLocationP,
     CurrentRoomDiv,
+    CurrentRoomTitleBar,
     CurrentRoomH2,
     CurrentRoomLi,
     CurrentRoomSpan,
@@ -216,6 +247,8 @@ export {
     UserInfoH2,
     UserInfoLi,
     UserInfoSpan,
+    InventoryDropButton,
+    InventorySellButton,
     ButtonPanelDiv,
     MovementButton,
 };
