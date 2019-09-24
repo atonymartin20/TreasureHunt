@@ -1,5 +1,5 @@
 import React from 'react';
-import { CurrentRoomLi, CurrentRoomSpan, InventoryPickUpButton } from '../StyledComponents';
+import { CurrentRoomItemPickUpButton } from '../StyledComponents';
 import { AppContext } from '../Context/AppContext.js';
 
 class InventoryList extends React.Component {
@@ -7,14 +7,24 @@ class InventoryList extends React.Component {
         super(props);
         this.state = {
             userData: {},
+            disablePickUpButton: false,
         }
     }
 
     UpdateOnPickUp({item}) {
+        this.setState({
+            disablePickUpButton: true
+        })
         this.context.PickUpItem({item});
         setTimeout(() => {
+            this.context.GetInitalRoomData();
+            this.setState({
+                disablePickUpButton: false
+            })
+        },this.context.state.cooldown + 5600)
+        setTimeout(() => {
             this.context.GetUserData();
-        },6500)
+        },this.context.state.cooldown + 500)
     }
     render() {
         // Checks to see if this.context.state.currentRoomData has been filled in yet.
@@ -58,7 +68,7 @@ class InventoryList extends React.Component {
                     return (
                         <ul>
                             {this.context.state.currentRoomData.items.map(item => {
-                                return <li key={Math.random()}>{item}</li>
+                                return <li key={Math.random()}>{item}<CurrentRoomItemPickUpButton onClick={() => {this.UpdateOnPickUp({item})}} disabled={this.state.disablePickUpButton === true}>Pick Up</CurrentRoomItemPickUpButton></li>
                             })}
                         </ul>
                     );

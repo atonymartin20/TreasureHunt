@@ -141,6 +141,19 @@ const CurrentRoomSpan = styled.span`
     font-weight: bold;
 `;
 
+const CurrentRoomItemPickUpButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #9C97E8;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
+
 // User Info Styled Components
 const UserInfoDiv = styled.div`
     width: 100%;
@@ -243,6 +256,7 @@ export {
     CurrentRoomH2,
     CurrentRoomLi,
     CurrentRoomSpan,
+    CurrentRoomItemPickUpButton,
     UserInfoDiv,
     UserInfoH2,
     UserInfoLi,

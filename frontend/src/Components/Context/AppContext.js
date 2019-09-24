@@ -42,7 +42,7 @@ export default class AppProvider extends Component {
                                     this.setState({
                                         currentRoomData: res.data,
                                         currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1500)
+                                        cooldown: (res.data.cooldown * 1300)
                                     });
                                 })
                                 .catch(err => {
