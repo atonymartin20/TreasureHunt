@@ -18,13 +18,15 @@ class InventoryList extends React.Component {
         this.context.PickUpItem({item});
         setTimeout(() => {
             this.context.GetInitalRoomData();
-            this.setState({
-                disablePickUpButton: false
-            })
         },this.context.state.cooldown + 5600)
         setTimeout(() => {
             this.context.GetUserData();
         },this.context.state.cooldown + 500)
+        setTimeout(() => {
+            this.setState({
+                disablePickUpButton: false
+            })
+        }, 10000)
     }
     render() {
         // Checks to see if this.context.state.currentRoomData has been filled in yet.

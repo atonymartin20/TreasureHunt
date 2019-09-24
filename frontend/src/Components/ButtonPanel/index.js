@@ -10,6 +10,7 @@ class ButtonPanel extends React.Component {
             southAvailable: true,
             westAvailable: true,
             eastAvailable: true,
+            disableMovementButtons: false,
         }
     }
 
@@ -21,6 +22,53 @@ class ButtonPanel extends React.Component {
         this.UpdateRoomData();
     }
 
+    MoveNorth = () => {
+        this.setState({
+            disableMovementButtons: true
+        })
+        this.context.MoveNorth()
+        setTimeout(() => {
+            this.setState({
+                disableMovementButtons: false
+            })
+        }, 6000)
+    }
+    
+    MoveSouth = () => {
+        this.setState({
+            disableMovementButtons: true
+        })
+        this.context.MoveSouth()
+        setTimeout(() => {
+            this.setState({
+                disableMovementButtons: false
+            })
+        }, 6000)
+    }
+
+    MoveWest = () => {
+        this.setState({
+            disableMovementButtons: true
+        })
+        this.context.MoveWest()
+        setTimeout(() => {
+            this.setState({
+                disableMovementButtons: false
+            })
+        }, 6000)
+    }
+
+    MoveEast = () => {
+        this.setState({
+            disableMovementButtons: true
+        })
+        this.context.MoveEast()
+        setTimeout(() => {
+            this.setState({
+                disableMovementButtons: false
+            })
+        }, 6000)
+    }
 
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
@@ -77,10 +125,10 @@ class ButtonPanel extends React.Component {
     render() {
         return (
             <ButtonPanelDiv>
-                <MovementButton onClick={this.context.MoveNorth} disabled={this.state.northAvailable === false}>North</MovementButton>
-                <MovementButton onClick={this.context.MoveSouth} disabled={this.state.southAvailable === false}>South</MovementButton>
-                <MovementButton onClick={this.context.MoveWest} disabled={this.state.westAvailable === false}>West</MovementButton>
-                <MovementButton onClick={this.context.MoveEast} disabled={this.state.eastAvailable === false}>East</MovementButton>
+                <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>North</MovementButton>
+                <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>South</MovementButton>
+                <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>West</MovementButton>
+                <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>East</MovementButton>
             </ButtonPanelDiv>
         );
     }

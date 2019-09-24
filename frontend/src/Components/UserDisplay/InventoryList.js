@@ -19,7 +19,13 @@ class InventoryList extends React.Component {
         setTimeout(() => {
             this.context.GetUserData();
         }, 6500)
+        setTimeout(() => {
+            this.setState({
+                disableSellButton: false
+            })
+        }, 11000)
     }
+
     UpdateOnDrop({item}) {
         this.setState({
             disableDropButton: true
@@ -30,7 +36,13 @@ class InventoryList extends React.Component {
         },this.context.state.cooldown + 1000)
         setTimeout(() => {
             this.context.GetInitalRoomData();
+
         },this.context.state.cooldown + 8800)
+        setTimeout(() => {
+            this.setState({
+                disableDropButton: false
+            })
+        }, 11000)
     }
     render() {
         if (this.context.state.userData.inventory) {
