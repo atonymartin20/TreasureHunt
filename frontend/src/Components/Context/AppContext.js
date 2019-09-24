@@ -42,7 +42,7 @@ export default class AppProvider extends Component {
                                     this.setState({
                                         currentRoomData: res.data,
                                         currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1500)
+                                        cooldown: (res.data.cooldown * 1300)
                                     });
                                 })
                                 .catch(err => {
@@ -378,7 +378,33 @@ export default class AppProvider extends Component {
                                 alert("The shopkeeper doesn't want that item.  He currently would only like to buy your treasure.")
                             }
                         }, this.state.cooldown);
-                    }
+                    },
+                    PickUpItem: (item) => {
+                        setTimeout(() => {
+                            const itemName = item.item
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/take/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'name': `${itemName}`,
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then( res => {
+                                    this.setState({
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
+                    },
                 }}
             >
                 {this.props.children}

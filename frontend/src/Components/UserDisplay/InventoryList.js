@@ -3,17 +3,46 @@ import { InventoryDropButton, InventorySellButton, UserInfoSpan } from '../Style
 import { AppContext } from '../Context/AppContext.js';
 
 class InventoryList extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            userData: {},
+            disableDropButton: false,
+            disableSellButton: false,
+        }
+    }
     UpdateOnSell({item}) {
+        this.setState({
+            disableSellButton: true
+        })
         this.context.SellItem({item})
         setTimeout(() => {
             this.context.GetUserData();
         }, 6500)
+        setTimeout(() => {
+            this.setState({
+                disableSellButton: false
+            })
+        }, 11000)
     }
+
     UpdateOnDrop({item}) {
+        this.setState({
+            disableDropButton: true
+        })
         this.context.DropItem({item});
         setTimeout(() => {
             this.context.GetUserData();
-        },6500)
+        },this.context.state.cooldown + 1000)
+        setTimeout(() => {
+            this.context.GetInitalRoomData();
+
+        },this.context.state.cooldown + 8800)
+        setTimeout(() => {
+            this.setState({
+                disableDropButton: false
+            })
+        }, 11000)
     }
     render() {
         if (this.context.state.userData.inventory) {
@@ -21,7 +50,7 @@ class InventoryList extends React.Component {
                 return (
                     <ul>
                         {this.context.state.userData.inventory.map(item => {
-                            return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventorySellButton onClick={() => {this.UpdateOnSell({item})}}>Sell</InventorySellButton></li>
+                            return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventorySellButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableSellButton === true}>Sell</InventorySellButton></li>
                         })}
                     </ul>
                 )
@@ -30,7 +59,7 @@ class InventoryList extends React.Component {
                 return (
                     <ul>
                         {this.context.state.userData.inventory.map(item => {
-                            return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryDropButton onClick={() => {this.UpdateOnDrop({item})}}>Drop</InventoryDropButton></li>
+                            return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryDropButton onClick={() => {this.UpdateOnDrop({item})}} disabled={this.state.disableDropButton === true}>Drop</InventoryDropButton></li>
                         })}
                     </ul>);
     

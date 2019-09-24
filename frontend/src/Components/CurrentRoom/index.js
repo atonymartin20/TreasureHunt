@@ -22,13 +22,13 @@ class CurrentRoom extends React.Component {
                     <CurrentRoomLi><CurrentRoomSpan>Room ID:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.room_id}</CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Description:</CurrentRoomSpan>&nbsp;&nbsp;{this.context.state.currentRoomData.description}</CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Players:</CurrentRoomSpan> 
-                        <InventoryList inventoryPlayers={this.context.state.currentRoomData.players} />
+                        <InventoryList ListType='players' />
                     </CurrentRoomLi>  
                     <CurrentRoomLi><CurrentRoomSpan>Items:</CurrentRoomSpan> 
-                        <InventoryList inventoryItems={this.context.state.currentRoomData.items} />
+                        <InventoryList ListType='items' />
                     </CurrentRoomLi>
                     <CurrentRoomLi><CurrentRoomSpan>Messages:</CurrentRoomSpan> 
-                        <InventoryList inventoryMessages={this.context.state.currentRoomData.messages} />
+                        <InventoryList ListType='messages' />
                     </CurrentRoomLi>
                 </ul>
             </CurrentRoomDiv>
