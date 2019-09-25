@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
-import { ButtonPanelDiv, MovementButton } from '../StyledComponents';
+import { ButtonPanelDiv, MovementButton, MineButton } from '../StyledComponents';
 
 class ButtonPanel extends React.Component {
     constructor(props) {
@@ -11,6 +11,7 @@ class ButtonPanel extends React.Component {
             westAvailable: true,
             eastAvailable: true,
             disableMovementButtons: false,
+            disableMineButton: false,
         }
     }
 
@@ -70,6 +71,18 @@ class ButtonPanel extends React.Component {
         }, 6000)
     }
 
+    MineCoin = () => {
+        this.setState({
+            disableMineButton: true
+        })
+        // call context mining function
+        setTimeout(() => {
+            this.setState({
+                disableMineButton: false
+            })
+        }, 15000) // Disables button for  15 seconds
+    }
+
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
             if (this.context.state.currentRoomData.exits.includes("n") && this.state.northAvailable === false) {
@@ -121,14 +134,34 @@ class ButtonPanel extends React.Component {
             }
         }
     }
-
+    
     render() {
+        // If context.state.currentRoomData has been grabbed.
+        if (this.context.state.currentRoomData) {
+            // If you are in the Mine - Room 250
+            if (this.context.state.currentRoomData.room_id === 250) {
+                // render regular buttons plus a mine button
+                return (
+                    <ButtonPanelDiv>
+                        <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
+                        <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
+                        <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
+                        <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
+                        <MineButton onClick={this.MineCoin} disabled={this.state.disableMineButton === true}>Mine Coin</MineButton>
+                    </ButtonPanelDiv>
+                );
+            }
+        }
+        // If context hasn't been set yet return null
+        else {
+            return null
+        }
         return (
             <ButtonPanelDiv>
-                <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>North</MovementButton>
-                <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>South</MovementButton>
-                <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>West</MovementButton>
-                <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>East</MovementButton>
+                <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
+                <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
+                <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
+                <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
             </ButtonPanelDiv>
         );
     }
