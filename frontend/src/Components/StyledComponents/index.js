@@ -210,7 +210,7 @@ const ButtonPanelDiv = styled.div`
     flex-wrap: wrap;
     justify-content: space-evenly;
     padding: 10px;
-    `;
+`;
 
 const MovementButton = styled.button`
     ${props => props.disabled}
@@ -233,6 +233,82 @@ const MovementButton = styled.button`
         color: black;
         cursor: not-allowed;
     }
+`;
+
+const MineButton = styled.button`
+    ${props => props.disabled}
+    width: 35%;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: black;
+    color: white;
+    font-size: 1.0rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:disabled {
+        width: 35%;
+        background-color: #808080;
+        color: black;
+        cursor: not-allowed;
+    }
+`;
+
+const PrayButton = styled.button`
+    ${props => props.disabled}
+    width: 35%;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #FFFF00;
+    font-size: 1.0rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:disabled {
+        width: 35%;
+        background-color: #808080;
+        color: black;
+        cursor: not-allowed;
+    }
+`;
+
+const NameChangeButton = styled.button`
+    ${props => props.disabled}
+    width: 35%;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #FF00F0;
+    font-size: 1.0rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:disabled {
+        width: 35%;
+        background-color: #808080;
+        color: black;
+        cursor: not-allowed;
+    }
+`;
+
+const NameChangeInput = styled.input`
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
 `;
 
 export {
@@ -265,5 +341,9 @@ export {
     InventorySellButton,
     ButtonPanelDiv,
     MovementButton,
+    MineButton,
+    PrayButton,
+    NameChangeButton,
+    NameChangeInput,
 };
 // export 
