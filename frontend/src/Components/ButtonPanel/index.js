@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
-import { ButtonPanelDiv, MovementButton, MineButton } from '../StyledComponents';
+import { ButtonPanelDiv, MovementButton, MineButton, PrayButton, NameChangeButton } from '../StyledComponents';
 
 class ButtonPanel extends React.Component {
     constructor(props) {
@@ -12,6 +12,9 @@ class ButtonPanel extends React.Component {
             eastAvailable: true,
             disableMovementButtons: false,
             disableMineButton: false,
+            disablePrayButton: false,
+            disableNameChangeButton: false,
+            newName: '',
         }
     }
 
@@ -82,7 +85,10 @@ class ButtonPanel extends React.Component {
             })
         }, 15000) // Disables button for  15 seconds
     }
+    
+    Pray = () => {
 
+    }
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
             if (this.context.state.currentRoomData.exits.includes("n") && this.state.northAvailable === false) {
@@ -140,7 +146,7 @@ class ButtonPanel extends React.Component {
         if (this.context.state.currentRoomData) {
             // If you are in the Mine - Room 250
             if (this.context.state.currentRoomData.room_id === 250) {
-                // render regular buttons plus a mine button
+                // render movement buttons plus a mine button
                 return (
                     <ButtonPanelDiv>
                         <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
@@ -151,19 +157,49 @@ class ButtonPanel extends React.Component {
                     </ButtonPanelDiv>
                 );
             }
+            // Else if you are at the Pirate Ry's Name Change shop - Room 467
+            else if (this.context.state.currentRoomData.room_id === 467) {
+                // render movement buttons plus a name change button and a name change input field
+                return (
+                    <ButtonPanelDiv>
+                        <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
+                        <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
+                        <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
+                        <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
+                        <NameChangeButton onClick={this.NameChange} disable={this.state.disableNameChangeButton === true}Change Name></NameChangeButton>
+                    </ButtonPanelDiv>
+                );
+            }
+            // Else if you are at a shrine - Rooms 461, 22, 499
+            else if (this.context.state.currentRoomData.room_id === 22 || this.context.state.currentRoomData.room_id === 461 || this.context.state.currentRoomData.room_id === 499) {
+                // render movement buttons plus Pray button
+                return (
+                    <ButtonPanelDiv>
+                        <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
+                        <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
+                        <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
+                        <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
+                        <PrayButton onClick={this.Pray} disable={this.state.disablePrayButton === true}Change Name></PrayButton>
+                    </ButtonPanelDiv>
+                );
+            }
+            // Else if just a regular node
+            else {
+                // render movement buttons
+                return (
+                    <ButtonPanelDiv>
+                        <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
+                        <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
+                        <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
+                        <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
+                    </ButtonPanelDiv>
+                );
+            }
         }
         // If context hasn't been set yet return null
         else {
             return null
         }
-        return (
-            <ButtonPanelDiv>
-                <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true}>Move North</MovementButton>
-                <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
-                <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
-                <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
-            </ButtonPanelDiv>
-        );
     }
 }
 
