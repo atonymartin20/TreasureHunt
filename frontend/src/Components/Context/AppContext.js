@@ -405,6 +405,21 @@ export default class AppProvider extends Component {
                                 });
                         }, this.state.cooldown);
                     },
+                    PrayAtAltar: () => {
+                        setTimeout(() => {
+                            // Pray At Altar Code Here
+                        }, this.state.cooldown);
+                    },
+                    MineOneCoin: () => {
+                        setTimeout(() => {
+                            // Mine a coin Code Here
+                        }, this.state.cooldown);
+                    },
+                    RenameCharacter: () => {
+                        setTimeout(() => {
+                            // Rename Character Code Here
+                        }, this.state.cooldown);
+                    }
                 }}
             >
                 {this.props.children}

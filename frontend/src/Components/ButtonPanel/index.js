@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
-import { ButtonPanelDiv, MovementButton, MineButton, PrayButton, NameChangeButton } from '../StyledComponents';
+import { ButtonPanelDiv, MovementButton, MineButton, PrayButton, NameChangeInput, NameChangeButton } from '../StyledComponents';
 
 class ButtonPanel extends React.Component {
     constructor(props) {
@@ -78,17 +78,38 @@ class ButtonPanel extends React.Component {
         this.setState({
             disableMineButton: true
         })
-        // call context mining function
+        this.context.MineOneCoin()
         setTimeout(() => {
             this.setState({
                 disableMineButton: false
             })
-        }, 15000) // Disables button for  15 seconds
+        }, 15000) // Disables button for 15 seconds
     }
     
     Pray = () => {
-
+        this.setState({
+            disablePrayButton: true
+        })
+        this.context.PrayAtAltar()
+        setTimeout(() => {
+            this.setState({
+                disablePrayButton: false
+            })
+        }, 10000) // Disables pray button for 10 seconds
     }
+
+    NameChange = () => {
+        this.setState({
+            disableNameChangeButton: true
+        })
+        this.context.RenameCharacter()
+        setTimeout(() => {
+            this.setState({
+                disableNameChangeButton: false
+            })
+        }, 10000) // Disables name change button for 10 seconds
+    }
+
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
             if (this.context.state.currentRoomData.exits.includes("n") && this.state.northAvailable === false) {
@@ -166,7 +187,8 @@ class ButtonPanel extends React.Component {
                         <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
                         <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
                         <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
-                        <NameChangeButton onClick={this.NameChange} disable={this.state.disableNameChangeButton === true}Change Name></NameChangeButton>
+                        <NameChangeInput />
+                        <NameChangeButton onClick={this.NameChange} disable={this.state.disableNameChangeButton === true}>Change Name</NameChangeButton>
                     </ButtonPanelDiv>
                 );
             }
@@ -179,7 +201,7 @@ class ButtonPanel extends React.Component {
                         <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
                         <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
                         <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
-                        <PrayButton onClick={this.Pray} disable={this.state.disablePrayButton === true}Change Name></PrayButton>
+                        <PrayButton onClick={this.Pray} disable={this.state.disablePrayButton === true}>Pray</PrayButton>
                     </ButtonPanelDiv>
                 );
             }

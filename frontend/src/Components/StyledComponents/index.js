@@ -305,6 +305,12 @@ const NameChangeButton = styled.button`
     }
 `;
 
+const NameChangeInput = styled.input`
+    width: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -338,5 +344,6 @@ export {
     MineButton,
     PrayButton,
     NameChangeButton,
+    NameChangeInput,
 };
 // export 
