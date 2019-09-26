@@ -10,7 +10,8 @@ export default class AppProvider extends Component {
         userData: {},
         currentRoomData: {},
         wiseExplorer: false,
-        cooldown: 2000
+        cooldown: 2000,
+        coinCount: null,
     };
 
     componentDidMount() {
@@ -65,6 +66,34 @@ export default class AppProvider extends Component {
                                     this.setState({
                                         userData: res.data,
                                         cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
+                    },
+                    CoinBalance: () => {
+                        setTimeout(() => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/get_balance/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`
+                                }
+                            };
+                            axios
+                                .get(endpoint, options)
+                                .then(res => {
+                                    let coinMessage = res.data.messages;
+                                    // Will give something like this:
+                                    // ["You have a balance of 35.0 Lambda Coins"]
+                                    let regExpression = Number(/[0-9]+[.][0]*/.exec(coinMessage)[0]);
+                                    // pulls out just the number value in the above statement
+
+                                    this.setState({
+                                        coinCount: regExpression,
+                                        cooldown: (res.data.cooldown * 1300)
                                     });
                                 })
                                 .catch(err => {
