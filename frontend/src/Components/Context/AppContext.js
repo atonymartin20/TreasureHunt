@@ -12,6 +12,7 @@ export default class AppProvider extends Component {
         wiseExplorer: false,
         cooldown: 2000,
         coinCount: null,
+        flying: false,
     };
 
     componentDidMount() {
@@ -436,7 +437,33 @@ export default class AppProvider extends Component {
                     },
                     PrayAtAltar: () => {
                         setTimeout(() => {
-                            // Pray At Altar Code Here
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/pray/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                            axios
+                                .post(endpoint, {}, options)
+                                .then(res => {
+                                    let PrayerMessage = res.data.messages
+                                    console.log(PrayerMessage[0])
+                                    let CanIFly = /(?:hover)/.test(PrayerMessage);
+                                    if (CanIFly === true) {
+                                        this.setState({
+                                            flying: true,
+                                            cooldown: (res.data.cooldown * 1200)
+                                        });
+                                    }
+                                    else {
+                                        return null
+                                    }
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
                         }, this.state.cooldown);
                     },
                     MineOneCoin: () => {

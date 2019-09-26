@@ -188,7 +188,7 @@ class ButtonPanel extends React.Component {
                         <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
                         <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
                         <NameChangeInput />
-                        <NameChangeButton onClick={this.NameChange} disable={this.state.disableNameChangeButton === true}>Change Name</NameChangeButton>
+                        <NameChangeButton onClick={this.NameChange} disabled={this.state.disableNameChangeButton === true}>Change Name</NameChangeButton>
                     </ButtonPanelDiv>
                 );
             }
@@ -201,7 +201,7 @@ class ButtonPanel extends React.Component {
                         <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true}>Move South</MovementButton>
                         <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true}>Move West</MovementButton>
                         <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true}>Move East</MovementButton>
-                        <PrayButton onClick={this.Pray} disable={this.state.disablePrayButton === true}>Pray</PrayButton>
+                        <PrayButton onClick={this.Pray} disabled={this.state.disablePrayButton === true}>Pray</PrayButton>
                     </ButtonPanelDiv>
                 );
             }
