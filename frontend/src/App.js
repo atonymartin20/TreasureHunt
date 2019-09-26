@@ -10,6 +10,7 @@ class App extends React.Component{
     async componentDidMount() {
         await this.context.GetInitalRoomData();
         await this.context.GetUserData();
+        await this.context.CoinBalance();
     }
     render(){
         return (
