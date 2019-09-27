@@ -12,7 +12,7 @@ export default class AppProvider extends Component {
         wiseExplorer: false,
         cooldown: 2000,
         coinCount: null,
-        flying: false,
+        flying: localStorage.getItem('flight') || false,
     };
 
     componentDidMount() {
@@ -39,6 +39,7 @@ export default class AppProvider extends Component {
                             axios
                                 .get(endpoint, options)
                                 .then(res => {
+                                    console.log('Get Initial Room Data', res.data)
                                     let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
                                     let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
                                     this.setState({
@@ -64,6 +65,8 @@ export default class AppProvider extends Component {
                             axios
                                 .post(endpoint, {}, options)
                                 .then(res => {
+                                    localStorage.setItem('userData', JSON.stringify(res.data));
+                                    console.log('Get User Data', res.data)
                                     this.setState({
                                         userData: res.data,
                                         cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
@@ -225,6 +228,35 @@ export default class AppProvider extends Component {
                                     });
                             }, this.state.cooldown);
                         }
+                    },
+                    FlyNorth: () => {
+                        setTimeout(() => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                            const body = {
+                                'direction': "n",
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then(res => {
+                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                    this.setState({
+                                        currentRoomData: res.data,
+                                        currentLocation: currentLocation,
+                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
                     },
                     MoveNorth: () => {
                         if (this.state.wiseExplorer) {
@@ -449,16 +481,14 @@ export default class AppProvider extends Component {
                                 .post(endpoint, {}, options)
                                 .then(res => {
                                     let PrayerMessage = res.data.messages
-                                    console.log(PrayerMessage[0])
                                     let CanIFly = /(?:hover)/.test(PrayerMessage);
                                     if (CanIFly === true) {
+                                        localStorage.setItem('flight', 'activated');
+                                        alert(`${PrayerMessage}\n\nYou will be able to move again in 50 seconds.`)
                                         this.setState({
                                             flying: true,
-                                            cooldown: (res.data.cooldown * 1200)
+                                            // cooldown: (res.data.cooldown * 1025)
                                         });
-                                    }
-                                    else {
-                                        return null
                                     }
                                 })
                                 .catch(err => {
