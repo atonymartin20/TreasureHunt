@@ -52,7 +52,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 2000)
+        }, 5300)
     }
 
     MoveSouth = () => {
@@ -80,7 +80,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 2000)
+        }, 5300)
     }
 
     MoveWest = () => {
@@ -108,7 +108,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 2000)
+        }, 5300)
     }
 
     MoveEast = () => {
@@ -136,7 +136,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 2000)
+        }, 5300)
     }
 
     MineCoin = () => {

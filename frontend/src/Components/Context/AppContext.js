@@ -105,6 +105,35 @@ export default class AppProvider extends Component {
                                 });
                         }, this.state.cooldown);
                     },
+                    FlyWest: () => {
+                        setTimeout(() => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                            const body = {
+                                'direction': "w",
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then(res => {
+                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                    this.setState({
+                                        currentRoomData: res.data,
+                                        currentLocation: currentLocation,
+                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
+                    },
                     MoveWest: () => {
                         if (this.state.wiseExplorer) {
                             const nextRoom = roomMap[this.state.currentRoomData.room_id].w.toString()
@@ -166,6 +195,35 @@ export default class AppProvider extends Component {
                                     });
                             }, this.state.cooldown);
                         }
+                    },
+                    FlyEast: () => {
+                        setTimeout(() => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                            const body = {
+                                'direction': "e",
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then(res => {
+                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                    this.setState({
+                                        currentRoomData: res.data,
+                                        currentLocation: currentLocation,
+                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
                     },
                     MoveEast: () => {
                         if (this.state.wiseExplorer) {
@@ -319,6 +377,35 @@ export default class AppProvider extends Component {
                                     });
                             }, this.state.cooldown);
                         }
+                    },
+                    FlySouth: () => {
+                        setTimeout(() => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                },
+                            }
+                            const body = {
+                                'direction': "s",
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then(res => {
+                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                    this.setState({
+                                        currentRoomData: res.data,
+                                        currentLocation: currentLocation,
+                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
                     },
                     MoveSouth: () => {
                         if (this.state.wiseExplorer) {
