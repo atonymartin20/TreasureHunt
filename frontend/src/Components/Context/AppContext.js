@@ -13,6 +13,8 @@ export default class AppProvider extends Component {
         cooldown: 2000,
         coinCount: null,
         flying: localStorage.getItem('flight') || false,
+        ghostFriend: localStorage.getItem('ghost_companion') || false,
+        dash: localStorage.getItem('runfast' || false)
     };
 
     componentDidMount() {
@@ -39,7 +41,6 @@ export default class AppProvider extends Component {
                             axios
                                 .get(endpoint, options)
                                 .then(res => {
-                                    console.log('Get Initial Room Data', res.data)
                                     let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
                                     let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
                                     this.setState({
@@ -66,7 +67,6 @@ export default class AppProvider extends Component {
                                 .post(endpoint, {}, options)
                                 .then(res => {
                                     localStorage.setItem('userData', JSON.stringify(res.data));
-                                    console.log('Get User Data', res.data)
                                     this.setState({
                                         userData: res.data,
                                         cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
@@ -106,33 +106,66 @@ export default class AppProvider extends Component {
                         }, this.state.cooldown);
                     },
                     FlyWest: () => {
-                        setTimeout(() => {
-                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
-                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                            const options = {
-                                headers: {
-                                    Authorization: `Token ${key}`,
-                                    'Content-Type': 'application/json'
-                                },
-                            }
-                            const body = {
-                                'direction': "w",
-                            }
-                            axios
-                                .post(endpoint, body, options)
-                                .then(res => {
-                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                    this.setState({
-                                        currentRoomData: res.data,
-                                        currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].w.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "w",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('error', err);
-                                });
-                        }, this.state.cooldown);
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "w",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1000)
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                     MoveWest: () => {
                         if (this.state.wiseExplorer) {
@@ -197,33 +230,66 @@ export default class AppProvider extends Component {
                         }
                     },
                     FlyEast: () => {
-                        setTimeout(() => {
-                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
-                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                            const options = {
-                                headers: {
-                                    Authorization: `Token ${key}`,
-                                    'Content-Type': 'application/json'
-                                },
-                            }
-                            const body = {
-                                'direction': "e",
-                            }
-                            axios
-                                .post(endpoint, body, options)
-                                .then(res => {
-                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                    this.setState({
-                                        currentRoomData: res.data,
-                                        currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].e.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "e",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('error', err);
-                                });
-                        }, this.state.cooldown);
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "e",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1000)
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                     MoveEast: () => {
                         if (this.state.wiseExplorer) {
@@ -288,33 +354,66 @@ export default class AppProvider extends Component {
                         }
                     },
                     FlyNorth: () => {
-                        setTimeout(() => {
-                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
-                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                            const options = {
-                                headers: {
-                                    Authorization: `Token ${key}`,
-                                    'Content-Type': 'application/json'
-                                },
-                            }
-                            const body = {
-                                'direction': "n",
-                            }
-                            axios
-                                .post(endpoint, body, options)
-                                .then(res => {
-                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                    this.setState({
-                                        currentRoomData: res.data,
-                                        currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].n.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "n",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('error', err);
-                                });
-                        }, this.state.cooldown);
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "n",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1000)
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                     MoveNorth: () => {
                         if (this.state.wiseExplorer) {
@@ -379,33 +478,66 @@ export default class AppProvider extends Component {
                         }
                     },
                     FlySouth: () => {
-                        setTimeout(() => {
-                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
-                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-                            const options = {
-                                headers: {
-                                    Authorization: `Token ${key}`,
-                                    'Content-Type': 'application/json'
-                                },
-                            }
-                            const body = {
-                                'direction': "s",
-                            }
-                            axios
-                                .post(endpoint, body, options)
-                                .then(res => {
-                                    let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
-                                    let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
-                                    this.setState({
-                                        currentRoomData: res.data,
-                                        currentLocation: currentLocation,
-                                        cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                        if (this.state.wiseExplorer) {
+                            const nextRoom = roomMap[this.state.currentRoomData.room_id].s.toString()
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    }
+                                }
+                                const body = {
+                                    'direction': "s",
+                                    "next_room_id": nextRoom
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
                                     });
-                                })
-                                .catch(err => {
-                                    console.log('error', err);
-                                });
-                        }, this.state.cooldown);
+                            }, this.state.cooldown);
+                        }
+                        else {
+                            setTimeout(() => {
+                                const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/fly/';
+                                const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                                const options = {
+                                    headers: {
+                                        Authorization: `Token ${key}`,
+                                        'Content-Type': 'application/json'
+                                    },
+                                }
+                                const body = {
+                                    'direction': "s",
+                                }
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then(res => {
+                                        let currentLocationSplit = res.data.coordinates.replace( /[\s()]/g, '' ).split( ',' );
+                                        let currentLocation = [({x: Number(currentLocationSplit[0]), y: Number(currentLocationSplit[1])})]
+                                        this.setState({
+                                            currentRoomData: res.data,
+                                            currentLocation: currentLocation,
+                                            cooldown: (res.data.cooldown * 1000)
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }, this.state.cooldown);
+                        }
                     },
                     MoveSouth: () => {
                         if (this.state.wiseExplorer) {
@@ -568,14 +700,33 @@ export default class AppProvider extends Component {
                                 .post(endpoint, {}, options)
                                 .then(res => {
                                     let PrayerMessage = res.data.messages
+                                    console.log(PrayerMessage)
                                     let CanIFly = /(?:hover)/.test(PrayerMessage);
+                                    let ghostlyUnburden = /(?:ghostly)/.test(PrayerMessage);
+                                    let CanIDash = /(?:speed)/.test(PrayerMessage);
+                                    
                                     if (CanIFly === true) {
                                         localStorage.setItem('flight', 'activated');
                                         alert(`${PrayerMessage}\n\nYou will be able to move again in 50 seconds.`)
                                         this.setState({
                                             flying: true,
-                                            // cooldown: (res.data.cooldown * 1025)
                                         });
+                                    }
+
+                                    else if (ghostlyUnburden === true) {
+                                        localStorage.setItem('ghost_companion', 'activated');
+                                        alert(`${PrayerMessage}\n\nYou will be able to move again in 50 seconds.`)
+                                        this.setState({
+                                            ghostFriend: true,
+                                        })
+                                    }
+
+                                    else if (CanIDash === true) {
+                                        localStorage.setItem('runfast', 'I am the Flash!');
+                                        alert(`${PrayerMessage}\n\nYou will be able to move again in 50 seconds.`)
+                                        this.setState({
+                                            dash: true,
+                                        })
                                     }
                                 })
                                 .catch(err => {
