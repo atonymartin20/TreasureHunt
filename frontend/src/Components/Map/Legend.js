@@ -1,5 +1,5 @@
 import React from 'react';
-import { LegendDiv, LegendH2, RegularNodeP, ShopP, ShrineP, PirateRyP, MineP, CurrentLocationP } from '../StyledComponents';
+import { LegendDiv, LegendH2, RegularNodeP, ShopP, ShrineP, PirateRyP, MineP, CurrentLocationP, TransmogrifierP } from '../StyledComponents';
 
 function Legend() {
     return (
@@ -22,6 +22,9 @@ function Legend() {
 
             {/* Current Location Red #FF0000 */}
             <CurrentLocationP>Current Location</CurrentLocationP>
+
+            {/* Location of Transmogrifier */}
+            <TransmogrifierP>Transmogrifier</TransmogrifierP>
        </LegendDiv>
     );
 }

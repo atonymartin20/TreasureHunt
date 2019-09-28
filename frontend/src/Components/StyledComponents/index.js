@@ -99,7 +99,6 @@ const ShopP = styled(LegendP)`
 
 const ShrineP = styled(LegendP)`
     color: #FFFF00;
-    stroke: black;
     text-shadow: -1px -1px 3px black, 1px -1px 3px black, -1px 1px 3px black, 1px 1px 3px black;
 `;
 
@@ -114,6 +113,11 @@ const MineP = styled(LegendP)`
 
 const CurrentLocationP = styled(LegendP)`
     color: #FF0000;
+`;
+
+const TransmogrifierP = styled(LegendP)`
+    color: #FABEBE;
+    text-shadow: -1px -1px 3px black, 1px -1px 3px black, -1px 1px 3px black, 1px 1px 3px black;
 `;
 
 // Current Room Styled Components
@@ -311,6 +315,29 @@ const NameChangeInput = styled.input`
     border-radius: 10px;
 `;
 
+const TransmogButton = styled.button`
+    ${props => props.disabled}
+    width: 35%;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #FABEBE;
+    font-size: 1.0rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:disabled {
+        width: 35%;
+        background-color: #808080;
+        color: black;
+        cursor: not-allowed;
+    }
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -327,6 +354,7 @@ export {
     PirateRyP,
     MineP,
     CurrentLocationP,
+    TransmogrifierP,
     CurrentRoomDiv,
     CurrentRoomTitleBar,
     CurrentRoomH2,
@@ -345,5 +373,6 @@ export {
     PrayButton,
     NameChangeButton,
     NameChangeInput,
+    TransmogButton,
 };
 // export 

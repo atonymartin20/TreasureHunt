@@ -704,7 +704,7 @@ export default class AppProvider extends Component {
                                     let CanIFly = /(?:hover)/.test(PrayerMessage);
                                     let ghostlyUnburden = /(?:ghostly)/.test(PrayerMessage);
                                     let CanIDash = /(?:speed)/.test(PrayerMessage);
-                                    
+
                                     if (CanIFly === true) {
                                         localStorage.setItem('flight', 'activated');
                                         alert(`${PrayerMessage}\n\nYou will be able to move again in 50 seconds.`)
@@ -743,7 +743,12 @@ export default class AppProvider extends Component {
                         setTimeout(() => {
                             // Rename Character Code Here
                         }, this.state.cooldown);
-                    }
+                    },
+                    TransmogItem: () => {
+                        setTimeout(() => {
+                            // Add Transmog code
+                        }, this.state.cooldown);
+                    },
                 }}
             >
                 {this.props.children}
