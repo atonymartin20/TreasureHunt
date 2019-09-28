@@ -744,9 +744,31 @@ export default class AppProvider extends Component {
                             // Rename Character Code Here
                         }, this.state.cooldown);
                     },
-                    TransmogItem: () => {
+                    TransmogItem: (item) => {
                         setTimeout(() => {
-                            // Add Transmog code
+                            const itemName = item.item
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/transmogrify/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'name': `${itemName}`,
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then( res => {
+                                    console.log(res.data)
+                                    this.setState({
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
                         }, this.state.cooldown);
                     },
                 }}

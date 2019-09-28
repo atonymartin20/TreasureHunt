@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
-import { ButtonPanelDiv, MovementButton, MineButton, PrayButton, NameChangeInput, NameChangeButton, TransmogButton } from '../StyledComponents';
+import { ButtonPanelDiv, MovementButton, MineButton, PrayButton, NameChangeInput, NameChangeButton } from '../StyledComponents';
 
 class ButtonPanel extends React.Component {
     constructor(props) {
@@ -15,7 +15,6 @@ class ButtonPanel extends React.Component {
             disableMineButton: false,
             disablePrayButton: false,
             disableNameChangeButton: false,
-            disableTransmogButton: false,
             newName: '',
         }
     }
@@ -182,19 +181,6 @@ class ButtonPanel extends React.Component {
         }, 10000) // Disables name change button for 10 seconds
     }
 
-    Transmog = () => {
-        this.setState({
-            disableTransmogButton: true,
-            disablePrayButton: true
-        })
-        this.context.TransmogItem()
-        setTimeout(() => {
-            this.setState({
-                disableTransmogButton: false,
-                disablePrayButton: false
-            })
-        }, 10000) // Disables transmog button for 10 seconds
-    }
     UpdateRoomData = () => {
         if (this.context.state.currentRoomData.exits) {
             if (this.context.state.currentRoomData.exits.includes("n") && this.state.northAvailable === false) {
@@ -291,19 +277,7 @@ class ButtonPanel extends React.Component {
                         </ButtonPanelDiv>
                     );
                 }
-                // If you are at transmogrifier
-                if (this.context.state.currentRoomData.room_id === 495) {
-                    // render movement buttons plus Pray button
-                    return (
-                        <ButtonPanelDiv>
-                            <MovementButton onClick={this.FlyNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move North</MovementButton>
-                            <MovementButton onClick={this.FlySouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move South</MovementButton>
-                            <MovementButton onClick={this.FlyWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move West</MovementButton>
-                            <MovementButton onClick={this.FlyEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move East</MovementButton>
-                            <TransmogButton onClick = {this.Transmog} disabled = {this.state.disableTransmogButton === true || this.state.disableAllButtons === true}>Transmogrify</TransmogButton>
-                        </ButtonPanelDiv>
-                    );
-                }
+
                 // Else if just a regular node
                 else {
                     // render movement buttons
@@ -358,19 +332,6 @@ class ButtonPanel extends React.Component {
                     );
                 }
 
-                // If you are at transmogrifier
-                if (this.context.state.currentRoomData.room_id === 495) {
-                    // render movement buttons plus Pray button
-                    return (
-                        <ButtonPanelDiv>
-                            <MovementButton onClick={this.MoveNorth} disabled={this.state.northAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move North</MovementButton>
-                            <MovementButton onClick={this.MoveSouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move South</MovementButton>
-                            <MovementButton onClick={this.MoveWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move West</MovementButton>
-                            <MovementButton onClick={this.MoveEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move East</MovementButton>
-                            <TransmogButton onClick = {this.Transmog} disabled = {this.state.disableTransmogButton === true || this.state.disableAllButtons === true}>Transmogrify</TransmogButton>
-                        </ButtonPanelDiv>
-                    );
-                }
                 // Else if just a regular node
                 else {
                     // render movement buttons
