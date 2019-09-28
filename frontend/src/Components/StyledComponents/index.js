@@ -99,7 +99,6 @@ const ShopP = styled(LegendP)`
 
 const ShrineP = styled(LegendP)`
     color: #FFFF00;
-    stroke: black;
     text-shadow: -1px -1px 3px black, 1px -1px 3px black, -1px 1px 3px black, 1px 1px 3px black;
 `;
 
@@ -114,6 +113,11 @@ const MineP = styled(LegendP)`
 
 const CurrentLocationP = styled(LegendP)`
     color: #FF0000;
+`;
+
+const TransmogrifierP = styled(LegendP)`
+    color: #FABEBE;
+    text-shadow: -1px -1px 3px black, 1px -1px 3px black, -1px 1px 3px black, 1px 1px 3px black;
 `;
 
 // Current Room Styled Components
@@ -327,6 +331,7 @@ export {
     PirateRyP,
     MineP,
     CurrentLocationP,
+    TransmogrifierP,
     CurrentRoomDiv,
     CurrentRoomTitleBar,
     CurrentRoomH2,

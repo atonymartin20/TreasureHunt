@@ -38,7 +38,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 6000)
+        }, this.context.state.cooldown +500)
     }
     
     FlyNorth = () => {
@@ -52,7 +52,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 5300)
+        }, this.context.state.cooldown +500)
     }
 
     MoveSouth = () => {
@@ -66,7 +66,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 6000)
+        }, this.context.state.cooldown +500)
     }
 
     FlySouth = () => {
@@ -80,7 +80,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 5300)
+        }, this.context.state.cooldown +500)
     }
 
     MoveWest = () => {
@@ -94,7 +94,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 6000)
+        }, this.context.state.cooldown +500)
     }
 
     FlyWest = () => {
@@ -108,7 +108,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 5300)
+        }, this.context.state.cooldown +500)
     }
 
     MoveEast = () => {
@@ -122,7 +122,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 6000)
+        }, this.context.state.cooldown +500)
     }
 
     FlyEast = () => {
@@ -136,7 +136,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disableMovementButtons: false
             })
-        }, 5300)
+        }, this.context.state.cooldown +500)
     }
 
     MineCoin = () => {
@@ -164,7 +164,7 @@ class ButtonPanel extends React.Component {
                 disableAllButtons: false,
                 disablePrayButton: false
             })
-        }, 50000) // Disables pray button for 10 seconds
+        }, 50000) // Disables pray button for 50 seconds
     }
 
     NameChange = () => {
