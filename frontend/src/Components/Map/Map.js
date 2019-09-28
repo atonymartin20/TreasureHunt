@@ -24,6 +24,7 @@ class Map extends React.Component {
         let shop = [];
         let pirateRy = [];
         let mine = [];
+        let transmogrifier = [];
 
         for (var room in rooms) {
             coords.push({ x: rooms[room].x, y: rooms[room].y });
@@ -51,7 +52,9 @@ class Map extends React.Component {
             if (rooms[room].room_id === 250) {
                 mine.push({ x: rooms[room].x, y: rooms[room].y });
             }
-
+            if (rooms[room].room_id === 495) {
+                transmogrifier.push({ x: rooms[room].x, y: rooms[room].y })
+            }
         }
 
         function getRoomEdges(room) {
@@ -131,6 +134,16 @@ class Map extends React.Component {
 
                         {/* Displays Mine in Black */}
                         <MarkSeries data={mine} color="black" size={7} />
+                        
+                        {/* Displays Pirate Ry's in Bright Pink */}
+                        <MarkSeries
+                            data={transmogrifier}
+                            color="#FABEBE"
+                            size={7}
+                            stroke="black"
+                            strokeWidth={2}
+                        />
+
 
                         {/* display user's current location */}
                         <MarkSeries

@@ -743,7 +743,12 @@ export default class AppProvider extends Component {
                         setTimeout(() => {
                             // Rename Character Code Here
                         }, this.state.cooldown);
-                    }
+                    },
+                    TransmogItem: () => {
+                        setTimeout(() => {
+                            // Add Transmog code
+                        }, this.state.cooldown);
+                    },
                 }}
             >
                 {this.props.children}

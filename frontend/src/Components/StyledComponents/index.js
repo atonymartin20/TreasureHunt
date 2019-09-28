@@ -315,6 +315,29 @@ const NameChangeInput = styled.input`
     border-radius: 10px;
 `;
 
+const TransmogButton = styled.button`
+    ${props => props.disabled}
+    width: 35%;
+    height: 60px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #FABEBE;
+    font-size: 1.0rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    cursor: pointer;
+
+    &:disabled {
+        width: 35%;
+        background-color: #808080;
+        color: black;
+        cursor: not-allowed;
+    }
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -350,5 +373,6 @@ export {
     PrayButton,
     NameChangeButton,
     NameChangeInput,
+    TransmogButton,
 };
 // export 
