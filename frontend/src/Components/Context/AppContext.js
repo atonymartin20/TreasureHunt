@@ -763,7 +763,7 @@ export default class AppProvider extends Component {
                                 .then( res => {
                                     console.log(res.data)
                                     this.setState({
-                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                        cooldown: (res.data.cooldown * 1000)
                                     });
                                 })
                                 .catch(err => {
