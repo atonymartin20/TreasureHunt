@@ -179,6 +179,11 @@ const UserInfoSpan = styled.span`
     font-weight: bold;
 `;
 
+
+const InventoryListLi = styled.li`
+    display: flex;
+`;
+
 const InventoryDropButton = styled.button`
     width: 85%;
     max-width: 120px;
@@ -186,6 +191,19 @@ const InventoryDropButton = styled.button`
     border: 2px solid black;
     border-radius: 10px;
     background-color: #97E3E8;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
+
+const InventoryTransmogButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #FABEBE;
     font-size: 1.0rem;
     font-weight: bold;
     cursor: pointer;
@@ -205,6 +223,18 @@ const InventorySellButton = styled.button`
     margin: 0px 0px 10px 10%;
 `;
 
+const InventoryEquipButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #AAFFC3;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
 //  Button Panel Styled Components
 const ButtonPanelDiv = styled.div`
     width: 45%;
@@ -315,29 +345,6 @@ const NameChangeInput = styled.input`
     border-radius: 10px;
 `;
 
-const TransmogButton = styled.button`
-    ${props => props.disabled}
-    width: 35%;
-    height: 60px;
-    border: 2px solid black;
-    border-radius: 10px;
-    background-color: #FABEBE;
-    font-size: 1.0rem;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    cursor: pointer;
-
-    &:disabled {
-        width: 35%;
-        background-color: #808080;
-        color: black;
-        cursor: not-allowed;
-    }
-`;
-
 export {
     TopBarDiv,
     TopBarH1,
@@ -365,14 +372,16 @@ export {
     UserInfoH2,
     UserInfoLi,
     UserInfoSpan,
+    InventoryListLi,
     InventoryDropButton,
+    InventoryTransmogButton,
     InventorySellButton,
+    InventoryEquipButton,
     ButtonPanelDiv,
     MovementButton,
     MineButton,
     PrayButton,
     NameChangeButton,
     NameChangeInput,
-    TransmogButton,
 };
 // export 

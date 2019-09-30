@@ -13,6 +13,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -32,6 +33,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -50,6 +52,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -68,6 +71,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -86,6 +90,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -103,6 +108,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -120,6 +126,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
@@ -128,7 +135,7 @@ class UserInfoDisplay extends React.Component {
                 </UserInfoDiv>
             );
         }
-        
+
         // No prayers active
         else {
             return (
@@ -137,6 +144,7 @@ class UserInfoDisplay extends React.Component {
                     <ul>
                         <UserInfoLi><UserInfoSpan>Encumbrance:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.encumbrance}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Strength:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.strength}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Speed:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.speed}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Gold:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.userData.gold}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Coins Mined:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.coinCount}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
