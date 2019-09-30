@@ -179,6 +179,11 @@ const UserInfoSpan = styled.span`
     font-weight: bold;
 `;
 
+
+const InventoryListLi = styled.li`
+    display: flex;
+`;
+
 const InventoryDropButton = styled.button`
     width: 85%;
     max-width: 120px;
@@ -367,6 +372,7 @@ export {
     UserInfoH2,
     UserInfoLi,
     UserInfoSpan,
+    InventoryListLi,
     InventoryDropButton,
     InventoryTransmogButton,
     InventorySellButton,

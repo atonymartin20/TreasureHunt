@@ -1,5 +1,5 @@
 import React from 'react';
-import { InventoryDropButton, InventoryTransmogButton, InventorySellButton, InventoryEquipButton, UserInfoSpan } from '../StyledComponents';
+import { InventoryListLi, InventoryDropButton, InventoryTransmogButton, InventorySellButton, InventoryEquipButton, UserInfoSpan } from '../StyledComponents';
 import { AppContext } from '../Context/AppContext.js';
 
 class InventoryList extends React.Component {
@@ -77,7 +77,7 @@ class InventoryList extends React.Component {
                     <ul>
                         {this.context.state.userData.inventory.map(item => {
                             return (
-                                <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventorySellButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true}>Sell</InventorySellButton><InventoryEquipButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true} hidden = {this.HideButton({item})}>Equip</InventoryEquipButton></li>
+                                <InventoryListLi key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventorySellButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true}>Sell</InventorySellButton><InventoryEquipButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true} hidden = {this.HideButton({item})}>Equip</InventoryEquipButton></InventoryListLi>
                             )
                         })}
                     </ul>
@@ -88,7 +88,7 @@ class InventoryList extends React.Component {
                 return (
                     <ul>
                         {this.context.state.userData.inventory.map(item => {
-                            return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryTransmogButton onClick={() => {this.Transmog({item})}} disabled={this.state.disableAllButtons === true}>Transmogrify</InventoryTransmogButton><InventoryEquipButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true} hidden = {this.HideButton({item})}>Equip</InventoryEquipButton></li>
+                            return <InventoryListLi key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryTransmogButton onClick={() => {this.Transmog({item})}} disabled={this.state.disableAllButtons === true}>Transmogrify</InventoryTransmogButton><InventoryEquipButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true} hidden = {this.HideButton({item})}>Equip</InventoryEquipButton></InventoryListLi>
                         })}
                     </ul>
                 )
@@ -98,7 +98,7 @@ class InventoryList extends React.Component {
                 return (
                     <ul>
                         {this.context.state.userData.inventory.map(item => {
-                            return <li key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryDropButton onClick={() => {this.UpdateOnDrop({item})}} disabled={this.state.disableAllButtons === true} >Drop</InventoryDropButton><InventoryEquipButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true} hidden = {this.HideButton({item})}>Equip</InventoryEquipButton></li>
+                            return <InventoryListLi key={Math.random()}><UserInfoSpan>{item}</UserInfoSpan><InventoryDropButton onClick={() => {this.UpdateOnDrop({item})}} disabled={this.state.disableAllButtons === true} >Drop</InventoryDropButton><InventoryEquipButton onClick={() => {this.UpdateOnSell({item})}} disabled={this.state.disableAllButtons === true} hidden = {this.HideButton({item})}>Equip</InventoryEquipButton></InventoryListLi>
                         })}
                     </ul>);
     
