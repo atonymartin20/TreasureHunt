@@ -343,6 +343,9 @@ const NameChangeInput = styled.input`
     width: 100%;
     border: 2px solid black;
     border-radius: 10px;
+    font-size: 1.25rem;
+    height: 55px;
+    margin-bottom: 20px;
 `;
 
 export {

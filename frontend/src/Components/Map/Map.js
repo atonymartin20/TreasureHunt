@@ -135,7 +135,7 @@ class Map extends React.Component {
                         {/* Displays Mine in Black */}
                         <MarkSeries data={mine} color="black" size={7} />
                         
-                        {/* Displays Pirate Ry's in Bright Pink */}
+                        {/* Displays Transmogrifier in Light Pink */}
                         <MarkSeries
                             data={transmogrifier}
                             color="#FABEBE"
@@ -199,6 +199,15 @@ class Map extends React.Component {
 
                         {/* Displays Mine in Black */}
                         <MarkSeries data={mine} color="black" size={6} />
+
+                        {/* Displays Transmogrifier in Light Pink */}
+                        <MarkSeries
+                            data={transmogrifier}
+                            color="#FABEBE"
+                            size={6}
+                            stroke="black"
+                            strokeWidth={2}
+                        />
 
                         {/* display user's current location */}
                         <MarkSeries
