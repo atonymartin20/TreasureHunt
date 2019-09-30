@@ -15,7 +15,6 @@ class ButtonPanel extends React.Component {
             disableMineButton: false,
             disablePrayButton: false,
             disableNameChangeButton: false,
-            newName: '',
         }
     }
 
@@ -167,18 +166,25 @@ class ButtonPanel extends React.Component {
         }, 50000) // Disables pray button for 50 seconds
     }
 
-    NameChange = () => {
-        this.setState({
-            disableAllButtons: true,
-            disableNameChangeButton: true
-        })
-        this.context.RenameCharacter()
-        setTimeout(() => {
+    NameChange = event => {
+        event.preventDefault();
+        if (this.context.state.newName !== '') {
             this.setState({
-                disableAllButtons: false,
-                disableNameChangeButton: false
+                disableAllButtons: true,
+                disableNameChangeButton: true
             })
-        }, 10000) // Disables name change button for 10 seconds
+            this.context.RenameCharacter()
+            setTimeout(() => {
+                this.context.GetUserData();
+            }, 15000)
+            setTimeout(() => {
+                this.setState({
+                    disableAllButtons: false,
+                    disableNameChangeButton: false,
+                })
+            }, 25000) // Disables name change button for 14 seconds
+
+        }
     }
 
     UpdateRoomData = () => {
@@ -259,7 +265,7 @@ class ButtonPanel extends React.Component {
                             <MovementButton onClick={this.FlySouth} disabled={this.state.southAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move South</MovementButton>
                             <MovementButton onClick={this.FlyWest} disabled={this.state.westAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move West</MovementButton>
                             <MovementButton onClick={this.FlyEast} disabled={this.state.eastAvailable === false || this.state.disableMovementButtons === true || this.state.disableAllButtons === true}>Move East</MovementButton>
-                            <NameChangeInput />
+                            <NameChangeInput onChange={this.context.InputHandler} placeholder='Enter your new name here' />
                             <NameChangeButton onClick={this.NameChange} disabled={this.state.disableNameChangeButton === true || this.state.disableAllButtons === true}>Change Name</NameChangeButton>
                         </ButtonPanelDiv>
                     );
