@@ -14,7 +14,9 @@ export default class AppProvider extends Component {
         coinCount: null,
         flying: localStorage.getItem('flight') || false,
         ghostFriend: localStorage.getItem('ghost_companion') || false,
-        dash: localStorage.getItem('runfast' || false)
+        dash: localStorage.getItem('runfast') || false,
+        equippedJacket: localStorage.getItem('jacket') || false,
+        equippedBoots: localStorage.getItem('boots') || false
     };
 
     componentDidMount() {
@@ -75,7 +77,7 @@ export default class AppProvider extends Component {
                                 .catch(err => {
                                     console.log('error', err);
                                 });
-                        }, this.state.cooldown);
+                        }, this.state.cooldown + 1000);
                     },
                     CoinBalance: () => {
                         setTimeout(() => {
@@ -615,16 +617,53 @@ export default class AppProvider extends Component {
                             const body = {
                                 'name': `${itemName}`,
                             }
-                            axios
+                            console.log(this.state.equippedJacket)
+                            console.log(this.state.equippedBoots)
+
+                            if(itemName === this.state.equippedJacket) {
+                                axios
                                 .post(endpoint, body, options)
                                 .then( res => {
+                                    console.log(res.data)
+                                    localStorage.removeItem('jacket');
                                     this.setState({
+                                        equippedJacket: false,
                                         cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
                                     });
                                 })
                                 .catch(err => {
                                     console.log('error', err);
                                 });
+                            }
+
+                            else if (itemName === this.state.equippedBoots) {
+                                axios
+                                .post(endpoint, body, options)
+                                .then( res => {
+                                    console.log(res.data)
+                                    localStorage.removeItem('boots');
+                                    this.setState({
+                                        equippedBoots: false,
+                                        cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                            }
+
+                            else {
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then( res => {
+                                        this.setState({
+                                            cooldown: (res.data.cooldown * 1300) //cooldown * 1100 for milliseconds and small buffer.
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }
                         }, this.state.cooldown);
                     },
                     SellItem: (item) => {
@@ -770,6 +809,58 @@ export default class AppProvider extends Component {
                                     console.log('error', err);
                                 });
                         }, this.state.cooldown);
+                    },
+                    EquipEquipment: (item) => {
+                        setTimeout(() => {
+                            const itemName = item.item
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/wear/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'name': `${itemName}`,
+                            }
+
+                            if(/(?:boots)/.test(itemName)) {
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then( res => {
+                                        console.log(res.data)
+                                        localStorage.setItem('boots', itemName);
+                                        this.setState({
+                                            equippedBoots: localStorage.getItem('boots'),
+                                            cooldown: (res.data.cooldown * 1000)
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }
+
+                            else if (/(?:jacket)/.test(itemName)) {
+                                axios
+                                    .post(endpoint, body, options)
+                                    .then( res => {
+                                        console.log(res.data)
+                                        localStorage.setItem('jacket', itemName);
+                                        this.setState({
+                                            equippedJacket: localStorage.getItem('jacket'),
+                                            cooldown: (res.data.cooldown * 1000)
+                                        });
+                                    })
+                                    .catch(err => {
+                                        console.log('error', err);
+                                    });
+                            }
+
+                            else {
+                                return null
+                            }
+                        }, this.state.cooldown)
                     },
                 }}
             >
