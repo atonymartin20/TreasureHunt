@@ -1,7 +1,5 @@
 import React from 'react';
 import { TopBarDiv, TopBarH1, TopBarSpan, TopBarSpanDiv, TopBarSpanLink } from '../StyledComponents';
-import { Link } from 'react-router-dom';
-
 
 function TopBar() {
     return(

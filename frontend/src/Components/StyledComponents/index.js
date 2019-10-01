@@ -195,6 +195,9 @@ const UserInfoH2 = styled.h2`
 
 const UserInfoLi = styled.li`
     font-size: 1.0rem;
+    width: 100%;
+    padding-left: 0px;
+
 `;
 
 const UserInfoSpan = styled.span`
