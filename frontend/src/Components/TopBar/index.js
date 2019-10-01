@@ -1,11 +1,17 @@
 import React from 'react';
-import { TopBarDiv, TopBarH1 } from '../StyledComponents';
+import { TopBarDiv, TopBarH1, TopBarSpan, TopBarSpanDiv, TopBarSpanLink } from '../StyledComponents';
+import { Link } from 'react-router-dom';
 
 
 function TopBar() {
     return(
         <TopBarDiv>
             <TopBarH1>Treasure Hunt</TopBarH1>
+            <TopBarSpanDiv>
+                <TopBarSpan><TopBarSpanLink to='/home'>Home</TopBarSpanLink></TopBarSpan>
+                <TopBarSpan><TopBarSpanLink to='/fullRoom'>Room Data</TopBarSpanLink></TopBarSpan>
+                <TopBarSpan><TopBarSpanLink to='/fullPlayer'>Player Data</TopBarSpanLink></TopBarSpan>
+            </TopBarSpanDiv>
         </TopBarDiv>
     )
 }

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import pirateBackground from '../../Images/pirate-background.jpg';
+import { Link } from 'react-router-dom';
 
 //  App Styled Components
 const AppDiv = styled.div`
@@ -29,19 +30,41 @@ const AppRightDiv = styled.div`
     background-image: url(${pirateBackground});
 `;
 
-
 // TopBar Styled Components
 const TopBarDiv = styled.div`
     width: 100%;
-    text-align: center;
     background-color: #9BF182;
-`;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    `;
 
 const TopBarH1 = styled.div`
     font-family: "Gorgia", serif;
     font-size: 2.7rem;
     font-weight: 500;
     padding: 15px;
+`;
+
+const TopBarSpanDiv = styled.div`
+    display: flex;
+    margin-right: 20px;
+`;
+
+const TopBarSpan = styled.div`
+    font-size: 1.5rem;
+    border: 2px solid black;
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+`;
+
+const TopBarSpanLink = styled(Link)`
+    text-decoration: none;
+    color: black;
 `;
 
 // Map Styled Components
@@ -358,6 +381,9 @@ const ViewPanelDiv = styled.div`
 export {
     TopBarDiv,
     TopBarH1,
+    TopBarSpan,
+    TopBarSpanDiv,
+    TopBarSpanLink,
     AppDiv,
     AppLeftDiv,
     AppRightDiv,
