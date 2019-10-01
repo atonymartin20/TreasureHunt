@@ -23,9 +23,9 @@ const AppLeftDiv = styled.div`
 
 const AppRightDiv = styled.div`
     width: 30%;
+    padding: 20px 1%;
     display: flex;
     flex-wrap: wrap;
-    padding: 20px 1%;
     background-image: url(${pirateBackground});
 `;
 
@@ -348,6 +348,13 @@ const NameChangeInput = styled.input`
     margin-bottom: 20px;
 `;
 
+// Views
+const ViewPanelDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
@@ -386,5 +393,6 @@ export {
     PrayButton,
     NameChangeButton,
     NameChangeInput,
+    ViewPanelDiv,
 };
 // export 
