@@ -684,7 +684,6 @@ export default class AppProvider extends Component {
                                 axios
                                     .post(endpoint, body, options)
                                     .then( res => {
-                                        console.log('res.data', res.data)
                                         this.setState({
                                             cooldown: (res.data.cooldown * 1100) //cooldown * 1100 for milliseconds and small buffer.
                                         });

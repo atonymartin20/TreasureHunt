@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import pirateBackground from '../../Images/pirate-background.jpg';
+import { Link } from 'react-router-dom';
 
 //  App Styled Components
 const AppDiv = styled.div`
@@ -23,25 +24,47 @@ const AppLeftDiv = styled.div`
 
 const AppRightDiv = styled.div`
     width: 30%;
+    padding: 20px 1%;
     display: flex;
     flex-wrap: wrap;
-    padding: 20px 1%;
     background-image: url(${pirateBackground});
 `;
-
 
 // TopBar Styled Components
 const TopBarDiv = styled.div`
     width: 100%;
-    text-align: center;
     background-color: #9BF182;
-`;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    `;
 
 const TopBarH1 = styled.div`
     font-family: "Gorgia", serif;
     font-size: 2.7rem;
     font-weight: 500;
     padding: 15px;
+`;
+
+const TopBarSpanDiv = styled.div`
+    display: flex;
+    margin-right: 20px;
+`;
+
+const TopBarSpan = styled.div`
+    font-size: 1.5rem;
+    border: 2px solid black;
+    width: 150px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+`;
+
+const TopBarSpanLink = styled(Link)`
+    text-decoration: none;
+    color: black;
 `;
 
 // Map Styled Components
@@ -172,6 +195,9 @@ const UserInfoH2 = styled.h2`
 
 const UserInfoLi = styled.li`
     font-size: 1.0rem;
+    width: 100%;
+    padding-left: 0px;
+
 `;
 
 const UserInfoSpan = styled.span`
@@ -348,9 +374,19 @@ const NameChangeInput = styled.input`
     margin-bottom: 20px;
 `;
 
+// Views
+const ViewPanelDiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+`;
+
 export {
     TopBarDiv,
     TopBarH1,
+    TopBarSpan,
+    TopBarSpanDiv,
+    TopBarSpanLink,
     AppDiv,
     AppLeftDiv,
     AppRightDiv,
@@ -386,5 +422,6 @@ export {
     PrayButton,
     NameChangeButton,
     NameChangeInput,
+    ViewPanelDiv,
 };
 // export 

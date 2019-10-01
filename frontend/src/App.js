@@ -1,10 +1,12 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import { AppContext } from './Components/Context/AppContext.js';
 import { AppDiv, AppLeftDiv, AppRightDiv } from './Components/StyledComponents';
 import TopBar from './Components/TopBar';
 import Map from './Components/Map/Map.js'
-import CurrentRoom from './Components/CurrentRoom';
-import UserInfoDisplay from './Components/UserDisplay/UserInfoDisplay.js'
+import FullRoom from './Components/Views/FullRoom.js';
+import DefaultView from './Components/Views/DefaultView.js';
+import FullPlayer from './Components/Views/FullPlayer.js';
 
 class App extends React.Component{
     async componentDidMount() {
@@ -20,8 +22,10 @@ class App extends React.Component{
                     <Map/>
                 </AppLeftDiv>
                 <AppRightDiv>
-                    <CurrentRoom />
-                    <UserInfoDisplay />
+                    <Route exact path="/" component = {DefaultView} />
+                    <Route path="/home" component = {DefaultView} />
+                    <Route path="/fullRoom" component = {FullRoom} />
+                    <Route path='/fullPlayer' component = {FullPlayer} />
                 </AppRightDiv>
             </AppDiv>
         )
