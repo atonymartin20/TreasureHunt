@@ -12,12 +12,14 @@ export default class AppProvider extends Component {
         wiseExplorer: false,
         cooldown: 2000,
         coinCount: null,
+        carriedItem: localStorage.getItem('carriedItem') || 'false',
         flying: localStorage.getItem('flight') || false,
         ghostFriend: localStorage.getItem('ghost_companion') || false,
         dash: localStorage.getItem('runfast') || false,
         equippedJacket: localStorage.getItem('jacket') || false,
         equippedBoots: localStorage.getItem('boots') || false,
         newName: '',
+
     };
 
     componentDidMount() {
@@ -889,6 +891,63 @@ export default class AppProvider extends Component {
                                 return null
                             }
                         }, this.state.cooldown)
+                    },
+                    GhostCarryItem: (item) => {
+                        setTimeout(() => {
+                            const itemName = item.item
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/carry/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            const body = {
+                                'name': `${itemName}`,
+                            }
+                            axios
+                                .post(endpoint, body, options)
+                                .then( res => {
+                                    console.log(res.data)
+                                    localStorage.setItem('carriedItem', itemName);
+                                    this.setState({
+                                        cooldown: (res.data.cooldown * 1000)
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
+                    },
+                    GhostReceiveItem: () => {
+                        setTimeout(() => {
+                            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/receive/';
+                            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+                            const options = {
+                                headers: {
+                                    Authorization: `Token ${key}`,
+                                    'Content-Type': 'application/json'
+                                }
+                            }
+                            axios
+                                .post(endpoint, {}, options)
+                                .then( res => {
+                                    console.log(res.data)
+                                    localStorage.removeItem('carriedItem')
+                                    this.setState({
+                                        cooldown: (res.data.cooldown * 1000)
+                                    });
+                                })
+                                .catch(err => {
+                                    console.log('error', err);
+                                });
+                        }, this.state.cooldown);
+                    },
+                    UpdateCarriedItem: () => {
+                        this.setState({
+                            carriedItem: localStorage.getItem('carriedItem') || 'false',
+                        })
                     },
                 }}
             >

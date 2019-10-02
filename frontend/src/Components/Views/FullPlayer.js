@@ -1,7 +1,7 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
 import { ViewPanelDiv, UserInfoH2, UserInfoLi, UserInfoSpan } from '../StyledComponents';
-import InventoryList from '../UserDisplay/InventoryList.js';
+import FullPlayerInventoryList from './FullPlayerInventoryList.js';
 
 class FullPlayer extends React.Component{
     render(){
@@ -23,7 +23,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -47,7 +48,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -71,7 +73,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -95,7 +98,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -119,7 +123,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -143,7 +148,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -167,7 +173,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );
@@ -191,7 +198,8 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><InventoryList /></UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
             );

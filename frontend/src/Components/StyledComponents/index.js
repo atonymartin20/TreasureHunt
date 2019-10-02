@@ -261,6 +261,34 @@ const InventoryEquipButton = styled.button`
     cursor: pointer;
     margin: 0px 0px 10px 10%;
 `;
+
+const InventoryCarryButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #800000;
+    color: white
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
+
+const InventoryReceiveButton = styled.button`
+    width: 85%;
+    max-width: 120px;
+    height: 40px;
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: #BCF60C;
+    font-size: 1.0rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0px 0px 10px 10%;
+`;
+
 //  Button Panel Styled Components
 const ButtonPanelDiv = styled.div`
     width: 45%;
@@ -416,6 +444,8 @@ export {
     InventoryTransmogButton,
     InventorySellButton,
     InventoryEquipButton,
+    InventoryCarryButton,
+    InventoryReceiveButton,
     ButtonPanelDiv,
     MovementButton,
     MineButton,
