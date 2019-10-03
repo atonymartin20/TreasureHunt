@@ -9,6 +9,7 @@ function TopBar() {
                 <TopBarSpan><TopBarSpanLink to='/home'>Home</TopBarSpanLink></TopBarSpan>
                 <TopBarSpan><TopBarSpanLink to='/fullRoom'>Room Data</TopBarSpanLink></TopBarSpan>
                 <TopBarSpan><TopBarSpanLink to='/fullPlayer'>Player Data</TopBarSpanLink></TopBarSpan>
+                <TopBarSpan><TopBarSpanLink to='/about'>About</TopBarSpanLink></TopBarSpan>
             </TopBarSpanDiv>
         </TopBarDiv>
     )

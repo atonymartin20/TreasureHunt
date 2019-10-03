@@ -44,6 +44,7 @@ const TopBarH1 = styled.div`
     font-size: 2.7rem;
     font-weight: 500;
     padding: 15px;
+    margin-left: 10%;
 `;
 
 const TopBarSpanDiv = styled.div`
@@ -408,6 +409,7 @@ const ViewPanelDiv = styled.div`
     flex-direction: column;
     flex-wrap: wrap;
 `;
+
 
 export {
     TopBarDiv,
