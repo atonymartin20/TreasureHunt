@@ -191,37 +191,22 @@ class ButtonPanel extends React.Component {
 
     ProofOfWork = (last_proof, difficulty) => {
         let proof = last_proof
-        let count = 0
         while ((this.ValidProof(last_proof, proof, difficulty)) === false) {
-            if (count === 1000000) {
-                return false
-            }
-            else {
-                proof += 1
-                console.log(count)
-                count += 1
-            }
+            proof += 1
         }
         console.log(this.ValidProof(last_proof, proof, difficulty))
-        proof += 1
-        console.log(this.ValidProof(last_proof, proof, difficulty))
         console.log(`Proof found: ${proof}`)
-        return proof
+        return true
     }
 
     ValidProof = (last_hash, proof, difficulty) => {
-        // console.log('Valid Proof')
-
         let guess = (`${last_hash}${proof}`)
         let guessHash = this.sha256(guess)
-        // console.log(guessHash)
 
         let beg = guessHash.substring(0, difficulty)
-        // console.log(beg)
         let comp = "".padStart(difficulty, '0');
-        // console.log(comp)
+
         if (beg === comp) {
-            console.log(`${guessHash} ${beg} ${comp}`)
             return true
         }
         else {
