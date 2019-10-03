@@ -29,7 +29,6 @@ def proof_of_work(last_proof, difficulty):
 
     print("Searching for next proof")
     proof = last_proof
-
     last_hash = hashlib.sha256(f'{last_proof}'.encode()).hexdigest()
 
     while valid_proof(last_proof, proof, difficulty) is False:
@@ -49,7 +48,6 @@ def valid_proof(last_hash, proof, difficulty):
 
     # Hash the string
     guess = f'{last_hash}{proof}'.encode()
-
     guess_hash = hashlib.sha256(guess).hexdigest()
 
     # Check for <difficulty> leading 0's
