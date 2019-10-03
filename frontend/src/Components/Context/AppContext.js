@@ -19,7 +19,7 @@ export default class AppProvider extends Component {
         equippedJacket: localStorage.getItem('jacket') || false,
         equippedBoots: localStorage.getItem('boots') || false,
         newName: '',
-
+        lastProof: {},
     };
 
     componentDidMount() {
@@ -771,11 +771,6 @@ export default class AppProvider extends Component {
                                 .catch(err => {
                                     console.log('error', err);
                                 });
-                        }, this.state.cooldown);
-                    },
-                    MineOneCoin: () => {
-                        setTimeout(() => {
-                            // Mine a coin Code Here
                         }, this.state.cooldown);
                     },
                     InputHandler: event => {

@@ -7,6 +7,7 @@ import Map from './Components/Map/Map.js'
 import FullRoom from './Components/Views/FullRoom.js';
 import DefaultView from './Components/Views/DefaultView.js';
 import FullPlayer from './Components/Views/FullPlayer.js';
+import About from './Components/Views/About.js';
 
 class App extends React.Component{
     async componentDidMount() {
@@ -26,6 +27,7 @@ class App extends React.Component{
                     <Route path="/home" component = {DefaultView} />
                     <Route path="/fullRoom" component = {FullRoom} />
                     <Route path='/fullPlayer' component = {FullPlayer} />
+                    <Route path='/about' component = {About} />
                 </AppRightDiv>
             </AppDiv>
         )
