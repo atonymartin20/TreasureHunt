@@ -318,7 +318,7 @@ class ButtonPanel extends React.Component {
             disableMineButton: false
         })
     }
-// Commit 3
+// Commit 4
     MineOneCoin = () => {
         // this.test()
         this.runner('Hello Everyone')
