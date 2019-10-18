@@ -166,34 +166,83 @@ class ButtonPanel extends React.Component {
         // }, 15000) // Disables button for 15 seconds
     }
     
+    // getData = () => {
+    //     console.log('getData()')
+    //     return new Promise(function (resolve, reject) {
+    //         resolve(this.GetLastProof)
+    //         .then(console.log('I\'m Done'))
+    //     })
+    // }
+
+    getData = (initialData) => {
+        //gets the data
+        console.log(initialData)
+        return new Promise(function (resolve, reject) {
+          resolve('Hello World (getData)!')
+        })
+      }
+      
+      parseData = (dataFromGetDataFunction) => {
+          console.log(dataFromGetDataFunction)
+        //does some stuff with the data
+        return new Promise(function (resolve, reject) {
+          resolve('Hello World! Parse')
+        })
+      }
+      
+      validate = (dataFromParseDataFunction) => {
+          console.log(dataFromParseDataFunction)
+        //validates the data
+        return new Promise(function (resolve, reject) {
+          resolve('Hello World! Validate')
+        })
+      }
+      
+      //The function that orchestrates these calls 
+      runner = (initialData) => {
+          return this.getData(initialData)
+              .then(this.parseData)
+              .then(this.validate)
+      }
+    runner2 = () => {
+        let lastProof = this.GetLastProof();
+        return this.getData(lastProof)
+            .then(this.parseData)
+            .then(this.validate)
+          
+      }
+    //   runner('Hello World!').then(function (dataFromValidateFunction) {
+    //       console.log(dataFromValidateFunction);
+    //   })
+
     GetLastProof =  () => {
-        setTimeout(() => {
-            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-            const options = {
-                headers: {
-                    Authorization: `Token ${key}`
-                }
-            };
-            axios
-                .get(endpoint, options)
-                .then(res => {
-                    this.setState({
-                        lastProof: res.data,
-                        cooldown: (res.data.cooldown * 1050)
-                    });
-                })
-                .catch(err => {
-                    console.log('error', err);
+        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
+        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+        const options = {
+            headers: {
+                Authorization: `Token ${key}`
+            }
+        };
+        axios
+            .get(endpoint, options)
+            .then(res => {
+                console.log(res.data)
+                this.setState({
+                    lastProof: res.data,
+                    cooldown: (res.data.cooldown * 1050)
                 });
-        }, this.state.cooldown);
+                return res.data
+            })
+            .catch(err => {
+                console.log('error', err);
+            });
     }
 
     ProofOfWork = (last_proof, difficulty) => {
         let proof = last_proof
-        while ((this.ValidProof(last_proof, proof, difficulty)) === false) {
-            proof += 1
-        }
+        // while ((this.ValidProof(last_proof, proof, difficulty)) === false) {
+        //     proof += 1
+        // }
         console.log(this.ValidProof(last_proof, proof, difficulty))
         console.log(`Proof found: ${proof}`)
         return true
@@ -213,22 +262,82 @@ class ButtonPanel extends React.Component {
             return false
         }
     }
-
-    MineOneCoin = () => {
-        let canChangeButton = true;
-        console.log(this.state.lastProof) // Should return {}
+    
+    test = () => {
+        // let testProof = null;
+        //     const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
+        //     const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+        //     const options = {
+        //         headers: {
+        //             Authorization: `Token ${key}`
+        //         }
+        //     };
+        //     axios
+        //         .get(endpoint, options)
+        //         .then(res => {
+        //             console.log(res.data)
+        //             this.setState({
+        //                 testProof: res.data,
+        //                 lastProof: res.data,
+        //                 cooldown: (res.data.cooldown * 1050)
+        //             });
+        //         })
+        //         .catch(err => {
+        //             console.log('error', err);
+        //         });
+        // const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
+        // const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+        // const options = {
+        //     headers: {
+        //         Authorization: `Token ${key}`
+        //     }
+        // };
+        // axios
+        //     .get(endpoint, options)
+        //     .then(res => {
+        //         console.log(res.data)
+        //         this.setState({
+        //             testProof: res.data,
+        //             lastProof: res.data,
+        //             cooldown: (res.data.cooldown * 1050)
+        //         });
+        //     })
+        //     .catch(err => {
+        //         console.log('error', err);
+        //     });
         this.setState({
             disableAllButtons: true,
             disableMineButton: true
         })
-        setTimeout(() => {
-            this.GetLastProof();
-        }, this.context.state.cooldown)
+        let data = this.GetLastProof()
+        // this.GetLastProof();
+        console.log(data)
+        this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
+        this.setState({
+            disableAllButtons: false,
+            disableMineButton: false
+        })
+    }
+// Commit 1
+    MineOneCoin = () => {
+        // this.test()
+        this.runner('Hello Everyone')
+        this.runner2()
+        // this.getData()
+        // let canChangeButton = true;
+        // console.log(this.state.lastProof) // Should return {}
+        // this.setState({
+        //     disableAllButtons: true,
+        //     disableMineButton: true
+        // })
+        // setTimeout(() => {
+        //     this.GetLastProof();
+        // }, this.context.state.cooldown)
 
-        setTimeout(() => {
-            console.log(this.state.lastProof)
-            this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        }, this.context.state.cooldown + 1500)
+        // setTimeout(() => {
+        //     console.log(this.state.lastProof)
+        //     this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
+        // }, this.context.state.cooldown + 1500)
 
         // setTimeout(() => {
         //     this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
@@ -236,14 +345,15 @@ class ButtonPanel extends React.Component {
     //     // setTimeout(() => {
     //         this.context.MineOneCoin();
     //     // }, this.state.cooldown + 1500)
-        setTimeout(() => {
-            this.setState({
-                disableAllButtons: false,
-                disableMineButton: false
-            })
-        }, 15000) // Disables button for 15 seconds
+        // setTimeout(() => {
+        //     this.setState({
+        //         disableAllButtons: false,
+        //         disableMineButton: false
+        //     })
+        // }, 15000) // Disables button for 15 seconds
 
         // this.GetLastProof();
+        // this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
         // Mine Coin:
         // const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/mine/';
         // const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';

@@ -410,6 +410,30 @@ const ViewPanelDiv = styled.div`
     flex-wrap: wrap;
 `;
 
+const AboutH2 = styled.h2`
+    font-size: 1.5rem;
+
+`;
+
+const AboutUL = styled.ul`
+    margin: 0px;
+`;
+
+const AboutLI = styled.li`
+    font-size: 1.0rem;
+    width: 100%;
+    padding-left: 0px;
+`;
+
+const AboutSpan = styled.span`
+    font-size: 1.0rem;
+    font-weight: bold;
+`;
+
+const AboutSpanATag = styled.a`
+    text-decoration: none;
+    color: black;
+`;
 
 export {
     TopBarDiv,
@@ -455,5 +479,10 @@ export {
     NameChangeButton,
     NameChangeInput,
     ViewPanelDiv,
+    AboutH2,
+    AboutUL,
+    AboutLI,
+    AboutSpan,
+    AboutSpanATag,
 };
 // export 
