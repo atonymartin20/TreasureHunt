@@ -13,6 +13,7 @@ class About extends React.Component{
                     <AboutLI><AboutSpan><AboutSpanATag href='https://github.com/pghrogue' target="_blank">Jennifer King</AboutSpanATag></AboutSpan><AboutSpanATag href='https://github.com/pghrogue' target="_blank">&nbsp;&nbsp; - Jennifer's Github</AboutSpanATag></AboutLI>
                 </AboutUL>
                 {/* Next up adding details about how to play the game */}
+                {/* Still need to fix mining and add Frontend Readme */}
 
             </ViewPanelDiv>
         )
