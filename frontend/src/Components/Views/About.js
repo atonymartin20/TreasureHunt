@@ -14,7 +14,7 @@ class About extends React.Component{
                 </AboutUL>
                 {/* Next up adding details about how to play the game */}
                 {/* Still need to fix mining and add Frontend Readme */}
-                {/* Commit 2 */}
+                {/* Commit 3 */}
             </ViewPanelDiv>
         )
     }
