@@ -147,7 +147,7 @@ class ButtonPanel extends React.Component {
         this.DisableButtons();
         new Promise(function(resolve, reject) {
             // this.GetLastProof
-            let testValue = null
+            let lastproof = null
             const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
             const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
             const options = {
@@ -158,18 +158,18 @@ class ButtonPanel extends React.Component {
             axios
                 .get(endpoint, options)
                 .then(res => {
-                    testValue = res.data
+                    lastproof = res.data
                     return res.data
                 })
                 .catch(err => {
                     console.log('error', err);
                 });
-            setTimeout(() => resolve(testValue), 1000);
+            setTimeout(() => resolve(lastproof), 1000);
 
         }).then(function(result) { // (**)
 /* sha256 function is from https://geraintluff.github.io/sha256/
     This is not my work and I would like to thank them for this code */
-            alert('Currently Working on Mining Your Coin.  You will be Alerted when the coin is mined.')
+            alert('Currently Working on Mining Your Coin.  This could take a few minutes.')
 
             let sha256 = function sha256(ascii) {
                 function rightRotate(value, amount) {
@@ -275,7 +275,6 @@ class ButtonPanel extends React.Component {
         
                 let beg = guessHash.substring(0, difficulty)
                 let comp = "".padStart(difficulty, '0');
-        
                 if (beg === comp) {
                     let newCoinValue = beg
                     alert('Coin Mined Succesfully')
@@ -288,210 +287,53 @@ class ButtonPanel extends React.Component {
 
             // Proof of Work
             let ProofOfWork = (last_proof, difficulty) => {
+                let startTime = new Date();
                 let proof = last_proof
+                let attempts = 0;
+
                 while ((ValidProof(last_proof, proof, difficulty)) === false) {
-                    let attempts = 0;
                     proof += 1
                     attempts += 1;
-                    if (attempts & 1000 === 0) {
+                    if (attempts % 10000 === 0) {
                         console.log(attempts);
                     }
                 }
-                console.log(this.ValidProof(last_proof, proof, difficulty))
+                let endTime = new Date();
+                let timeTaken = (endTime - startTime) / 1000;
+                console.log(`It took ${timeTaken} seconds to find the correct proof`)
+                console.log(ValidProof(last_proof, proof, difficulty))
                 console.log(`Proof found: ${proof}`)
-                return true
+                console.log(`It only took ${attempts} attempts...`)
+                return proof
             }
         
-            ProofOfWork(result.proof, result.difficulty)
-
+            let newProof = ProofOfWork(result.proof, result.difficulty)
+            console.log(newProof);
+            return newProof;
             
-            // console.log(result)
-            // alert(`Proof = ${result.proof}, Difficulty = ${result.difficulty}, Cooldown = ${result.cooldown}`); // 1
-            // return result;
-          
-        //   }).then(function(result) { // (***)
-          
-        //     alert(result); // 2
-        //     return result * 3;
-          
-        //   }).then(function(result) {
-          
-        //     alert(result); // 4
-        //     return result * 2;
-          
-        });
-        this.ReenableButtons();
-
-        // setTimeout(() => {
-        //     this.GetLastProof();
-        // }, this.context.state.cooldown)
-        // setTimeout(() => {
-        //     this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        // }, this.context.state.cooldown + 2000)
-        // this.MineOneCoin();
-
-    //     // setTimeout(() => {
-    //         this.context.MineOneCoin();
-    //     // }, this.state.cooldown + 1500)
-        // setTimeout(() => {
-        //     this.setState({
-        //         disableAllButtons: false,
-        //         disableMineButton: false
-        //     })
-        // }, 15000) // Disables button for 15 seconds
-    }
-    
-    // getData = () => {
-    //     console.log('getData()')
-    //     return new Promise(function (resolve, reject) {
-    //         resolve(this.GetLastProof)
-    //         .then(console.log('I\'m Done'))
-    //     })
-    // }
-
-    getData = (initialData) => {
-        //gets the data
-        console.log(initialData)
-        return new Promise(function (resolve, reject) {
-          resolve('Hello World (getData)!')
-        })
-      }
-      
-      parseData = (dataFromGetDataFunction) => {
-          console.log(dataFromGetDataFunction)
-        //does some stuff with the data
-        return new Promise(function (resolve, reject) {
-          resolve('Hello World! Parse')
-        })
-      }
-      
-      validate = (dataFromParseDataFunction) => {
-          console.log(dataFromParseDataFunction)
-        //validates the data
-        return new Promise(function (resolve, reject) {
-          resolve('Hello World! Validate')
-        })
-      }
-      
-      //The function that orchestrates these calls 
-      runner = (initialData) => {
-          return this.getData(initialData)
-              .then(this.parseData)
-              .then(this.validate)
-      }
-    runner2 = () => {
-        let lastProof = this.GetLastProof();
-        return this.getData(lastProof)
-            .then(this.parseData)
-            .then(this.validate)
-          
-      }
-    //   runner('Hello World!').then(function (dataFromValidateFunction) {
-    //       console.log(dataFromValidateFunction);
-    //   })
-
-    GetLastProof =  () => {
-        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        const options = {
-            headers: {
-                Authorization: `Token ${key}`
+        }).then(function(result) { // (***)
+            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/mine';
+            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+            const options = {
+                headers: {
+                    Authorization: `Token ${key}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            const body = {
+                'proof': `${result}`, //'{"proof":new_proof}' 
             }
-        };
-        axios
-            .get(endpoint, options)
-            .then(res => {
-                console.log(res.data)
-                this.setState({
-                    lastProof: res.data,
-                    cooldown: (res.data.cooldown * 1050)
+            axios
+                .post(endpoint, body, options)
+                .then(res => {
+                    console.log(res.data)
+                    return res.data
+                })
+                .catch(err => {
+                    console.log('error', err);
                 });
-                return res.data
-            })
-            .catch(err => {
-                console.log('error', err);
-            });
-    }
-
-    ProofOfWork = (last_proof, difficulty) => {
-        let proof = last_proof
-        while ((this.ValidProof(last_proof, proof, difficulty)) === false) {
-            proof += 1
-        }
-        console.log(this.ValidProof(last_proof, proof, difficulty))
-        console.log(`Proof found: ${proof}`)
-        return true
-    }
-
-    ValidProof = (last_hash, proof, difficulty) => {
-        let guess = (`${last_hash}${proof}`)
-        let guessHash = this.sha256(guess)
-
-        let beg = guessHash.substring(0, difficulty)
-        let comp = "".padStart(difficulty, '0');
-
-        if (beg === comp) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-    
-    test = () => {
-        // let testProof = null;
-        //     const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-        //     const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        //     const options = {
-        //         headers: {
-        //             Authorization: `Token ${key}`
-        //         }
-        //     };
-        //     axios
-        //         .get(endpoint, options)
-        //         .then(res => {
-        //             console.log(res.data)
-        //             this.setState({
-        //                 testProof: res.data,
-        //                 lastProof: res.data,
-        //                 cooldown: (res.data.cooldown * 1050)
-        //             });
-        //         })
-        //         .catch(err => {
-        //             console.log('error', err);
-        //         });
-        // const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-        // const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        // const options = {
-        //     headers: {
-        //         Authorization: `Token ${key}`
-        //     }
-        // };
-        // axios
-        //     .get(endpoint, options)
-        //     .then(res => {
-        //         console.log(res.data)
-        //         this.setState({
-        //             testProof: res.data,
-        //             lastProof: res.data,
-        //             cooldown: (res.data.cooldown * 1050)
-        //         });
-        //     })
-        //     .catch(err => {
-        //         console.log('error', err);
-        //     });
-        this.setState({
-            disableAllButtons: true,
-            disableMineButton: true
         })
-        let data = this.GetLastProof()
-        // this.GetLastProof();
-        console.log(data)
-        this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        this.setState({
-            disableAllButtons: false,
-            disableMineButton: false
-        })
+        this.ReenableButtons();
     }
 
     DisableButtons = () => {
@@ -510,27 +352,6 @@ class ButtonPanel extends React.Component {
     }
 
     MineOneCoin = () => {
-        new Promise(function(resolve, reject) {
-            this.DisableButtons()
-            setTimeout(() => resolve(1), 1000);
-          
-          }).then(function(result) { // (**)
-          
-            alert(result); // 1
-            return result * 2;
-          
-          }).then(function(result) { // (***)
-          
-            alert(result); // 2
-            return result * 3;
-          
-          }).then(function(result) {
-          
-            alert(result); // 4
-            this.state.ReenableButtons();
-            return result * 2;
-          
-          });
         // this.test()
         // this.runner('Hello Everyone')
         // this.runner2()
