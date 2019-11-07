@@ -276,9 +276,7 @@ class ButtonPanel extends React.Component {
                 let beg = guessHash.substring(0, difficulty)
                 let comp = "".padStart(difficulty, '0');
                 if (beg === comp) {
-                    let newCoinValue = beg
-                    alert('Coin Mined Succesfully')
-                    return newCoinValue
+                    return beg
                 }
                 else {
                     return false
@@ -300,6 +298,7 @@ class ButtonPanel extends React.Component {
                 }
                 let endTime = new Date();
                 let timeTaken = (endTime - startTime) / 1000;
+                alert(`It took ${timeTaken} seconds to find the correct proof\nProof found: ${proof}\nIt only took ${attempts} attempts...`)
                 console.log(`It took ${timeTaken} seconds to find the correct proof`)
                 console.log(ValidProof(last_proof, proof, difficulty))
                 console.log(`Proof found: ${proof}`)
@@ -326,6 +325,7 @@ class ButtonPanel extends React.Component {
             axios
                 .post(endpoint, body, options)
                 .then(res => {
+                    alert('If there is a coin here, then Congrats you have it.  If not then coins are currently not being produced.')
                     console.log(res.data)
                     return res.data
                 })
