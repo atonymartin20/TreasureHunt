@@ -39,7 +39,7 @@ class About extends React.Component{
                 </AboutUL>
 
                 <AboutH2>How To Play the Game:</AboutH2>
-                <AboutP>This game allows you to hunt for treasure, </AboutP>
+                <AboutP>This game allows you to hunt for treasure, pick up treasure, traverse the map, and mine Lambda Coins.  </AboutP>
 
                 <AboutH2>Legend Details:</AboutH2>
                 <AboutUL>
@@ -50,6 +50,14 @@ class About extends React.Component{
                     <AboutLI><strong>Mining Location</strong> - Allows you to mine Lambda Coins which can be used later.</AboutLI>
                     <AboutLI><strong>Current Location</strong> - Shows your current location on the map.</AboutLI>
                     <AboutLI><strong>Transmogrifier</strong> - The transmogrifier allows you to change items into wearable equipment.  This uses Gold and Lambda Coins.</AboutLI>
+                </AboutUL>
+
+                <AboutH2>Button Panel Details:</AboutH2>
+                <AboutUL>
+                    <AboutLI><strong>Movement Buttons</strong> - These buttons allow the player to move throughout the map.  They are rendered depending on what movement options you have unlocked.  The buttons are also disabled if you can't move in a certain direction or while an action is being taken.</AboutLI>
+                    <AboutLI><strong>Pray Button</strong> - This button only shows when the player is currently located at a Shrine.  Praying will unlock a special ability for your character.</AboutLI>
+                    <AboutLI><strong>Pirate Ry's Shop</strong> - There are two different items rendered at Pirate Ry's Shop.  First is an input field where the player can create their new player name.  The second item is a button changing the player's name.</AboutLI>
+                    <AboutLI><strong>Mining Button</strong> - This button only renders at the Mining Location.  Clicking this button will begin the Lambda Coin Mining process.  This process can take a few minutes to complete.</AboutLI>
                 </AboutUL>
                 {/* Next up adding details about how to play the game */}
                 {/* Still need to add Frontend Readme */}
