@@ -147,7 +147,7 @@ class ButtonPanel extends React.Component {
         this.DisableButtons();
         new Promise(function(resolve, reject) {
             // this.GetLastProof
-            let testValue = null
+            let lastproof = null
             const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
             const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
             const options = {
@@ -158,18 +158,18 @@ class ButtonPanel extends React.Component {
             axios
                 .get(endpoint, options)
                 .then(res => {
-                    testValue = res.data
+                    lastproof = res.data
                     return res.data
                 })
                 .catch(err => {
                     console.log('error', err);
                 });
-            setTimeout(() => resolve(testValue), 1000);
+            setTimeout(() => resolve(lastproof), 1000);
 
         }).then(function(result) { // (**)
 /* sha256 function is from https://geraintluff.github.io/sha256/
     This is not my work and I would like to thank them for this code */
-            alert('Currently Working on Mining Your Coin.  You will be Alerted when the coin is mined.')
+            alert('Currently Working on Mining Your Coin.  This could take a few minutes.')
 
             let sha256 = function sha256(ascii) {
                 function rightRotate(value, amount) {
@@ -275,11 +275,8 @@ class ButtonPanel extends React.Component {
         
                 let beg = guessHash.substring(0, difficulty)
                 let comp = "".padStart(difficulty, '0');
-        
                 if (beg === comp) {
-                    let newCoinValue = beg
-                    alert('Coin Mined Succesfully')
-                    return newCoinValue
+                    return beg
                 }
                 else {
                     return false
@@ -288,210 +285,55 @@ class ButtonPanel extends React.Component {
 
             // Proof of Work
             let ProofOfWork = (last_proof, difficulty) => {
+                let startTime = new Date();
                 let proof = last_proof
+                let attempts = 0;
+
                 while ((ValidProof(last_proof, proof, difficulty)) === false) {
-                    let attempts = 0;
                     proof += 1
                     attempts += 1;
-                    if (attempts & 1000 === 0) {
+                    if (attempts % 10000 === 0) {
                         console.log(attempts);
                     }
                 }
-                console.log(this.ValidProof(last_proof, proof, difficulty))
+                let endTime = new Date();
+                let timeTaken = (endTime - startTime) / 1000;
+                alert(`It took ${timeTaken} seconds to find the correct proof\nProof found: ${proof}\nIt only took ${attempts} attempts...`)
+                console.log(`It took ${timeTaken} seconds to find the correct proof`)
+                console.log(ValidProof(last_proof, proof, difficulty))
                 console.log(`Proof found: ${proof}`)
-                return true
+                console.log(`It only took ${attempts} attempts...`)
+                return proof
             }
         
-            ProofOfWork(result.proof, result.difficulty)
-
+            let newProof = ProofOfWork(result.proof, result.difficulty)
+            console.log(newProof);
+            return newProof;
             
-            // console.log(result)
-            // alert(`Proof = ${result.proof}, Difficulty = ${result.difficulty}, Cooldown = ${result.cooldown}`); // 1
-            // return result;
-          
-        //   }).then(function(result) { // (***)
-          
-        //     alert(result); // 2
-        //     return result * 3;
-          
-        //   }).then(function(result) {
-          
-        //     alert(result); // 4
-        //     return result * 2;
-          
-        });
-        this.ReenableButtons();
-
-        // setTimeout(() => {
-        //     this.GetLastProof();
-        // }, this.context.state.cooldown)
-        // setTimeout(() => {
-        //     this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        // }, this.context.state.cooldown + 2000)
-        // this.MineOneCoin();
-
-    //     // setTimeout(() => {
-    //         this.context.MineOneCoin();
-    //     // }, this.state.cooldown + 1500)
-        // setTimeout(() => {
-        //     this.setState({
-        //         disableAllButtons: false,
-        //         disableMineButton: false
-        //     })
-        // }, 15000) // Disables button for 15 seconds
-    }
-    
-    // getData = () => {
-    //     console.log('getData()')
-    //     return new Promise(function (resolve, reject) {
-    //         resolve(this.GetLastProof)
-    //         .then(console.log('I\'m Done'))
-    //     })
-    // }
-
-    getData = (initialData) => {
-        //gets the data
-        console.log(initialData)
-        return new Promise(function (resolve, reject) {
-          resolve('Hello World (getData)!')
-        })
-      }
-      
-      parseData = (dataFromGetDataFunction) => {
-          console.log(dataFromGetDataFunction)
-        //does some stuff with the data
-        return new Promise(function (resolve, reject) {
-          resolve('Hello World! Parse')
-        })
-      }
-      
-      validate = (dataFromParseDataFunction) => {
-          console.log(dataFromParseDataFunction)
-        //validates the data
-        return new Promise(function (resolve, reject) {
-          resolve('Hello World! Validate')
-        })
-      }
-      
-      //The function that orchestrates these calls 
-      runner = (initialData) => {
-          return this.getData(initialData)
-              .then(this.parseData)
-              .then(this.validate)
-      }
-    runner2 = () => {
-        let lastProof = this.GetLastProof();
-        return this.getData(lastProof)
-            .then(this.parseData)
-            .then(this.validate)
-          
-      }
-    //   runner('Hello World!').then(function (dataFromValidateFunction) {
-    //       console.log(dataFromValidateFunction);
-    //   })
-
-    GetLastProof =  () => {
-        const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-        const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        const options = {
-            headers: {
-                Authorization: `Token ${key}`
+        }).then(function(result) { // (***)
+            const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/mine';
+            const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
+            const options = {
+                headers: {
+                    Authorization: `Token ${key}`,
+                    'Content-Type': 'application/json'
+                }
+            };
+            const body = {
+                'proof': `${result}`, //'{"proof":new_proof}' 
             }
-        };
-        axios
-            .get(endpoint, options)
-            .then(res => {
-                console.log(res.data)
-                this.setState({
-                    lastProof: res.data,
-                    cooldown: (res.data.cooldown * 1050)
+            axios
+                .post(endpoint, body, options)
+                .then(res => {
+                    alert('If there is a coin here, then Congrats you have it.  If not then coins are currently not being produced.')
+                    console.log(res.data)
+                    return res.data
+                })
+                .catch(err => {
+                    console.log('error', err);
                 });
-                return res.data
-            })
-            .catch(err => {
-                console.log('error', err);
-            });
-    }
-
-    ProofOfWork = (last_proof, difficulty) => {
-        let proof = last_proof
-        while ((this.ValidProof(last_proof, proof, difficulty)) === false) {
-            proof += 1
-        }
-        console.log(this.ValidProof(last_proof, proof, difficulty))
-        console.log(`Proof found: ${proof}`)
-        return true
-    }
-
-    ValidProof = (last_hash, proof, difficulty) => {
-        let guess = (`${last_hash}${proof}`)
-        let guessHash = this.sha256(guess)
-
-        let beg = guessHash.substring(0, difficulty)
-        let comp = "".padStart(difficulty, '0');
-
-        if (beg === comp) {
-            return true
-        }
-        else {
-            return false
-        }
-    }
-    
-    test = () => {
-        // let testProof = null;
-        //     const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-        //     const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        //     const options = {
-        //         headers: {
-        //             Authorization: `Token ${key}`
-        //         }
-        //     };
-        //     axios
-        //         .get(endpoint, options)
-        //         .then(res => {
-        //             console.log(res.data)
-        //             this.setState({
-        //                 testProof: res.data,
-        //                 lastProof: res.data,
-        //                 cooldown: (res.data.cooldown * 1050)
-        //             });
-        //         })
-        //         .catch(err => {
-        //             console.log('error', err);
-        //         });
-        // const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/bc/last_proof/';
-        // const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        // const options = {
-        //     headers: {
-        //         Authorization: `Token ${key}`
-        //     }
-        // };
-        // axios
-        //     .get(endpoint, options)
-        //     .then(res => {
-        //         console.log(res.data)
-        //         this.setState({
-        //             testProof: res.data,
-        //             lastProof: res.data,
-        //             cooldown: (res.data.cooldown * 1050)
-        //         });
-        //     })
-        //     .catch(err => {
-        //         console.log('error', err);
-        //     });
-        this.setState({
-            disableAllButtons: true,
-            disableMineButton: true
         })
-        let data = this.GetLastProof()
-        // this.GetLastProof();
-        console.log(data)
-        this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        this.setState({
-            disableAllButtons: false,
-            disableMineButton: false
-        })
+        this.ReenableButtons();
     }
 
     DisableButtons = () => {
@@ -509,86 +351,6 @@ class ButtonPanel extends React.Component {
         return null
     }
 
-    MineOneCoin = () => {
-        new Promise(function(resolve, reject) {
-            this.DisableButtons()
-            setTimeout(() => resolve(1), 1000);
-          
-          }).then(function(result) { // (**)
-          
-            alert(result); // 1
-            return result * 2;
-          
-          }).then(function(result) { // (***)
-          
-            alert(result); // 2
-            return result * 3;
-          
-          }).then(function(result) {
-          
-            alert(result); // 4
-            this.state.ReenableButtons();
-            return result * 2;
-          
-          });
-        // this.test()
-        // this.runner('Hello Everyone')
-        // this.runner2()
-        // this.getData()
-        // let canChangeButton = true;
-        // console.log(this.state.lastProof) // Should return {}
-        // this.setState({
-        //     disableAllButtons: true,
-        //     disableMineButton: true
-        // })
-        // setTimeout(() => {
-        //     this.GetLastProof();
-        // }, this.context.state.cooldown)
-
-        // setTimeout(() => {
-        //     console.log(this.state.lastProof)
-        //     this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        // }, this.context.state.cooldown + 1500)
-
-        // setTimeout(() => {
-        //     this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        // }, this.context.state.cooldown + 2000)
-    //     // setTimeout(() => {
-    //         this.context.MineOneCoin();
-    //     // }, this.state.cooldown + 1500)
-        // setTimeout(() => {
-        //     this.setState({
-        //         disableAllButtons: false,
-        //         disableMineButton: false
-        //     })
-        // }, 15000) // Disables button for 15 seconds
-
-        // this.GetLastProof();
-        // this.ProofOfWork(this.state.lastProof.proof, this.state.lastProof.difficulty)
-        // Mine Coin:
-        // const endpoint = 'https://lambda-treasure-hunt.herokuapp.com/api/adv/mine/';
-        // const key = process.env.REACT_APP_KEY || '314ec772ed9d2974590b9b02a56b022a47c1815c';
-        // const options = {
-        //     headers: {
-        //         Authorization: `Token ${key}`,
-        //         'Content-Type': 'application/json'
-        //     }
-        // }
-        // const body = {
-        //     // 'proof': `${newProof}`, //'{"proof":new_proof}' 
-        // }
-        // axios
-        // .post(endpoint, body, options)
-        // .then( res => {
-        //     console.log(res.data)
-        //     this.setState({
-        //         cooldown: (res.data.cooldown * 1000)
-        //     });
-        // })
-        // .catch(err => {
-        //     console.log('error', err);
-        // });
-    }
     Pray = () => {
         this.setState({
             disableAllButtons: true,
@@ -676,107 +438,6 @@ class ButtonPanel extends React.Component {
         }
     }
 
-/* sha256 function is from https://geraintluff.github.io/sha256/
-    This is not my work and I would like to thank them for this code */
-
-
-    sha256 = function sha256(ascii) {
-        function rightRotate(value, amount) {
-            return (value>>>amount) | (value<<(32 - amount));
-        };
-        
-        var mathPow = Math.pow;
-        var maxWord = mathPow(2, 32);
-        var lengthProperty = 'length'
-        var i, j; // Used as a counter across the whole file
-        var result = ''
-    
-        var words = [];
-        var asciiBitLength = ascii[lengthProperty]*8;
-        
-        //* caching results is optional - remove/add slash from front of this line to toggle
-        // Initial hash value: first 32 bits of the fractional parts of the square roots of the first 8 primes
-        // (we actually calculate the first 64, but extra values are just ignored)
-        var hash = sha256.h = sha256.h || [];
-        // Round constants: first 32 bits of the fractional parts of the cube roots of the first 64 primes
-        var k = sha256.k = sha256.k || [];
-        var primeCounter = k[lengthProperty];
-        /*/
-        var hash = [], k = [];
-        var primeCounter = 0;
-        //*/
-    
-        var isComposite = {};
-        for (var candidate = 2; primeCounter < 64; candidate++) {
-            if (!isComposite[candidate]) {
-                for (i = 0; i < 313; i += candidate) {
-                    isComposite[i] = candidate;
-                }
-                hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
-                k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
-            }
-        }
-        
-        ascii += '\x80' // Append Ƈ' bit (plus zero padding)
-        while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
-        for (i = 0; i < ascii[lengthProperty]; i++) {
-            j = ascii.charCodeAt(i);
-            if (j>>8) return; // ASCII check: only accept characters in range 0-255
-            words[i>>2] |= j << ((3 - i)%4)*8;
-        }
-        words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
-        words[words[lengthProperty]] = (asciiBitLength)
-        
-        // process each chunk
-        for (j = 0; j < words[lengthProperty];) {
-            var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
-            var oldHash = hash;
-            // This is now the undefinedworking hash", often labelled as variables a...g
-            // (we have to truncate as well, otherwise extra entries at the end accumulate
-            hash = hash.slice(0, 8);
-            
-            for (i = 0; i < 64; i++) {
-                // var i2 = i + j;
-                // Expand the message into 64 words
-                // Used below if 
-                var w15 = w[i - 15], w2 = w[i - 2];
-    
-                // Iterate
-                var a = hash[0], e = hash[4];
-                var temp1 = hash[7]
-                    + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) // S1
-                    + ((e&hash[5])^((~e)&hash[6])) // ch
-                    + k[i]
-                    // Expand the message schedule if needed
-                    + (w[i] = (i < 16) ? w[i] : (
-                            w[i - 16]
-                            + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3)) // s0
-                            + w[i - 7]
-                            + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10)) // s1
-                        )|0
-                    );
-                // This is only used once, so *could* be moved below, but it only saves 4 bytes and makes things unreadble
-                var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) // S0
-                    + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2])); // maj
-                
-                hash = [(temp1 + temp2)|0].concat(hash); // We don't bother trimming off the extra ones, they're harmless as long as we're truncating when we do the slice()
-                hash[4] = (hash[4] + temp1)|0;
-            }
-            
-            for (i = 0; i < 8; i++) {
-                hash[i] = (hash[i] + oldHash[i])|0;
-            }
-        }
-        
-        for (i = 0; i < 8; i++) {
-            for (j = 3; j + 1; j--) {
-                var b = (hash[i]>>(j*8))&255;
-                result += ((b < 16) ? 0 : '') + b.toString(16);
-            }
-        }
-        return result;
-    }
-    
     render() {
         // If context.state.currentRoomData has been grabbed.
         if (this.context.state.currentRoomData) {
