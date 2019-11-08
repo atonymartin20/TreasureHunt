@@ -37,6 +37,20 @@ class About extends React.Component{
                     <AboutLI><AboutSpanATag href='https://github.com/atonymartin20/TreasureHunt/blob/master/backend/README.md' target="_blank">Backend README</AboutSpanATag></AboutLI>
                     <AboutLI><AboutSpanATag href='https://dazzling-tesla-7c91b1.netlify.com/' target="_blank">Netlify - Frontend</AboutSpanATag></AboutLI>
                 </AboutUL>
+
+                <AboutH2>How To Play the Game:</AboutH2>
+                <AboutP>This game allows you to hunt for treasure, </AboutP>
+
+                <AboutH2>Legend Details:</AboutH2>
+                <AboutUL>
+                    <AboutLI><strong>Regular Nodes</strong> - Any nodes that do not serve a particular purposed.  They may contain items.</AboutLI>
+                    <AboutLI><strong>Shop Location</strong> - This node allows you to sell treasure to the store to gain gold.</AboutLI>
+                    <AboutLI><strong>Shrine Locations</strong> - Each shrine can be prayed at to gain special abilities.  These abilities include Dash, Flying, and Ghost Friend.</AboutLI>
+                    <AboutLI><strong>Pirate Ry's Shop</strong> - Pirate Ry's Shop allows you to change your name by typing your name into the input field and pressing the change name button.</AboutLI>
+                    <AboutLI><strong>Mining Location</strong> - Allows you to mine Lambda Coins which can be used later.</AboutLI>
+                    <AboutLI><strong>Current Location</strong> - Shows your current location on the map.</AboutLI>
+                    <AboutLI><strong>Transmogrifier</strong> - The transmogrifier allows you to change items into wearable equipment.  This uses Gold and Lambda Coins.</AboutLI>
+                </AboutUL>
                 {/* Next up adding details about how to play the game */}
                 {/* Still need to add Frontend Readme */}
             </ViewPanelDiv>
