@@ -412,6 +412,8 @@ const ViewPanelDiv = styled.div`
 
 const AboutH2 = styled.h2`
     font-size: 1.5rem;
+    margin: 10px;
+    padding: 0px;
 
 `;
 
@@ -425,6 +427,10 @@ const AboutLI = styled.li`
     padding-left: 0px;
 `;
 
+const AboutP = styled.p`
+    font-size: 1.0rem;
+`;
+
 const AboutSpan = styled.span`
     font-size: 1.0rem;
     font-weight: bold;
@@ -433,6 +439,14 @@ const AboutSpan = styled.span`
 const AboutSpanATag = styled.a`
     text-decoration: none;
     color: black;
+`;
+
+const AboutStackSpan = styled(AboutSpan)`
+    font-weight: normal;
+    margin-left: 10px;
+    padding: 0px;
+    margin-top: -5px;
+    font-size: 1.25rem;
 `;
 
 export {
@@ -482,7 +496,9 @@ export {
     AboutH2,
     AboutUL,
     AboutLI,
+    AboutP,
     AboutSpan,
     AboutSpanATag,
+    AboutStackSpan,
 };
 // export 
