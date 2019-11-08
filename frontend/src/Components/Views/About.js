@@ -32,8 +32,10 @@ class About extends React.Component{
 
                 <AboutH2>Important Links:</AboutH2>
                 <AboutUL>
-                    <AboutLI>React</AboutLI>
-                    <AboutLI>Context API</AboutLI>
+                    <AboutLI><AboutSpanATag href='https://github.com/atonymartin20/TreasureHunt' target="_blank">Project Github</AboutSpanATag></AboutLI>
+                    <AboutLI><AboutSpanATag href='https://github.com/atonymartin20/TreasureHunt/blob/master/frontend/README.md' target="_blank">Frontend README</AboutSpanATag></AboutLI>
+                    <AboutLI><AboutSpanATag href='https://github.com/atonymartin20/TreasureHunt/blob/master/backend/README.md' target="_blank">Backend README</AboutSpanATag></AboutLI>
+                    <AboutLI><AboutSpanATag href='https://dazzling-tesla-7c91b1.netlify.com/' target="_blank">Netlify - Frontend</AboutSpanATag></AboutLI>
                 </AboutUL>
                 {/* Next up adding details about how to play the game */}
                 {/* Still need to add Frontend Readme */}
