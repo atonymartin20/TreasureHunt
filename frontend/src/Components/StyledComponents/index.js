@@ -429,6 +429,9 @@ const AboutLI = styled.li`
 
 const AboutP = styled.p`
     font-size: 1.0rem;
+    margin: 0px;
+    padding: 0px;
+    margin-left: 10px;
 `;
 
 const AboutSpan = styled.span`
@@ -447,6 +450,10 @@ const AboutStackSpan = styled(AboutSpan)`
     padding: 0px;
     margin-top: -5px;
     font-size: 1.25rem;
+`;
+
+const AboutStackSpan2 = styled(AboutStackSpan)`
+    margin-top: 5px;
 `;
 
 export {
@@ -500,5 +507,6 @@ export {
     AboutSpan,
     AboutSpanATag,
     AboutStackSpan,
+    AboutStackSpan2,
 };
 // export 

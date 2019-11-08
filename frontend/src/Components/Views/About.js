@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppContext } from '../Context/AppContext.js';
-import { ViewPanelDiv, AboutH2, AboutUL, AboutLI, AboutP, AboutSpan, AboutSpanATag, AboutStackSpan } from '../StyledComponents';
+import { ViewPanelDiv, AboutH2, AboutUL, AboutLI, AboutP, AboutSpan, AboutSpanATag, AboutStackSpan, AboutStackSpan2 } from '../StyledComponents';
 
 class About extends React.Component{
     render(){
@@ -14,17 +14,26 @@ class About extends React.Component{
                 </AboutUL>
                 <AboutH2>Project Information:</AboutH2>
                 <AboutP>
-
+                    This project was created during our time in Lambda School.  We were given a backend with endpoints that we could hit to grab data.  We had to build
+                    out our map, store data, pick up treasure, traverse the map, and eventually mine a coin.
                 </AboutP>
+
                 <AboutH2>Stack:</AboutH2>
-                    <AboutStackSpan>Frontend</AboutStackSpan>
+                <AboutStackSpan>Frontend</AboutStackSpan>
                 <AboutUL>
                     <AboutLI>React</AboutLI>
                     <AboutLI>Context API</AboutLI>
-                    <AboutLI>React</AboutLI>
+                </AboutUL>
 
-                    <AboutLI>React</AboutLI>
+                <AboutStackSpan2>Our Backend</AboutStackSpan2>
+                <AboutUL>
+                    <AboutLI>Python</AboutLI>
+                </AboutUL>
 
+                <AboutH2>Important Links:</AboutH2>
+                <AboutUL>
+                    <AboutLI>React</AboutLI>
+                    <AboutLI>Context API</AboutLI>
                 </AboutUL>
                 {/* Next up adding details about how to play the game */}
                 {/* Still need to add Frontend Readme */}
