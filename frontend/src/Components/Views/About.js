@@ -40,6 +40,11 @@ class About extends React.Component{
 
                 <AboutH2>How To Play the Game:</AboutH2>
                 <AboutP>This game allows you to hunt for treasure, pick up treasure, traverse the map, and mine Lambda Coins.  </AboutP>
+                <AboutUL>
+                    <AboutLI><strong>Cooldown</strong> - The backend of the game runs on a cooldown feature to keep the server from crashing.  Every action in the game has a cooldown that has to run before an action has to be taken.</AboutLI>
+                    <AboutLI><strong>Movement</strong> - The movement keys are located in the button panel.  Your current location can be tracked on the map by following the red dot.  Traps may activate slowing your character down.</AboutLI>
+                    <AboutLI><strong>Items</strong> - Treasure items can be sold to the shop for gold or used with the transmogrifier to be turned into equippable equipment.  Equippable items include jackets and boots which can be used to increase a character's strength and speed.</AboutLI>
+                </AboutUL>
 
                 <AboutH2>Legend Details:</AboutH2>
                 <AboutUL>
