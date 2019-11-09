@@ -64,6 +64,36 @@ class About extends React.Component{
                     <AboutLI><strong>Pirate Ry's Shop</strong> - There are two different items rendered at Pirate Ry's Shop.  First is an input field where the player can create their new player name.  The second item is a button changing the player's name.</AboutLI>
                     <AboutLI><strong>Mining Button</strong> - This button only renders at the Mining Location.  Clicking this button will begin the Lambda Coin Mining process.  This process can take a few minutes to complete.</AboutLI>
                 </AboutUL>
+
+                <AboutH2>Room Details:</AboutH2>
+                <AboutUL>
+                    <AboutLI><strong>Room Name</strong> - Shows the name of the room.</AboutLI>
+                    <AboutLI><strong>Room Coordinates</strong> - Shows the coordinates for the location on the map.</AboutLI>
+                    <AboutLI><strong>Room ID</strong> - Shows the Room ID for the room.</AboutLI>
+                    <AboutLI><strong>Room Description</strong> - Gives a brief description of the room.</AboutLI>
+                    <AboutLI><strong>Cooldown</strong> - Cooldown shows how many seconds </AboutLI>
+                    <AboutLI><strong>Elevation</strong> - Contains any elevation information.</AboutLI>
+                    <AboutLI><strong>Terrain</strong> - Displays current terrain features.</AboutLI>
+                    <AboutLI><strong>Players</strong> - Shows all players located in the current room.</AboutLI>
+                    <AboutLI><strong>Exits</strong> - Exits show all available directions of movement available to the player.</AboutLI>
+                    <AboutLI><strong>Items</strong> - Items in the room can be picked up.  Dropped items will be displayed in the room.</AboutLI>
+                    <AboutLI><strong>Messages</strong> - Messages will show movement information and any other information.</AboutLI>
+                    <AboutLI><strong>Errors</strong> - Errors show any issues that happen in the game.</AboutLI>
+                </AboutUL>
+
+                <AboutH2>Player Details:</AboutH2>
+                <AboutUL>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong></strong> - </AboutLI>
+                </AboutUL>
                 {/* Next up adding details about how to play the game */}
                 {/* Still need to add Frontend Readme */}
             </ViewPanelDiv>
