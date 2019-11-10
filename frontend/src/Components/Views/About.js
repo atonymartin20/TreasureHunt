@@ -99,7 +99,6 @@ class About extends React.Component{
                     <AboutLI><strong>Carried Item</strong> - Shows if an item is currently being carried by the Ghost Friend.</AboutLI>
                     <AboutLI><strong>Inventory</strong> - Contains a players inventory.  Buttons render allowing for different uses for items at different locations.  Items can be dropped, sold, equipped, transmogrified, given to the Ghost Friend to carry, and received back from the Ghost Friend.</AboutLI>
                 </AboutUL>
-                {/* Still need to add Frontend Readme */}
             </ViewPanelDiv>
         )
     }
