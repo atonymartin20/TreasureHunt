@@ -71,7 +71,7 @@ class About extends React.Component{
                     <AboutLI><strong>Room Coordinates</strong> - Shows the coordinates for the location on the map.</AboutLI>
                     <AboutLI><strong>Room ID</strong> - Shows the Room ID for the room.</AboutLI>
                     <AboutLI><strong>Room Description</strong> - Gives a brief description of the room.</AboutLI>
-                    <AboutLI><strong>Cooldown</strong> - Cooldown shows how many seconds </AboutLI>
+                    <AboutLI><strong>Cooldown</strong> - Cooldown shows how many seconds need to pass before the next request can run.</AboutLI>
                     <AboutLI><strong>Elevation</strong> - Contains any elevation information.</AboutLI>
                     <AboutLI><strong>Terrain</strong> - Displays current terrain features.</AboutLI>
                     <AboutLI><strong>Players</strong> - Shows all players located in the current room.</AboutLI>
@@ -87,7 +87,7 @@ class About extends React.Component{
                     <AboutLI><strong>Encumbrance</strong> - How much weight the player is carrying.</AboutLI>
                     <AboutLI><strong>Strength</strong> - How much weight the player can carry.</AboutLI>
                     <AboutLI><strong>Speed</strong> - The player's speed.</AboutLI>
-                    <AboutLI><strong>Cooldown</strong> - </AboutLI>
+                    <AboutLI><strong>Cooldown</strong> - Cooldown shows how many seconds need to pass before the next request can run.</AboutLI>
                     <AboutLI><strong>Status</strong> - </AboutLI>
                     <AboutLI><strong>Messages</strong> - </AboutLI>
                     <AboutLI><strong>Errors</strong> - </AboutLI>
