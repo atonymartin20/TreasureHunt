@@ -88,16 +88,16 @@ class About extends React.Component{
                     <AboutLI><strong>Strength</strong> - How much weight the player can carry.</AboutLI>
                     <AboutLI><strong>Speed</strong> - The player's speed.</AboutLI>
                     <AboutLI><strong>Cooldown</strong> - Cooldown shows how many seconds need to pass before the next request can run.</AboutLI>
-                    <AboutLI><strong>Status</strong> - </AboutLI>
-                    <AboutLI><strong>Messages</strong> - </AboutLI>
-                    <AboutLI><strong>Errors</strong> - </AboutLI>
-                    <AboutLI><strong>Gold</strong> - </AboutLI>
-                    <AboutLI><strong>Coins Mined</strong> - </AboutLI>
-                    <AboutLI><strong>Flying</strong> - </AboutLI>
-                    <AboutLI><strong>Ghost Friend</strong> - </AboutLI>
-                    <AboutLI><strong>Dash</strong> - </AboutLI>
-                    <AboutLI><strong>Carried Item</strong> - </AboutLI>
-                    <AboutLI><strong>Inventory</strong> - </AboutLI>
+                    <AboutLI><strong>Status</strong> - Shows any important status information.</AboutLI>
+                    <AboutLI><strong>Messages</strong> - Shows any important messages regarding the player.</AboutLI>
+                    <AboutLI><strong>Errors</strong> - Shows any important errors regarding the player.</AboutLI>
+                    <AboutLI><strong>Gold</strong> - Shows home much gold the player currently has.</AboutLI>
+                    <AboutLI><strong>Coins Mined</strong> - Shows how many Lambda Coins the player currently has.</AboutLI>
+                    <AboutLI><strong>Flying</strong> - Shows if the Flying ability has been found.  If active, the player can move faster in certain situations.</AboutLI>
+                    <AboutLI><strong>Ghost Friend</strong> - Shows if the Ghost Friend ability has been found.  If active, the player can have a ghost carry an item.  While the ghost carries the item, it does not weigh down the player.</AboutLI>
+                    <AboutLI><strong>Dash</strong> - Shows if the Dash ability has been found.  If active, the player can move faster in certain situations.</AboutLI>
+                    <AboutLI><strong>Carried Item</strong> - Shows if an item is currently being carried by the Ghost Friend.</AboutLI>
+                    <AboutLI><strong>Inventory</strong> - Contains a players inventory.  Buttons render allowing for different uses for items at different locations.  Items can be dropped, sold, equipped, transmogrified, given to the Ghost Friend to carry, and received back from the Ghost Friend.</AboutLI>
                 </AboutUL>
                 {/* Still need to add Frontend Readme */}
             </ViewPanelDiv>
