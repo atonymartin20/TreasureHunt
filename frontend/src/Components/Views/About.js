@@ -83,18 +83,22 @@ class About extends React.Component{
 
                 <AboutH2>Player Details:</AboutH2>
                 <AboutUL>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
-                    <AboutLI><strong></strong> - </AboutLI>
+                    <AboutLI><strong>Player Name</strong> - The player's name.</AboutLI>
+                    <AboutLI><strong>Encumbrance</strong> - How much weight the player is carrying.</AboutLI>
+                    <AboutLI><strong>Strength</strong> - How much weight the player can carry.</AboutLI>
+                    <AboutLI><strong>Speed</strong> - The player's speed.</AboutLI>
+                    <AboutLI><strong>Cooldown</strong> - </AboutLI>
+                    <AboutLI><strong>Status</strong> - </AboutLI>
+                    <AboutLI><strong>Messages</strong> - </AboutLI>
+                    <AboutLI><strong>Errors</strong> - </AboutLI>
+                    <AboutLI><strong>Gold</strong> - </AboutLI>
+                    <AboutLI><strong>Coins Mined</strong> - </AboutLI>
+                    <AboutLI><strong>Flying</strong> - </AboutLI>
+                    <AboutLI><strong>Ghost Friend</strong> - </AboutLI>
+                    <AboutLI><strong>Dash</strong> - </AboutLI>
+                    <AboutLI><strong>Carried Item</strong> - </AboutLI>
+                    <AboutLI><strong>Inventory</strong> - </AboutLI>
                 </AboutUL>
-                {/* Next up adding details about how to play the game */}
                 {/* Still need to add Frontend Readme */}
             </ViewPanelDiv>
         )
