@@ -1,3 +1,13 @@
+## Team
+
+Listed alphabetically:
+
+| [**Alex Martin**](https://github.com/atonymartin20) | [**Bruce Cabanayan**](https://github.com/bcabanayan) | [**Jennifer King**](https://github.com/pghrogue) |
+|:------------:|:------------:|:-----------:|
+| [<img src="https://avatars0.githubusercontent.com/u/35713771?s=460&v=4" width="80">](https://github.com/atonymartin20) | [<img src="https://avatars2.githubusercontent.com/u/33612344?s=400&v=4" width="80">](https://github.com/bcabanayan) | [<img src="https://avatars1.githubusercontent.com/u/28374001?s=460&v=4" width="80">](https://github.com/pghrogue) |
+| [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/atonymartin20) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/bcabanayan) | [<img src="https://github.com/favicon.ico" width="15"> Github](https://github.com/pghrogue) |
+
+# Rest of this README was provided by Lambda
 # CS Build Week 2
 
 For your second CS Build Week, you and a small team will be competing against your fellow CS students in the ***Lambda Treasure Hunt***. To succeed, you will need to apply knowledge you've learned throughout your entire tenure at Lambda School -- CS, Labs and main track -- to efficiently traverse an island maze, collect treasure, solve puzzles, unearth powerful artifacts and more. Glory and riches await the victors!
