@@ -34,16 +34,16 @@ The button panel contains all of the movement buttons along with room specific b
 This file contains the majority of the state management and functions in the entire application.
 
 State:
-- currentLocation
-- userData
-- currentRoomData
-- wiseExplorer
-- cooldown
-- coinCount
-- carriedItem
-- flying
-- ghostFriend 
-- dash
+- currentLocation - Contains the currentLocation in the map.  Updated through GetInitialRoomData() and whenever one of the movement functions is called.
+- userData - Contains information about the user.  This is updated through GetUserData().
+- currentRoomData - This contains all of the information about the current room.  Updated through GetInitialRoomData() and whenever one of the movement functions is called.
+- wiseExplorer - If wiseExplore is true, then the cooldowns whenever moving are reduced by 50%.  This checks the if the map has 500 nodes.  If so then wiseExplorer is active.
+- cooldown - This holds the value for the current cooldown.  This is updated through every function and makes sure the server has waited at least the proper amount of time before sending another request and erroring out.
+- coinCount - This shows how many Lambda Coins the player currently has.  This is updated in CoinBalance().
+- carriedItem - This checks if the ghostFriend is currently carrying an item.  This is updated in GhostCarryItem(), GhostReceiveItem(), and UpdateCarriedItem(). 
+- flying - Shows if the player has activated flight or not.  If true, the player can travel quicker.  This is updated at PrayAtAltar().
+- ghostFriend  - Shows if the player has found their ghost friend.  If true, then the player can have their ghostly companion hold an item for them.  This is updated at PrayAtAltar().
+- dash - Shows if the player has activated the dash ability or not.  When true, the player can travel quicker.  This is updated at PrayAtAltar().
 - equippedJacket
 - equippedBoots
 
