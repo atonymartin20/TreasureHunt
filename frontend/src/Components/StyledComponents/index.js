@@ -425,6 +425,7 @@ const AboutLI = styled.li`
     font-size: 1.0rem;
     width: 100%;
     padding-left: 0px;
+    margin-bottom: 5px;
 `;
 
 const AboutP = styled.p`
@@ -432,6 +433,7 @@ const AboutP = styled.p`
     margin: 0px;
     padding: 0px;
     margin-left: 10px;
+    margin-bottom: 10px;
 `;
 
 const AboutSpan = styled.span`
