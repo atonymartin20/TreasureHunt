@@ -44,8 +44,8 @@ State:
 - flying - Shows if the player has activated flight or not.  If true, the player can travel quicker.  This is updated at PrayAtAltar().
 - ghostFriend  - Shows if the player has found their ghost friend.  If true, then the player can have their ghostly companion hold an item for them.  This is updated at PrayAtAltar().
 - dash - Shows if the player has activated the dash ability or not.  When true, the player can travel quicker.  This is updated at PrayAtAltar().
-- equippedJacket
-- equippedBoots
+- equippedJacket - Shows if the player is currently wearing a jacket.  When wearing a jacket, the player can gain additional strength and speed.  This can be updated through DropItem(), and EquipEquipment().
+- equippedBoots - Shows if the player is currently wearing a pair of boots.  When wearing a pair of boots, the player can gain additional strength and speed.  This can be updated through DropItem(), and EquipEquipment().
 
 Functions:
 - GetInitialRoomData() 
