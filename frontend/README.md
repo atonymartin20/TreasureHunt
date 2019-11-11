@@ -55,26 +55,25 @@ Functions:
 - MoveWest(), MoveEast(), MoveSouth(), MoveNorth() - The traditional movement mechanic in the game.  If the player has wiseExplorer active, then the movement cooldown is decreased by 50%.
 - DropItem() - Runs when the player drops an item in their inventory.  If the item is currently equipped, then the item is unequipped and then dropped.
 - SellItem() - This checks to make sure the item being sold is a type of treasure.  If the item is not treasure, it alerts the user that the shopkeeper will only buy treasure.
-- PickUpItem() - 
-
-
+- PickUpItem() - Picks up items that are located in the current room.
+- PrayAtAltar() - Runs when the player prays at an altar.  Sets one of flying, ghost friend, or dash active dependent on prayer message from the altar.  Alerts the player that they will be able to move again in 50 seconds.
+- RenameCharacter() - Allows the player to rename their character.  After the name change, the player is alerted that they will be able to move again in 25 seconds.
+- TransmogItem() - This is only available at the transmogrifier. It will use an item, gold, and a Lambda Coin and turn it into wearable equipment.
+- EquipEquipment() - Checks to make sure that the item is a jacket or boots.  If the item is one of these two options, the item is equipped.
+- GhostCarryItem() - If Ghost Friend is active, then the user can hit the carry button on an item.  The item will then be carried by the ghost and will not weigh down the player.
+- GhostReceiveItem() - If Ghost Friend is active, and the ghost is carrying one of your items, this can be used to retrieve your item from the ghost.
 
 #### CurrentRoom
+This contains the current room data shown in the home display.  The inventory list has rules depending on the ListType and displays data accordingly.
 
 #### Map
-
-#### TopBar
+Map contains both the map data and the legend panel code.
 
 #### UserDisplay
+This contains the current player data shown in the home display.  The inventory list has rules depending on what room the player is in and changes the display accordingly.
 
 #### Views
+This contains each of the views in the right-hand sidebar.
 
 ### src/Data
-
-### src/Images
-
-### App.js
-
-### index.js
-
-### adv.py
+This contains the room data used in the mapping process.
