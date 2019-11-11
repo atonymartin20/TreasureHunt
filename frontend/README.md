@@ -48,8 +48,17 @@ State:
 - equippedBoots - Shows if the player is currently wearing a pair of boots.  When wearing a pair of boots, the player can gain additional strength and speed.  This can be updated through DropItem(), and EquipEquipment().
 
 Functions:
-- GetInitialRoomData() 
-- 
+- GetInitialRoomData() - Runs when the app loads.  Gathers the initial room data.
+- GetUserData() - Runs when the app loads.  Gathers the inital player data.
+- CoinBalance() - Runs when the app loads.  Gathers the amount of Lambda Coins the player has.
+- FlyWest(), FlyEast(), FlySouth(), FlyNorth() - These run while flying is active.  Flying allows the player to travel faster than they can when just using the normal movement mechanic.  If the player has wiseExplorer active, then the movement cooldown is decreased by 50%.
+- MoveWest(), MoveEast(), MoveSouth(), MoveNorth() - The traditional movement mechanic in the game.  If the player has wiseExplorer active, then the movement cooldown is decreased by 50%.
+- DropItem() - Runs when the player drops an item in their inventory.  If the item is currently equipped, then the item is unequipped and then dropped.
+- SellItem() - This checks to make sure the item being sold is a type of treasure.  If the item is not treasure, it alerts the user that the shopkeeper will only buy treasure.
+- PickUpItem() - 
+
+
+
 #### CurrentRoom
 
 #### Map
