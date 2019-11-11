@@ -48,7 +48,7 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
@@ -123,7 +123,7 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
@@ -173,7 +173,7 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;activated</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
@@ -198,7 +198,7 @@ class FullPlayer extends React.Component{
                         <UserInfoLi><UserInfoSpan>Flying:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Ghost Friend:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Dash:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
-                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;false</UserInfoLi>
+                        <UserInfoLi><UserInfoSpan>Carried Item:</UserInfoSpan>&nbsp;&nbsp;{this.context.state.carriedItem}</UserInfoLi>
                         <UserInfoLi><UserInfoSpan>Inventory:</UserInfoSpan><FullPlayerInventoryList /></UserInfoLi>
                     </ul>
                 </ViewPanelDiv>
